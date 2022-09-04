@@ -9,8 +9,8 @@
   boot.initrd.availableKernelModules =
     [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ ];
+  boot.kernelModules = [ "kvm-amd" "8821au" ];
+  boot.extraModulePackages = with pkgs.linuxPackages;[ rtl8821au ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/80699c90-ce4e-4de6-b45f-9c75a484be4b";
