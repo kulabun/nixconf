@@ -58,8 +58,6 @@ in {
       d = "docker";
       dps = "d ps";
       dl = "d logs";
-      ".." = "cd ..";
-      "~" = "cd ~";
       "4" = "ip -4 -c -o address";
       "6" = "ip -6 -c -o address";
       vpn = ''
@@ -70,6 +68,15 @@ in {
       ff = "firefox";
       xev = "wev";
       update = "nix-channel --update && nu && hms";
+
+      ".." = "cd ..";
+      "~" = "cd ~";
+      "~proj" = "cd ~proj";
+      "~vim" = "cd ~vim";
+      "~zsh" = "cd ~zsh";
+      "~nix" = "cd ~nix";
+      "~scripts" = "cd ~scripts";
+      "~sway" = "cd ~sway";
     };
 
     shellGlobalAliases = {
@@ -81,11 +88,12 @@ in {
     };
 
     dirHashes = {
-      conf = "$HOME/dotfiles/config";
-      #sway = "$HOME/dotfiles/config/sway";
-      bin = "$HOME/dotfiles/bin";
       proj = "$HOME/projects";
-      nix = "/etc/nixos";
+      vim = "$HOME/nixconf/home-manager/modules/neovim/config";
+      zsh = "$HOME/nixconf/home-manager/modules/zsh/config";
+      nix = "$HOME/nixconf/";
+      scripts = "$HOME/nixconf/home-manager/mondules/scripts";
+      sway = "$HOME/nixconf/home-manager/mondules/sway";
     };
 
     profileExtra = ''
@@ -102,8 +110,6 @@ in {
     '';
 
     initExtra = ''
-      export NIX_HOST="hx90";
-
       if [ -f "$HOME/.zshrc.local" ]; then
         source "$HOME/.zshrc.local"
       fi
