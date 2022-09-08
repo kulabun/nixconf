@@ -1,4 +1,7 @@
 { config, pkgs, lib, ... }: {
+  programs.scmpuff = {
+    enable = true;
+  };
   programs.git = {
     enable = true;
     lfs.enable = true;
@@ -6,10 +9,30 @@
     userEmail = "konstantin.labun@gmail.com";
     ignores = [ ".zsh_history" ];
     includes = [{ path = "~/.gitconfig.local"; }];
+    delta = {
+      enable = true;
+      options = {
+        syntax-theme = "Dracula";
+        side-by-side = true;
+        line-numbers = true;
+        navigate = true;
+      };
+    };
+    extraConfig = {
+      init.defaultBranch = "main";
+      pull = {
+        rebase = true;
+        ff = "only";
+      };
+      core.editor = "nvim";
+      color.ui = "auto";
+    };
     aliases = {
       "a" = "add";
+      "aa" = "add --all";
       "s" = "status -sb";
       "c" = "commit";
+      "ca" = "commit --all";
       "cr" = "!git add -u && git dc && read && git commit -m";
       "l" =
         "log --color --graph --pretty=format:'%C(bold green)%h%Creset [%G?]-%C(yellow)%d%Creset %C(bold)%s%Creset | %C(green)%an%Creset, %C(blue)%ar%Creset'";

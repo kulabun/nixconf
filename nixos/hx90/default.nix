@@ -46,7 +46,7 @@
   networking.networkmanager.enable = true;
 
   # Set your time zone.
-  time.timeZone = "America/Los_Angeles";
+  time.timeZone = "US/Pacific";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.utf8";
@@ -97,10 +97,16 @@
     description = "Konstantin";
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh;
-    packages = with pkgs;
-      [
-        #home-manager
-      ];
+    packages = with pkgs; [
+      usbutils # lsusb
+      pciutils # lspci
+      procps # pgrep, pkill
+      pavucontrol # volume control
+      pulseaudio
+      libnotify # notify-send
+      mpd
+      gnome.zenity
+    ];
   };
 
   # Allow unfree packages

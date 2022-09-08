@@ -67,7 +67,8 @@ in {
       chrome = "google-chrome-stable";
       ff = "firefox";
       xev = "wev";
-      update = "nix-channel --update && nu && hms";
+      update = "nx update && hm update";
+      tz = "tz US/Pacific US/Central Europe/Moscow";
 
       ".." = "cd ..";
       "~" = "cd ~";
@@ -85,6 +86,7 @@ in {
       G = "| grep";
       C = "| wl-copy";
       H = "| head";
+      U = "| up";
     };
 
     dirHashes = {
