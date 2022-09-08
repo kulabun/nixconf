@@ -22,42 +22,33 @@
     };
 
     packages = let
-      my-rustc = pkgs.rustc.overrideAttrs (attrs: { 
-        postInstall = ''
-          RUST_SRC_PATH=$out/lib/rustlib/src/rust
-          mkdir -p $(dirname $RUST_SRC_PATH)
-          ln -sf ${pkgs.rust.packages.stable.rustPlatform.rustcSrc} $RUST_SRC_PATH
-        '';
-      });
-      my-rust-analyzer = pkgs.rust-analyzer.overrideAttrs (attrs: {
-        buildInputs = [ pkgs.makeWrapper ];
-        postInstall = ''
-          wrapProgram "$out/bin/rust-analyzer" \
-            --set-default RUST_SRC_PATH "${my-rustc}/lib/rustlib/src/rust/src"
-        '';
-      });
-      # my-rust-analyzer = (pkgs.symlinkJoin {
-      #   name = "rust-analyzer";
-      #   paths = [ inputs.nixpkgs.legacyPackages.${system}.rust-analyzer ];
+      # my-rustc = pkgs.rustc.overrideAttrs (attrs: { 
+      #   postInstall = ''
+      #     RUST_SRC_PATH=$out/lib/rustlib/src/rust
+      #     mkdir -p $(dirname $RUST_SRC_PATH)
+      #     ln -sf ${pkgs.rust.packages.stable.rustPlatform.rustcSrc} $RUST_SRC_PATH
+      #   '';
+      # });
+      # my-rust-analyzer = pkgs.rust-analyzer.overrideAttrs (attrs: {
       #   buildInputs = [ pkgs.makeWrapper ];
-      #   postBuild = ''
+      #   postInstall = ''
       #     wrapProgram "$out/bin/rust-analyzer" \
       #       --set-default RUST_SRC_PATH "${my-rustc}/lib/rustlib/src/rust/src"
       #   '';
       # });
-      # my-rust = pkgs.rust-bin.stable.latest.default.override {
-      #   extensions = [ "rust-src" ];
-      #   targets = [ "x86_64-unknown-linux-gnu" ];
-      # };
-      # my-rust-analyzer = (pkgs.symlinkJoin {
-      #   name = "rust-analyzer";
-      #   paths = [ inputs.nixpkgs.legacyPackages.${system}.rust-analyzer ];
-      #   buildInputs = [ pkgs.makeWrapper ];
-      #   postBuild = ''
-      #     wrapProgram $out/bin/rust-analyzer \
-      #       --set-default "RUST_SRC_PATH" "${my-rust}"
-      #   '';
-      # });
+      my-rust = pkgs.rust-bin.stable.latest.default.override {
+        extensions = [ "rust-src" ];
+        targets = [ "x86_64-unknown-linux-gnu" ];
+      };
+      my-rust-analyzer = (pkgs.symlinkJoin {
+        name = "rust-analyzer";
+        paths = [ inputs.nixpkgs.legacyPackages.${system}.rust-analyzer ];
+        buildInputs = [ pkgs.makeWrapper ];
+        postBuild = ''
+          wrapProgram $out/bin/rust-analyzer \
+            --set-default "RUST_SRC_PATH" "${my-rust}"
+        '';
+      });
     in with pkgs; [
       neovim
       #tree-sitter
@@ -84,11 +75,11 @@
 
       # Rust support 
       # rustup
-      my-rustc
+      my-rust
       my-rust-analyzer
-      cargo
-      rustfmt
-      clippy # rust-linting
+      #cargo
+      #rustfmt
+      #clippy # rust-linting
       # my-rust
       # my-rust-analyzer
       taplo-lsp # toml support

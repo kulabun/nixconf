@@ -3,6 +3,11 @@
     # nixpkgs.url = "nixpkgs/nixos-unstable";
     nixpkgs.url = "nixpkgs/nixos-22.05";
     rust-overlay.url = "github:oxalica/rust-overlay";
+    # helix-master = {
+    #   url = "github:helix-editor/helix";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    #   inputs.rust-overlay.follows = "rust-overlay";
+    # };
 
     home-manager = {
       # url = "github:nix-community/home-manager";
@@ -16,17 +21,17 @@
       system = "x86_64-linux";
       nixpkgs = inputs.nixpkgs;
       home-manager = inputs.home-manager;
-      rust-overlay = inputs.rust-overlay;
 
       pkgs = import nixpkgs {
         inherit system;
-        overlays = [ 
-          (import ./overlay) 
-          #(import rust-overlay)
+        overlays = [
+          (import ./overlay)
+          (import inputs.rust-overlay)
+          # (import inputs.helix-master)
         ];
         config.allowUnfree = true;
       };
-      
+
       homeConfig = { user, machine }:
         home-manager.lib.homeManagerConfiguration rec {
           # inherit pkgs;
@@ -40,7 +45,7 @@
           configuration = { config, pkgs, lib, ... }: {
             imports = [ ./options/settings ./home-manager/profiles/${machine} ];
             config.nixconf.settings = {
-              inherit user; 
+              inherit user;
               inherit machine;
             };
           };
