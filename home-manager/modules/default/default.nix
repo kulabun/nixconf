@@ -12,6 +12,7 @@
     ../scripts
     ../home-manager
     ../helix
+    ../rofi
 
     ../sway
     ../waybar
