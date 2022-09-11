@@ -69,6 +69,7 @@ in {
       xev = "wev";
       update = "nx update && hm update";
       tz = "tz US/Pacific US/Central Europe/Moscow";
+      n = "navi";
 
       ".." = "cd ..";
       "~" = "cd ~";

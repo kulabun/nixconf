@@ -15,11 +15,9 @@
       mod = "Mod4";
       #terminal = "${pkgs.foot}/bin/foot"; 
       terminal = "${pkgs.foot}/bin/footclient";
-      menu = "ulauncher-toggle";
     in {
       modifier = "${mod}";
       terminal = "${terminal}";
-      menu = "${menu}";
 
       workspaceLayout = "stacking";
       defaultWorkspace = "workspace 1";
@@ -94,7 +92,6 @@
         "${mod}+Delete" = "bar mode toggle";
         "${mod}+Return" = "exec ${terminal}";
         "${mod}+Shift+q" = "kill";
-        "${mod}+d" = "exec ${menu}";
         "${mod}+Shift+c" = "reload";
         "${mod}+Shift+e" =
           "exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'";
@@ -155,6 +152,10 @@
         "${mod}+Shift+8" = "move container to workspace 8";
         "${mod}+Shift+9" = "move container to workspace 9";
         "${mod}+Shift+0" = "move container to workspace 10";
+        "Print" = "exec sway-make-screenshot";
+
+        "${mod}+d" = "exec rofi -show drun";
+        "${mod}+p" = "exec foot gopass";
       };
 
       window = {

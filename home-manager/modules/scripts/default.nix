@@ -4,6 +4,14 @@ with pkgs;
 let
   helloworld = writeShellScriptBin "helloworld"
     (builtins.readFile ./scripts/helloworld.sh);
+  sway-make-screenshot = writeShellScriptBin "sway-make-screenshot"
+    (builtins.readFile ./scripts/sway-make-screenshot.sh);
+  rofi-gopass = writeShellScriptBin "rofi-gopass"
+    (builtins.readFile ./scripts/rofi-gopass.sh);
+  rofi-pinentry = writeShellScriptBin "rofi-pinentry"
+    (builtins.readFile ./scripts/rofi-pinentry.sh);
+  pass = writeShellScriptBin "pass"
+    (builtins.readFile ./scripts/pass.sh);
 
   cfg = config.nixconf.settings;
   nx = pkgs.writeShellScriptBin "nx" ''
@@ -80,4 +88,4 @@ let
         ;;
     esac
   '';
-in { home.packages = [ nx hm ]; }
+in { home.packages = [ nx hm sway-make-screenshot rofi-gopass pass ]; }

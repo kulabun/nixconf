@@ -1,0 +1,6 @@
+% nix
+
+# List reverse dependencies of a store derivation
+nix-store --query --referrers /nix/store/<derivation>
+
+$ derivation: ls /nix/store

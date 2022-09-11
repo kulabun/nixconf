@@ -9,6 +9,7 @@
         "SpaceMono"
         "Terminus"
         "SourceCodePro"
+        "Hack"
       ];
     })
   ];

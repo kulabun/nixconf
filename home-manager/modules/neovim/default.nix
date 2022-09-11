@@ -59,8 +59,8 @@
       python3
 
       # Java support
-      openjdk17
-      jdt-language-server
+      # openjdk17
+      # jdt-language-server
 
       # Lua support
       sumneko-lua-language-server

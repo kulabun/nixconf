@@ -1,0 +1,24 @@
+% misc
+
+# Show ports set to LISTENING
+sudo netstat -tlnp
+
+# List open ports
+sudo lsof -Pan -i tcp -i udp
+
+# Limit CPU usage of process
+cpulimit --include-children --limit <n> --pid <pid>
+
+# Watch filesystem disk space usage
+watch -d -n1 df -h
+
+$ pid: (ps -o pid,%cpu,%mem,ni,cmd ax 2>/dev/null || ps -o pid,%cpu,%mem,ni,command) | sort -b -k3 -r | awk '{print $1, $2, $3, $4, $5}' | column -t --- --header-lines 1 --column 1
+
+# Check the process blocking the mount point
+fuser -v -m <directory>
+
+# Check the process blocking the directory
+fuser -v <directory>
+
+# Inspect current open/listening ports
+sudo netstat -tnlp | grep 'LISTEN'

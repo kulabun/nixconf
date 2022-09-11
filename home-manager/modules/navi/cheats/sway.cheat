@@ -1,0 +1,14 @@
+% sway
+
+# Make a screeshot of a part of the screen
+grim -g "$(slurp)" <file>.png
+
+# Make a screeshot of a part of the screen and put it in clipboard
+grim -t jpeg -g "$(slurp)" - | wl-copy
+
+# Get outputs
+swaymsg -t get_outputs
+
+# Get inputs
+swaymsg -t get_inputs 
+

@@ -13,6 +13,7 @@
     ../home-manager
     ../helix
     ../rofi
+    ../navi
 
     ../sway
     ../waybar
@@ -71,11 +72,14 @@
       time-decode
       shell-hist # analyze my shell history
       tree
-      gopass
       watson
       fd
       ripgrep
       tmux
+      age # file encryption
+      psmisc # fuser.- helps to see what process blocks the file
+
+      gopass
 
       #gdk-pixbuf
       #librsvg # support tray icons in svg
