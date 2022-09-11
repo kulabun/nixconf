@@ -66,8 +66,8 @@
         "type:keyboard" = {
           xkb_layout = "us";
           xkb_numlock = "disabled";
-          repeat_rate = "30";
-          repeat_delay = "200";
+          repeat_rate = "40";
+          repeat_delay = "400";
         };
       };
 
