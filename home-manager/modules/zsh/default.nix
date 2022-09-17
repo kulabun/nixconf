@@ -21,7 +21,10 @@ in {
 
     oh-my-zsh = {
       enable = true;
-      plugins = [ "sudo" "gradle" "rust" "fzf" "vi-mode" ];
+      plugins = [ "sudo" "gradle" "rust" "fzf" "vi-mode" "ssh-agent" ];
+      extraConfig = ''
+        zstyle :omz:plugins:ssh-agent lazy yes
+      '';
     };
 
     shellAliases = {
@@ -116,6 +119,10 @@ in {
       if [ -f "$HOME/.zshrc.local" ]; then
         source "$HOME/.zshrc.local"
       fi
+
+      ############################################################
+      # ZShell Configuration
+      ###########################################################
       export SUDO_PROMPT="$(tput bold)$(tput setaf 1)[sudo] $(tput setaf 7)password for $(tput setaf 6)$USER$(tput setaf 7):$(tput sgr0)"
       export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#6f6f6f"
       export FZF_DEFAULT_OPTS='--color=fg:#f8f8f2,hl:#bd93f9 --color=fg+:#f8f8f2,hl+:#bd93f9 --color=info:#ffb86c,prompt:#50fa7b,pointer:#ff79c6 --color=marker:#ff79c6,spinner:#ffb86c,header:#6272a4'
