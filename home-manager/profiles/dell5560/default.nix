@@ -4,7 +4,7 @@ in {
   imports = [ ../../modules/default ];
   home = {
     enableNixpkgsReleaseCheck = true;
-    packages = with pkgs; [ ];
+    packages = with pkgs; [ consul vault ];
   };
 
   programs = {
@@ -20,21 +20,68 @@ in {
       '';
     };
     git = {
-      userName = "Konstantin Labun";
-      userEmail = "klabun@indeed.com";
-
       includes = [
         {
-          condition = "gitdir:~/personal/";
-          content = {
-            userName = "Konstantin Labun";
-            userEmail = "konstantin.labun@gmail.com";
+          condition = "gitdir:~/indeed/";
+          contents = {
+            user = {
+              name = "Konstantin Labun";
+              email = "klabun@indeed.com";
+            };
           };
         }
         { path = "~/.gitconfig.local"; }
       ];
     };
-    sway.config = { output = { "eDP-1".scale = 1; }; };
+  };
+
+  wayland.windowManager.sway = {
+    config = {
+      output = {
+        "eDP-1".scale = "1.25";
+        "HDMI-A-1" = {
+          scale = "2";
+          resolution = "3840x2160";
+          position = "3840,0";
+        };
+        "HDMI-A-2" = {
+          scale = "2";
+          resolution = "3840x2160";
+          position = "3840,0";
+        };
+        "DP-3" = {
+          scale = "2";
+          resolution = "3840x2160";
+          position = "0,0";
+        };
+        "DP-2" = {
+          scale = "2";
+          resolution = "3840x2160";
+          position = "0,0";
+        };
+        "DP-1" = {
+          scale = "2";
+          resolution = "3840x2160";
+          position = "0,0";
+        };
+      };
+
+      assigns = {
+        "3" = [{ class = "^jetbrains-idea$"; }];
+        "7" = [
+          { app_id = "^chrome-app.slack.com.*"; }
+        ];
+        "8" = [
+          { app_id = "^chrome-mail.google.com.*"; }
+        ];
+        "9" = [
+          { app_id = "^chrome-calendar.google.com.*"; }
+        ];
+        "10" = [
+          { app_id = "^chrome-.*.zoom.us.*"; }
+        ];
+      };
+    };
   };
 }
 

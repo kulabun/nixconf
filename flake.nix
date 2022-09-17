@@ -50,8 +50,7 @@
               secretsRootPath = "${homeDirectory}/secrets";
               programs = {
                 sway.font = {
-                  #name = "JetBrainsMono Nerd Font";
-                  name = "Roboto";
+                  name = "SauceCodePro Nerd Font";
                   size = 9;
                 };
                 foot.font = {
@@ -60,12 +59,13 @@
                 };
                 waybar.font = {
                   #name = "JetBrainsMono Nerd Font";
-                  name = "Roboto";
+                  name = "SauceCodePro Nerd Font";
                   size = 10;
                 };
                 rofi.font = {
-                  # name = "JetBrainsMono Nerd Font";
-                  name = "Robot";
+                  name = "JetBrainsMono Nerd Font";
+                  #name = "SauceCodePro Nerd Font";
+                  #name = "Robot";
                   size = 9;
                 };
                 mako.font = {
@@ -84,6 +84,7 @@
         foot.font.size = 9;
         waybar.font.size = 10;
         rofi.font.size = 10;
+        mako.font.size = 10;
       };
     in {
       #isoImage = (baseSystem {
