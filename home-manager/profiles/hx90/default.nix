@@ -1,12 +1,11 @@
-{ pkgs, ... }: {
+{ config, pkgs, ... }:
+let cfg = config.nixconf.settings;
+in {
   imports = [ ../../modules/default ];
-
   home = {
     enableNixpkgsReleaseCheck = true;
 
-
-    packages = with pkgs; [
-    ];
+    packages = with pkgs; [ ];
 
     file = {
       #".config/ulauncher".source = ~/dotfiles/config/ulauncher;
@@ -19,5 +18,6 @@
     };
   };
 
+  programs = { ssh.includes = [ "${cfg.secretsRootPath}/ssh/config" ]; };
 }
 

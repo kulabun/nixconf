@@ -2,6 +2,13 @@
 
 with lib; {
   options.nixconf.settings = {
+    secretsRootPath = mkOption {
+      type = types.str;
+      readOnly = true;
+      description = ''
+        Path to secrets root
+      '';
+    };
     user = mkOption {
       type = types.str;
       readOnly = true;

@@ -1,4 +1,6 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+let cfg = config.nixconf.settings;
+in {
   imports = [
     ../git
     ../gh
@@ -14,6 +16,8 @@
     ../helix
     ../rofi
     ../navi
+    ../lorri
+    ../qmk
 
     ../sway
     ../waybar
@@ -49,6 +53,13 @@
       _JAVA_AWT_WM_NONREPARENTING = 1;
       XDG_SESSION_TYPE = "wayland";
       GSETTINGS_SCHEMA_DIR = "${pkgs.glib.getSchemaPath pkgs.gtk3}";
+
+      # Secrets storage
+      # TODO: use sops instead
+      SECRETS_STORE = cfg.secretsRootPath;
+
+      # Stores nix host profile name
+      NIX_HOST = cfg.machine;
     };
 
     packages = with pkgs; [

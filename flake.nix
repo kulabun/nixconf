@@ -47,6 +47,7 @@
             config.nixconf.settings = {
               inherit user;
               inherit machine;
+              secretsRootPath = "${homeDirectory}/secrets";
             };
           };
           username = user;
@@ -63,7 +64,7 @@
       nixosConfigurations = {
         hx90 = nixpkgs.lib.nixosSystem {
           inherit system;
-          modules = [ ./nixos/hx90 ];
+          modules = [ ./nixos/profiles/hx90 ];
         };
       };
 

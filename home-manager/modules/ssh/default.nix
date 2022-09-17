@@ -1,9 +1,8 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, ... }: let
+in{
   programs.ssh = {
     enable = true;
     forwardAgent = true;
-    extraConfig = ''
-      Include config.local
-    '';
+    #includes = [ "config.local" ];
   };
 }
