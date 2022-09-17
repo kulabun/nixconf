@@ -16,12 +16,12 @@ in {
       save = 1000000; # lines to save in file
       size = 10000; # lines to keep in memory
       share = false;
-      path = ".zsh_history";
+      path = "$HOME/.zsh_history";
     };
 
     oh-my-zsh = {
       enable = true;
-      plugins = [ "ssh-agent" "sudo" "gradle" "rust" "fzf" "vi-mode" ];
+      plugins = [ "sudo" "gradle" "rust" "fzf" "vi-mode" ];
     };
 
     shellAliases = {
@@ -58,8 +58,8 @@ in {
       d = "docker";
       dps = "d ps";
       dl = "d logs";
-      "4" = "ip -4 -c -o address";
-      "6" = "ip -6 -c -o address";
+      ip4 = "ip -4 -c -o address";
+      ip6 = "ip -6 -c -o address";
       vpn = ''
         (nmcli connection show | grep Indeed > /dev/null && echo "Already connected") || nmcli connection up Indeed --ask'';
       g = "git";
