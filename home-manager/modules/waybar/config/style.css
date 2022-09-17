@@ -50,8 +50,8 @@
 #waybar {
     background: #323232;
     color: white;
-    font-family: SauceCodePro Nerd Font, Noto Sans, sans-serif;
-    font-size: 10px;
+    font-family: @fontName@, Noto Sans, sans-serif;
+    font-size: @fontSize@px;
 }
 
 /* Each module */

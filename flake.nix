@@ -48,11 +48,43 @@
               inherit user;
               inherit machine;
               secretsRootPath = "${homeDirectory}/secrets";
+              programs = {
+                sway.font = {
+                  #name = "JetBrainsMono Nerd Font";
+                  name = "Roboto";
+                  size = 9;
+                };
+                foot.font = {
+                  name = "SauceCodePro Nerd Font";
+                  size = 9;
+                };
+                waybar.font = {
+                  #name = "JetBrainsMono Nerd Font";
+                  name = "Roboto";
+                  size = 10;
+                };
+                rofi.font = {
+                  # name = "JetBrainsMono Nerd Font";
+                  name = "Robot";
+                  size = 9;
+                };
+                mako.font = {
+                  #name = "JetBrainsMono Nerd Font";
+                  name = "Roboto";
+                  size = 9;
+                };
+              };
             };
           };
           username = user;
           homeDirectory = "/home/${username}";
         };
+      fhdFontsConfig = {
+        sway.font.size = 10;
+        foot.font.size = 9;
+        waybar.font.size = 10;
+        rofi.font.size = 10;
+      };
     in {
       #isoImage = (baseSystem {
       #  system = "x86_64-linux";

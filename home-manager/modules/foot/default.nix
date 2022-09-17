@@ -1,13 +1,18 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, ... }: 
+let 
+cfg = config.nixconf.settings;
+font = config.nixconf.settings.programs.foot.font;
+in {
   programs.foot = {
     enable = true;
     # TODO: check why foot started as a service dont have PATH defined. For now it starts from Sway config
     server.enable = true;
     settings = {
       main = {
-        dpi-aware = "yes";
+        # dpi-aware = "yes";
+        dpi-aware = "no";
         term = "xterm-color";
-        font = "SauceCodePro Nerd Font:size=10";
+        font = "${font.name}:size=${toString font.size}";
         notify = "notify-send -a Foot -i foot \${title} \${body}";
       };
       colors = {

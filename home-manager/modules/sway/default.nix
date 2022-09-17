@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, ... }:
+let
+  toFloat = x: x + 0.0;
+  cfg = config.nixconf.settings;
+  font = cfg.programs.sway.font;
+in {
   home.file = { "Pictures/swaybg.png".source = ./pictures/nix.png; };
   wayland.windowManager.sway = {
     enable = true;
@@ -23,8 +28,8 @@
       defaultWorkspace = "workspace 1";
 
       fonts = { # Font usedfor window tiles, navbar, ...
-        names = [ "SauceCodePro Nerd Font" ];
-        size = 8.0;
+        names = [ font.name ];
+        size = toFloat font.size;
       };
 
       gaps = { # Gaps for containters
@@ -47,7 +52,6 @@
         { command = "nm-applet --indicator"; }
         { command = "mako"; }
         { command = "ulauncher --hide-window"; }
-        { command = "mako"; }
       ];
 
       input = { # Input modules: $ man sway-input

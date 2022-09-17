@@ -1,4 +1,8 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, ... }:
+let
+  cfg = config.nixconf.settings;
+  font = cfg.programs.rofi.font;
+in {
   xdg.configFile."networkmanager-dmenu/config.ini".text = ''
     [dmenu]
     dmenu_command = rofi
@@ -8,12 +12,11 @@
     terminal = alacritty
   '';
 
-  home.packages = let
-  in with pkgs; [
-    #todofi-sh
+  home.packages = with pkgs; [
     rofi-wayland-vpn
     networkmanager_dmenu
   ];
+
   programs.rofi = {
     enable = true;
     package = pkgs.rofi-wayland;
@@ -26,9 +29,7 @@
       rofi-power-menu
     ];
     terminal = "foot";
-    #font = "Hack Nerd Font 10";
-    font = "JetBrainsMono Nerd Font 10";
-    #font = " SauceCodePro Nerd Font Mono 10";
+    font = "${font.name} ${toString font.size}";
     extraConfig = {
       modi =
         "drun,run,emoji,ssh,filebrowser,power-menu:${pkgs.rofi-power-menu}/bin/rofi-power-menu";
