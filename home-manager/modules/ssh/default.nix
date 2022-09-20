@@ -3,6 +3,7 @@ in{
   programs.ssh = {
     enable = true;
     forwardAgent = true;
+    matchBlocks."*".identitiesOnly = true;
     #includes = [ "config.local" ];
   };
 }

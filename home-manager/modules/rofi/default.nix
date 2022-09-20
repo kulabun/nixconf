@@ -5,7 +5,7 @@ let
 in {
   xdg.configFile."networkmanager-dmenu/config.ini".text = ''
     [dmenu]
-    dmenu_command = rofi
+    dmenu_command = ${pkgs.rofi-wayland}/bin/rofi
     rofi_highlight = True
     [editor]
     gui_if_available = True
@@ -23,7 +23,6 @@ in {
     #theme = "${pkgs.dracula-rofi-theme}/theme/config2.rasi";
     theme = "Arc-Dark";
     plugins = with pkgs; [
-      rofi-emoji
       rofi-calc
       rofi-file-browser
       rofi-power-menu
@@ -32,8 +31,10 @@ in {
     font = "${font.name} ${toString font.size}";
     extraConfig = {
       modi =
-        "drun,run,emoji,ssh,filebrowser,power-menu:${pkgs.rofi-power-menu}/bin/rofi-power-menu";
+        "drun,run,ssh,filebrowser,power-menu:${pkgs.rofi-power-menu}/bin/rofi-power-menu";
       matching = "fuzzy";
+      sort = true;
+      sorting-method = "fzf";
       show-icons = true;
       disable-history = false;
     };

@@ -102,17 +102,19 @@ in {
         "${mod}+Shift+i" = "exec swaylock"; # TODO: it doesnt work
 
         # Layout control
-        "${mod}+x" = "splith";
+        "${mod}+z" = "splith";
         "${mod}+v" = "splitv";
-        "${mod}+s" = "layout stacking";
-        "${mod}+w" = "layout tabbed";
+        "${mod}+a" = "layout stacking";
+        "${mod}+o" = "layout tabbed";
         "${mod}+e" = "layout default";
         "${mod}+f" = "fullscreen";
         "${mod}+Shift+Space" = "floating toggle";
         "${mod}+Space" = "focus mode_toggle";
-        "${mod}+a" = "focus parent";
-        "${mod}+Shift+a" = "focus child";
-
+        "${mod}+p" = "focus parent";
+        "${mod}+Shift+p" = "focus child";
+        "${mod}+n" = "exec ${pkgs.networkmanager_dmenu}/bin/networkmanager_dmenu";
+        "${mod}+s" = "exec ${pkgs.rofi-wayland}/bin/rofi -show power-menu";
+ 
         # Scratchpad
         "${mod}+Shift+g" = "move scratchpad";
         "${mod}+g" = "scratchpad show";
@@ -158,8 +160,7 @@ in {
         "${mod}+Shift+0" = "move container to workspace 10";
         "Print" = "exec sway-make-screenshot";
 
-        "${mod}+d" = "exec rofi -show drun";
-        "${mod}+p" = "exec foot gopass";
+        "${mod}+d" = "exec ${pkgs.rofi-wayland}/bin/rofi -show drun";
       };
 
       window = {
