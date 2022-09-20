@@ -1,10 +1,14 @@
 { config, pkgs, ... }:
-let cfg = config.nixconf.settings;
+let
+  cfg = config.nixconf.settings;
+  cvm = pkgs.writeShellScriptBin "cvm" (builtins.readFile ./scripts/cvm.sh);
+  gr = pkgs.writeShellScriptBin "gr" (builtins.readFile ./scripts/gr.sh);
+  venv = pkgs.writeShellScriptBin "venv" (builtins.readFile ./scripts/venv.sh);
 in {
   imports = [ ../../modules/default ];
   home = {
     enableNixpkgsReleaseCheck = true;
-    packages = with pkgs; [ consul vault ];
+    packages = with pkgs; [ consul vault cvm gr venv ];
   };
 
   programs = {
@@ -32,6 +36,10 @@ in {
         }
         { path = "~/.gitconfig.local"; }
       ];
+    };
+    zsh.dirHashes = {
+      indeed = "$HOME/indeed";
+      ind = "$HOME/indeed";
     };
   };
 
@@ -68,18 +76,10 @@ in {
 
       assigns = {
         "3" = [{ class = "^jetbrains-idea$"; }];
-        "7" = [
-          { app_id = "^chrome-app.slack.com.*"; }
-        ];
-        "8" = [
-          { app_id = "^chrome-mail.google.com.*"; }
-        ];
-        "9" = [
-          { app_id = "^chrome-calendar.google.com.*"; }
-        ];
-        "10" = [
-          { app_id = "^chrome-.*.zoom.us.*"; }
-        ];
+        "7" = [{ app_id = "^chrome-app.slack.com.*"; }];
+        "8" = [{ app_id = "^chrome-mail.google.com.*"; }];
+        "9" = [{ app_id = "^chrome-calendar.google.com.*"; }];
+        "10" = [{ app_id = "^chrome-.*.zoom.us.*"; }];
       };
     };
   };
