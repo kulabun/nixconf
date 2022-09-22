@@ -1,7 +1,5 @@
 { config, pkgs, lib, ... }: {
-  programs.scmpuff = {
-    enable = true;
-  };
+  programs.scmpuff = { enable = true; };
   programs.git = {
     enable = true;
     lfs.enable = true;

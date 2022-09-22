@@ -30,7 +30,7 @@ in {
 
     markup = true;
     actions = true;
-    format="<b>%s</b>\\n%b";
+    format = "<b>%s</b>\\n%b";
     defaultTimeout = 10000;
     ignoreTimeout = false;
 

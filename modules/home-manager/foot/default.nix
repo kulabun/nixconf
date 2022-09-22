@@ -1,7 +1,7 @@
-{ config, pkgs, lib, ... }: 
-let 
-cfg = config.settings;
-font = cfg.programs.foot.font;
+{ config, pkgs, lib, ... }:
+let
+  cfg = config.settings;
+  font = cfg.programs.foot.font;
 in {
   programs.foot = {
     enable = true;

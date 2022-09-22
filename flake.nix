@@ -94,13 +94,12 @@
           inherit pkgs;
           modules = [
             ./hosts/hx90
-            home-manager.nixosModules.home-manager {
+            home-manager.nixosModules.home-manager
+            {
               home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;
-                users."konstantin" = {
-                  imports = [ ./hosts/hx90/home ];
-                };
+                users."konstantin" = { imports = [ ./hosts/hx90/home ]; };
                 extraSpecialArgs = {
                   inherit system;
                   inherit inputs;

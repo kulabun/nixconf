@@ -7,9 +7,6 @@ in {
   };
   programs.navi = {
     enable = true;
-    settings = {
-      cheats = {
-      };
-    };
+    settings = { cheats = { }; };
   };
 }

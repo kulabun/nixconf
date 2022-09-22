@@ -12,21 +12,14 @@ in {
     terminal = alacritty
   '';
 
-  home.packages = with pkgs; [
-    rofi-wayland-vpn
-    networkmanager_dmenu
-  ];
+  home.packages = with pkgs; [ rofi-wayland-vpn networkmanager_dmenu ];
 
   programs.rofi = {
     enable = true;
     package = pkgs.rofi-wayland;
     #theme = "${pkgs.dracula-rofi-theme}/theme/config2.rasi";
     theme = "Arc-Dark";
-    plugins = with pkgs; [
-      rofi-calc
-      rofi-file-browser
-      rofi-power-menu
-    ];
+    plugins = with pkgs; [ rofi-calc rofi-file-browser rofi-power-menu ];
     terminal = "foot";
     font = "${font.name} ${toString font.size}";
     extraConfig = {

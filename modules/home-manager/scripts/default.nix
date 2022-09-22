@@ -15,7 +15,5 @@ let
   nx = pkgs.writeShellScriptBin "nx" (builtins.readFile ./scripts/nx.sh);
   hm = pkgs.writeShellScriptBin "hm" (builtins.readFile ./scripts/hm.sh);
 in {
-  home = {
-    packages = [ nx hm sway-make-screenshot rofi-gopass pass keys ];
-  };
+  home = { packages = [ nx hm sway-make-screenshot rofi-gopass pass keys ]; };
 }

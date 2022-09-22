@@ -21,7 +21,8 @@
       {
         event = "after-resume";
         # gdm runs on tt7, while sway on different one. after wake up gdm appear ahead of swaylock, I dont want that
-        command = "w | egrep tty[1-9] | sed \"s/.* tty\([1-9]\) .*/\1/g\" | xargs sudo chvt";
+        command = ''
+          w | egrep tty[1-9] | sed "s/.* tty([1-9]) .*/1/g" | xargs sudo chvt'';
       }
     ];
 

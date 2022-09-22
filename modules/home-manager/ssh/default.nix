@@ -1,5 +1,6 @@
-{ config, pkgs, lib, ... }: let
-in{
+{ config, pkgs, lib, ... }:
+let
+in {
   programs.ssh = {
     enable = true;
     forwardAgent = true;
