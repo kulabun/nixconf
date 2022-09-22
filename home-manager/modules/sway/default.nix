@@ -271,7 +271,7 @@ in {
       bindsym --to-code XF86AudioPlay exec 'playerctl play-pause'
       bindsym --to-code XF86AudioForward exec 'playerctl next'
 
-      seat * hide_cursor when-typing enable
+      #seat * hide_cursor when-typing enable
       seat * hide_cursor 5000
     '';
   };

@@ -14,16 +14,16 @@ function cvm() (
 
 	function cvm_init() {
 		local changed=false
-		[ -z "$LOCAL_ROOT" ] && read -r -p "${bold}Path to indeed folder on your laptop [$DEFAULT_LOCAL_ROOT]:${normal} " && changed=true
+		[ -z "$LOCAL_ROOT" ] && read -r -p "${bold}Path to indeed folder on your laptop [$DEFAULT_LOCAL_ROOT]:${normal} " LOCAL_ROOT && changed=true
 		[ -z "$LOCAL_ROOT" ] && LOCAL_ROOT=$DEFAULT_LOCAL_ROOT
 
-		[ -z "$REMOTE_HOST" ] && read -r -p "${bold}Your cvm hostname [$DEFAULT_REMOTE_HOST]: ${normal}" && changed=true
+		[ -z "$REMOTE_HOST" ] && read -r -p "${bold}Your cvm hostname [$DEFAULT_REMOTE_HOST]: ${normal}" REMOTE_HOST && changed=true
 		[ -z "$REMOTE_HOST" ] && REMOTE_HOST=$DEFAULT_REMOTE_HOST
 
-		[ -z "$REMOTE_USER" ] && read -r -p "${bold}Your user name on $REMOTE_HOST [$DEFAULT_REMOTE_USER]: ${normal}" && changed=true
+		[ -z "$REMOTE_USER" ] && read -r -p "${bold}Your user name on $REMOTE_HOST [$DEFAULT_REMOTE_USER]: ${normal}" REMOTE_USER && changed=true
 		[ -z "$REMOTE_USER" ] && REMOTE_USER=$DEFAULT_REMOTE_USER
 
-		[ -z "$REMOTE_ROOT" ] && read -r -p "${bold}Path to indeed folder on $REMOTE_HOST [$DEFAULT_REMOTE_ROOT]: ${normal}" && changed=true
+		[ -z "$REMOTE_ROOT" ] && read -r -p "${bold}Path to indeed folder on $REMOTE_HOST [$DEFAULT_REMOTE_ROOT]: ${normal}" REMOTE_ROOT && changed=true
 		[ -z "$REMOTE_ROOT" ] && REMOTE_ROOT=$DEFAULT_REMOTE_ROOT
 
 		if $changed; then
