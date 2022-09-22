@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 
-let cfg = config.nixconf.settings;
+let cfg = config.settings;
 in {
   programs.zsh = {
     enable = true;
@@ -8,20 +8,43 @@ in {
     enableCompletion = true;
     enableSyntaxHighlighting = true;
     autocd = true;
-    plugins = [ ];
+    plugins = [
+      {
+        name = "fzf-tab";
+        src = "${pkgs.zsh-fzf-tab}/share/fzf-tab";
+      }
+      {
+        name = "fast-syntax-highlighting";
+        src = "${pkgs.zsh-fast-syntax-highlighting}/share/zsh/site-functions";
+      }
+      {
+        name = "you-should-use";
+        src = "${pkgs.zsh-you-should-use}/share/zsh/plugins/you-should-use";
+      }
+    ];
 
     history = {
       extended = true;
       ignoreDups = true;
       save = 1000000; # lines to save in file
       size = 10000; # lines to keep in memory
-      share = false;
+      #share = false;
       path = "$HOME/.zsh_history";
     };
 
     oh-my-zsh = {
       enable = true;
-      plugins = [ "sudo" "gradle" "rust" "fzf" "vi-mode" "ssh-agent" ];
+      plugins = [
+        "sudo"
+        "gradle"
+        "rust"
+        "fzf"
+        "vi-mode"
+        "ssh-agent"
+        "taskwarrior"
+        "terraform"
+        "tmux"
+      ];
       extraConfig = ''
         zstyle :omz:plugins:ssh-agent lazy yes
       '';
@@ -107,7 +130,7 @@ in {
         # https://wiki.archlinux.org/title/Sway#Automatically_on_TTY_login
         # Disabled as managing sway from homemanager turned out to be a bad idea.
         # Remove slash before dollar sign to start using it.
-        \${pkgs.systemd}/bin/systemd-cat --identifier=sway \${pkgs.sway}/bin/sway
+        systemd-cat --identifier=sway sway
       fi
 
       if [ -f "$HOME/.zprofile.local" ]; then
@@ -116,10 +139,25 @@ in {
     '';
 
     initExtra = ''
+      #NIX_PROFILES=${config.home.profileDirectory}
       if [ -f "$HOME/.zshrc.local" ]; then
         source "$HOME/.zshrc.local"
       fi
 
+      function bind() { 
+        bindkey -M vicmd "$1" "$2" > /dev/null
+        bindkey -M viins "$1" "$2" > /dev/null
+      }
+
+      function unbind() { 
+        bindkey -rM vicmd "$1" > /dev/null
+        bindkey -rM viins "$1" > /dev/null
+      }
+
+      unbind '^[^['
+      bind '^S' sudo-command-line
+
+      export FZF_COMPLETION_TRIGGER="*"
       ############################################################
       # ZShell Configuration
       ###########################################################

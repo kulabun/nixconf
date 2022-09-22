@@ -44,11 +44,12 @@
           };
           configuration = { config, pkgs, lib, ... }: {
             imports = [ ./options/settings ./home-manager/profiles/${machine} ];
-            config.nixconf.settings = {
+            # TODO: use simple path
+            config.settings = {
               inherit user;
               inherit machine;
               secretsRootPath = "${homeDirectory}/secrets";
-              programs = {
+              theme = {
                 sway.font = {
                   name = "SauceCodePro Nerd Font";
                   size = 9;
@@ -79,13 +80,6 @@
           username = user;
           homeDirectory = "/home/${username}";
         };
-      fhdFontsConfig = {
-        sway.font.size = 10;
-        foot.font.size = 9;
-        waybar.font.size = 10;
-        rofi.font.size = 10;
-        mako.font.size = 10;
-      };
     in {
       #isoImage = (baseSystem {
       #  system = "x86_64-linux";
@@ -97,15 +91,31 @@
       nixosConfigurations = {
         hx90 = nixpkgs.lib.nixosSystem {
           inherit system;
-          modules = [ ./nixos/profiles/hx90 ];
+          inherit pkgs;
+          modules = [
+            ./hosts/hx90
+            home-manager.nixosModules.home-manager {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users."konstantin" = {
+                  imports = [ ./hosts/hx90/home ];
+                };
+                extraSpecialArgs = {
+                  inherit system;
+                  inherit inputs;
+                };
+              };
+            }
+          ];
         };
       };
 
       homeConfigurations = {
-        hx90 = homeConfig {
-          user = "konstantin";
-          machine = "hx90";
-        };
+        # hx90 = homeConfig {
+        #   user = "konstantin";
+        #   machine = "hx90";
+        # };
         dell5560 = homeConfig {
           user = "klabun";
           machine = "dell5560";

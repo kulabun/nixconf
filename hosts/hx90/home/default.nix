@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
-let cfg = config.nixconf.settings;
+let cfg = config.settings;
 in {
-  imports = [ ../../modules/default ];
+  imports = [ ../../../options ../../../modules/home-manager/default ];
   home = {
     enableNixpkgsReleaseCheck = true;
 

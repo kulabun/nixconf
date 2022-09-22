@@ -40,7 +40,7 @@ CONFIG
 		[[ ! "$PWD" =~ "$LOCAL_ROOT/".* ]] && return 1
 		REMOTE_PATH=$(echo "$PWD" | sed "s#$LOCAL_ROOT#$REMOTE_ROOT#g")
 		echo "Synchronizing $PWD to $REMOTE_USER@$REMOTE_HOST:$REMOTE_PATH"
-		rsync -aP --delete --exclude build/ --exclude node_modules/ --exclude .gradle/ "$PWD/." $USER@$REMOTE_HOST:$REMOTE_PATH
+		rsync -aP --delete --exclude build/ --exclude node_modules/ --exclude .gradle/ "$PWD/." $REMOTE_USER@$REMOTE_HOST:$REMOTE_PATH
 	}
 
 	function cvm_connect() {

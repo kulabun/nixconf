@@ -1,120 +1,36 @@
 { pkgs, config, lib, ... }:
 
 with lib; {
-  options.nixconf.settings = {
-    secretsRootPath = mkOption {
-      type = types.str;
-      readOnly = true;
-      description = ''
-        Path to secrets root
-      '';
+  options.settings = let
+    strOption = description:
+      mkOption {
+        inherit description;
+        type = types.str;
+        readOnly = true;
+      };
+    intOption = description:
+      mkOption {
+        inherit description;
+        type = types.int;
+        readOnly = true;
+      };
+    font = {
+      name = strOption "The font name";
+      size = intOption "The font size";
     };
+  in rec {
+    secretsRootPath = strOption "Root path for secrets";
+    user = strOption "The user name";
+    machine = strOption "The machine(host) name";
 
-    user = mkOption {
-      type = types.str;
-      readOnly = true;
-      description = ''
-        The user name
-      '';
-    };
-    
-    machine = mkOption {
-      type = types.str;
-      readOnly = true;
-      description = ''
-        The machine name
-      '';
-    };
+    theme = { inherit font; };
 
     programs = {
-      foot.font = {
-        name = mkOption {
-          type = types.str;
-          readOnly = true;
-          description = ''
-            The font name
-          '';
-        };
-        size = mkOption {
-          type = types.int;
-          readOnly = true;
-          description = ''
-            The font size
-          '';
-        };
-      };
-
-      waybar.font = {
-        name = mkOption {
-          type = types.str;
-          readOnly = true;
-          description = ''
-            The font name
-          '';
-        };
-
-        size = mkOption {
-          type = types.int;
-          readOnly = true;
-          description = ''
-            The font size
-          '';
-        };
-      };
-
-      sway.font = {
-        name = mkOption {
-          type = types.str;
-          readOnly = true;
-          description = ''
-            The font name
-          '';
-        };
-
-        size = mkOption {
-          type = types.int;
-          readOnly = true;
-          description = ''
-            The font size
-          '';
-        };
-      };
-
-      rofi.font = {
-        name = mkOption {
-          type = types.str;
-          readOnly = true;
-          description = ''
-            The font name
-          '';
-        };
-
-        size = mkOption {
-          type = types.int;
-          readOnly = true;
-          description = ''
-            The font size
-          '';
-        };
-      };
-
-      mako.font = {
-        name = mkOption {
-          type = types.str;
-          readOnly = true;
-          description = ''
-            The font name
-          '';
-        };
-
-        size = mkOption {
-          type = types.int;
-          readOnly = true;
-          description = ''
-            The font size
-          '';
-        };
-      };
+      foot = { inherit font; };
+      waybar = { inherit font; };
+      sway = { inherit font; };
+      rofi = { inherit font; };
+      mako = { inherit font; };
     };
   };
 }

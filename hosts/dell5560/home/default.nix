@@ -5,7 +5,7 @@ let
   gr = pkgs.writeShellScriptBin "gr" (builtins.readFile ./scripts/gr.sh);
   venv = pkgs.writeShellScriptBin "venv" (builtins.readFile ./scripts/venv.sh);
 in {
-  imports = [ ../../modules/default ];
+  imports = [ ../../../modules/nixos/default ];
   home = {
     enableNixpkgsReleaseCheck = true;
     packages = with pkgs; [ consul vault cvm gr venv ];

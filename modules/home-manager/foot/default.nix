@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }: 
 let 
-cfg = config.nixconf.settings;
-font = config.nixconf.settings.programs.foot.font;
+cfg = config.settings;
+font = cfg.programs.foot.font;
 in {
   programs.foot = {
     enable = true;

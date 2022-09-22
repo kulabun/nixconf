@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 let
   toFloat = x: x + 0.0;
-  cfg = config.nixconf.settings;
+  cfg = config.settings;
   font = cfg.programs.sway.font;
 in {
   home.file = { "Pictures/swaybg.png".source = ./pictures/nix.png; };

@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 let
-  cfg = config.nixconf.settings;
+  cfg = config.settings;
   font = cfg.programs.waybar.font;
 in {
   xdg.configFile = {

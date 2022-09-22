@@ -6,7 +6,7 @@
 
 {
   imports = [ # Include the results of the hardware scan.
-    ../../modules/kint-keyboard
+    ../../modules/nixos/default
 
     ./hardware-configuration.nix
     ./sway.nix

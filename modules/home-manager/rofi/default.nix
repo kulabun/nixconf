@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 let
-  cfg = config.nixconf.settings;
+  cfg = config.settings;
   font = cfg.programs.rofi.font;
 in {
   xdg.configFile."networkmanager-dmenu/config.ini".text = ''

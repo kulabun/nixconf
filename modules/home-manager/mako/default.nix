@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
 let
-  cfg = config.nixconf.settings;
+  cfg = config.settings;
   font = cfg.programs.mako.font;
   dummy-package = pkgs.runCommandLocal "dummy-package" { } "mkdir $out";
 in {
