@@ -123,6 +123,10 @@
     #  wget
   ];
 
+  # Auto-completion wouldn't work if Zsh is enabled only in home-manager.
+  # See https://github.com/nix-community/home-manager/issues/2562
+  programs.zsh.enable = true;
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;

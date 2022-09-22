@@ -15,6 +15,10 @@ build)
 	sudo nixos-rebuild build --flake "/home/$USER/nixconf#$NIX_HOST"
 	;;
 
+switch)
+	sudo nixos-rebuild switch --flake "/home/$USER/nixconf#$NIX_HOST"
+	;;
+
 clean)
 	sudo nix-collect-garbage -d
 	;;
