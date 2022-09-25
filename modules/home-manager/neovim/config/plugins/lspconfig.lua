@@ -16,7 +16,6 @@ local servers = {
 
   "jsonls",
   "yamlls",
-  "remark_ls",
 }
 
 for _, lsp in ipairs(servers) do

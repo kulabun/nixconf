@@ -1,14 +1,14 @@
 { config, pkgs, ... }:
 let
-  cfg = config.nixconf.settings;
+  cfg = config.settings;
   cvm = pkgs.writeShellScriptBin "cvm" (builtins.readFile ./scripts/cvm.sh);
   gr = pkgs.writeShellScriptBin "gr" (builtins.readFile ./scripts/gr.sh);
   venv = pkgs.writeShellScriptBin "venv" (builtins.readFile ./scripts/venv.sh);
 in {
-  imports = [ ../../../modules/nixos/default ];
+  imports = [ ../../../options ../../../modules/home-manager/default ];
   home = {
     enableNixpkgsReleaseCheck = true;
-    packages = with pkgs; [ consul vault cvm gr venv ];
+    packages = with pkgs; [ consul vault gcc cvm gr venv ];
   };
 
   programs = {

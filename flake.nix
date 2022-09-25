@@ -43,39 +43,7 @@
             inherit inputs;
           };
           configuration = { config, pkgs, lib, ... }: {
-            imports = [ ./options/settings ./home-manager/profiles/${machine} ];
-            # TODO: use simple path
-            config.settings = {
-              inherit user;
-              inherit machine;
-              secretsRootPath = "${homeDirectory}/secrets";
-              theme = {
-                sway.font = {
-                  name = "SauceCodePro Nerd Font";
-                  size = 9;
-                };
-                foot.font = {
-                  name = "SauceCodePro Nerd Font";
-                  size = 9;
-                };
-                waybar.font = {
-                  #name = "JetBrainsMono Nerd Font";
-                  name = "SauceCodePro Nerd Font";
-                  size = 10;
-                };
-                rofi.font = {
-                  name = "JetBrainsMono Nerd Font";
-                  #name = "SauceCodePro Nerd Font";
-                  #name = "Robot";
-                  size = 9;
-                };
-                mako.font = {
-                  #name = "JetBrainsMono Nerd Font";
-                  name = "Roboto";
-                  size = 9;
-                };
-              };
-            };
+            imports = [ ./hosts/${machine} ];
           };
           username = user;
           homeDirectory = "/home/${username}";
