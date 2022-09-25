@@ -9,6 +9,7 @@ in {
     ../ssh
     ../xdg
     ../zsh
+    #../fish
     ../fonts
     ../neovim
     ../scripts

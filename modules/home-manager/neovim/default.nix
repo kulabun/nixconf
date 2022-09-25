@@ -4,8 +4,8 @@
       source = pkgs.fetchFromGitHub {
         owner = "NvChad";
         repo = "NvChad";
-        rev = "b34328fb41be11f0ea56a1751e84020ef99ee608";
-        sha256 = "0hfa2g1jp6b14m59dx5xvs555mbhpvg5nf5mg7vaing9c7cvfxy2";
+        rev = "27560319cc4cf753e5a4d8713f82206d84a70d61";
+        sha256 = "0aw41nm81897k444k7v4pxd0x390532vm1n3b82gdxqag7hvywg7";
       };
       recursive = true;
     };
@@ -51,7 +51,7 @@
       });
     in with pkgs; [
       neovim
-      #tree-sitter
+      tree-sitter
       nodejs
 
       # Python support

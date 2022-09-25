@@ -55,7 +55,7 @@ in {
       l = "ls -l";
       la = "ls -a";
       lla = "ls -la";
-      cat = "bat --color always --plain";
+      cat = "bat";
       grep = "grep --color=auto";
       vim = "nvim";
       vi = "vim";
