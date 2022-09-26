@@ -51,10 +51,9 @@ in {
     };
 
     shellAliases = {
-      ls = "exa --color=auto --icons";
-      l = "ls -l";
-      la = "ls -a";
-      lla = "ls -la";
+      ls = "exa --color=auto";
+      l = "ls -lh --icons";
+      ll = "l -a";
       cat = "bat";
       grep = "grep --color=auto";
       vim = "nvim";
@@ -76,10 +75,6 @@ in {
       ezh = "$EDITOR ~/.zshrc && source ~/.zshrc";
       outputs = "swaymsg -t get_outputs";
       inputs = "swaymsg -t get_inputs";
-      hme = "hm edit";
-      hms = "hm switch";
-      hmu = "hm update";
-      hmes = "hme && hms";
       share = "python3 -m http.server 9000";
       d = "docker";
       dps = "d ps";
@@ -96,6 +91,7 @@ in {
       update = "nx update && hm update";
       tz = "tz US/Pacific US/Central Europe/Moscow";
       n = "navi";
+      pr = "f(){local project=$(ls $HOME/projects | fzf); [ -n \"$project\" ] && cd \"$HOME/projects/$project\"};f;unset -f f";
 
       ".." = "cd ..";
       "~" = "cd ~";
@@ -123,6 +119,7 @@ in {
       nix = "$HOME/nixconf/";
       scripts = "$HOME/nixconf/home-manager/mondules/scripts";
       sway = "$HOME/nixconf/home-manager/mondules/sway";
+      navi = "$HOME/nixconf/home-manager/mondules/navi";
     };
 
     profileExtra = ''
@@ -144,14 +141,17 @@ in {
         source "$HOME/.zshrc.local"
       fi
 
-      function bind() { 
-        bindkey -M vicmd "$1" "$2" > /dev/null
-        bindkey -M viins "$1" "$2" > /dev/null
+      function unbind() { 
+        if bindkey "$1" > /dev/null; then
+          bindkey -rM vicmd "$1" > /dev/null
+          bindkey -rM viins "$1" > /dev/null
+        fi
       }
 
-      function unbind() { 
-        bindkey -rM vicmd "$1" > /dev/null
-        bindkey -rM viins "$1" > /dev/null
+      function bind() { 
+        unbind $1
+        bindkey -M vicmd "$1" "$2" > /dev/null
+        bindkey -M viins "$1" "$2" > /dev/null
       }
 
       unbind '^[^['
@@ -161,7 +161,7 @@ in {
       ############################################################
       # ZShell Configuration
       ###########################################################
-      export SUDO_PROMPT="$(tput bold)$(tput setaf 1)[sudo] $(tput setaf 7)password for $(tput setaf 6)$USER$(tput setaf 7):$(tput sgr0)"
+      export SUDO_PROMPT="$(tput bold)$(tput setaf 1)[sudo] $(tput setaf 7)password for $(tput setaf 6)$USER$(tput setaf 7):$(tput sgr0) "
       export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#6f6f6f"
       export FZF_DEFAULT_OPTS='--color=fg:#f8f8f2,hl:#bd93f9 --color=fg+:#f8f8f2,hl+:#bd93f9 --color=info:#ffb86c,prompt:#50fa7b,pointer:#ff79c6 --color=marker:#ff79c6,spinner:#ffb86c,header:#6272a4'
       export EDITOR=nvim

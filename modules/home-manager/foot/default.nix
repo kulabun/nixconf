@@ -44,6 +44,11 @@ in {
       key-bindings = {
         clipboard-copy = "Control+c";
         clipboard-paste = "Control+v";
+        search-start = "Control+f";
+      };
+      search-bindings = {
+        find-next = "Control+n";
+        find-prev = "Control+p";
       };
     };
   };

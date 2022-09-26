@@ -20,6 +20,7 @@ in {
     ../lorri
     ../qmk
     ../taskwarrior
+    ../rclone
 
     ../sway
     ../waybar
