@@ -1,41 +1,60 @@
 #!/usr/bin/env bash
 
-cmd="$1"
-case $cmd in
-update)
-	nix flake update --commit-lock-file "/home/$USER/nixconf" --extra-experimental-features "nix-command flakes"
-	sudo nixos-rebuild boot --flake "/home/$USER/nixconf#$NIX_HOST"
-	;;
+function nx() {
+	function is_nixos() {
+		$(command -v nixos-rebuild >/dev/null)
+	}
 
-boot)
-	sudo nixos-rebuild boot --flake "/home/$USER/nixconf#$NIX_HOST"
-	;;
+	function has_home-manager() {
+		$(command -v home-manager >/dev/null)
+	}
 
-build)
-	sudo nixos-rebuild build --flake "/home/$USER/nixconf#$NIX_HOST"
-	;;
+	function nix() {
+		cmd="$1"
+		is_nixos && sudo nixos-rebuild $cmd --flake "/home/$USER/nixconf#$NIX_HOST"
+		has_home-manager && home-manager $cmd --flake "/home/$USER/nixconf#$NIX_HOST"
+	}
 
-switch)
-	sudo nixos-rebuild switch --flake "/home/$USER/nixconf#$NIX_HOST"
-	;;
+	cmd="$1"
+	case $cmd in
+	update)
+		nix switch
+		;;
 
-clean)
-	sudo nix-collect-garbage -d
-	;;
+	upgrade)
+		nix flake update --commit-lock-file "/home/$USER/nixconf" --extra-experimental-features "nix-command flakes"
+		nix switch
+		;;
 
-index)
-	nix-index
-	;;
+	boot)
+		is_nixos && sudo nixos-rebuild boot --flake "/home/$USER/nixconf#$NIX_HOST"
+		;;
 
-locate)
-	nix-locate
-	;;
+	build)
+		nix build
+		;;
 
-edit)
-	fd . "/home/$USER/nixconf" | fzf | xargs -L1 "$EDITOR"
-	;;
+	clean)
+		is_nixos && sudo nix-collect-garbage -d
+		has_home-manager && nix-collect-garbage -d
+		;;
 
-*)
-	echo "$cmd is not a known command"
-	;;
-esac
+	index)
+		nix-index
+		;;
+
+	locate)
+		nix-locate
+		;;
+
+	edit)
+		fd . "/home/$USER/nixconf" | fzf | xargs -L1 "$EDITOR"
+		;;
+
+	*)
+		echo "$cmd is not a known command"
+		;;
+	esac
+}
+
+nx "$@"
