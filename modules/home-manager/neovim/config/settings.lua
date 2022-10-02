@@ -16,4 +16,4 @@ vim.g.luasnippets_path = "~/.config/nvim/lua/custom/snippets"
 
 vim.g.mapleader = "t"
 
-opt.whichwrap = "<,>,[,]"
+opt.whichwrap = "<,>"

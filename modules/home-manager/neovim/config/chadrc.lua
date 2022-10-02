@@ -7,9 +7,14 @@ M.ui = {
 M.mappings = require("custom.mappings")
 
 M.plugins = {
+	remove = {
+		"windwp/nvim-autopairs",
+		"williamboman/mason.nvim",
+		"williamboman/nvim-lsp-installer",
+	},
 	override = {
 		["nvim-treesitter/nvim-treesitter"] = require("custom.plugins.treesitter"),
-		["williamboman/mason.nvim"] = require("custom.plugins.mason"),
+		-- ["williamboman/mason.nvim"] = require("custom.plugins.mason"),
 	},
 	user = {
 		["simrat39/rust-tools.nvim"] = require("custom.plugins.rust-tools"),

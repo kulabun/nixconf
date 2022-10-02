@@ -19,16 +19,16 @@ M.telescope = {
 	},
 }
 
-M.hop = {
-	n = {
-		["f"] = { "<cmd>lua require'hop'.hint_words({})<cr>" },
-		["F"] = { "<cmd>lua require'hop'.hint_char1({})<cr>" },
-	},
-	v = {
-		["f"] = { "<cmd>lua require'hop'.hint_words({})<cr>" },
-		["F"] = { "<cmd>lua require'hop'.hint_char1({})<cr>" },
-	},
-}
+-- M.hop = {
+-- 	n = {
+-- 		["f"] = { "<cmd>lua require'hop'.hint_words({})<cr>" },
+-- 		["F"] = { "<cmd>lua require'hop'.hint_char1({})<cr>" },
+-- 	},
+-- 	v = {
+-- 		["f"] = { "<cmd>lua require'hop'.hint_words({})<cr>" },
+-- 		["F"] = { "<cmd>lua require'hop'.hint_char1({})<cr>" },
+-- 	},
+-- }
 
 M.null_ls = {
 	n = {
