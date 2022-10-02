@@ -1,5 +1,9 @@
-{ config, pkgs, ... }:
-let cfg = config.settings;
+{
+  config,
+  pkgs,
+  ...
+}: let
+  cfg = config.settings;
 in {
   imports = [
     ../git
@@ -21,6 +25,9 @@ in {
     ../qmk
     ../taskwarrior
     ../rclone
+    ../flameshot
+    ../btop
+    ../tig
 
     ../sway
     ../waybar
@@ -46,7 +53,7 @@ in {
   };
 
   home = {
-    sessionPath = [ "$HOME/.local/bin" "$HOME/bin" ];
+    sessionPath = ["$HOME/.local/bin" "$HOME/bin"];
     sessionVariables = {
       PAGER = "less -R";
       TIME_STYLE = "long-iso"; # for core-utils
@@ -118,4 +125,3 @@ in {
     playerctld.enable = true;
   };
 }
-
