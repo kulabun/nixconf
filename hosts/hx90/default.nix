@@ -103,7 +103,7 @@
   users.users.konstantin = {
     isNormalUser = true;
     description = "Konstantin";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
     packages = with pkgs; [
       usbutils # lsusb
@@ -132,6 +132,8 @@
   # Auto-completion wouldn't work if Zsh is enabled only in home-manager.
   # See https://github.com/nix-community/home-manager/issues/2562
   programs.zsh.enable = true;
+
+  virtualisation.docker.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
