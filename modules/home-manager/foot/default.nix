@@ -44,7 +44,7 @@ in {
       key-bindings = {
         clipboard-copy = "Control+c";
         clipboard-paste = "Control+v";
-        search-start = "Control+f";
+        search-start = "Control+Shift+f";
       };
       search-bindings = {
         find-next = "Control+n";
