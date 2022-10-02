@@ -1,4 +1,11 @@
-{ inputs, system, config, pkgs, lib, ... }: {
+{
+  inputs,
+  system,
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   xdg.configFile = {
     "nvim" = {
       source = pkgs.fetchFromGitHub {
@@ -16,13 +23,13 @@
   };
 
   home = {
-    sessionVariables = {
-      EDITOR = "nvim";
-      VISUAL = "nvim";
-    };
+    # sessionVariables = {
+    #   EDITOR = "nvim";
+    #   VISUAL = "nvim";
+    # };
 
     packages = let
-      # my-rustc = pkgs.rustc.overrideAttrs (attrs: { 
+      # my-rustc = pkgs.rustc.overrideAttrs (attrs: {
       #   postInstall = ''
       #     RUST_SRC_PATH=$out/lib/rustlib/src/rust
       #     mkdir -p $(dirname $RUST_SRC_PATH)
@@ -37,64 +44,28 @@
       #   '';
       # });
       my-rust = pkgs.rust-bin.stable.latest.default.override {
-        extensions = [ "rust-src" ];
-        targets = [ "x86_64-unknown-linux-gnu" ];
+        extensions = ["rust-src"];
+        targets = ["x86_64-unknown-linux-gnu"];
       };
-      my-rust-analyzer = (pkgs.symlinkJoin {
+      my-rust-analyzer = pkgs.symlinkJoin {
         name = "rust-analyzer";
-        paths = [ inputs.nixpkgs.legacyPackages.${system}.rust-analyzer ];
-        buildInputs = [ pkgs.makeWrapper ];
+        paths = [inputs.nixpkgs.legacyPackages.${system}.rust-analyzer];
+        buildInputs = [pkgs.makeWrapper];
         postBuild = ''
           wrapProgram $out/bin/rust-analyzer \
             --set-default "RUST_SRC_PATH" "${my-rust}"
         '';
-      });
-    in with pkgs; [
-      neovim
-      tree-sitter
-      nodejs
+      };
+    in
+      with pkgs; [
+        neovim
+        tree-sitter
 
-      # Python support
-      nodePackages.pyright
-      python3
-
-      # Java support
-      # openjdk17
-      # jdt-language-server
-
-      # Lua support
-      sumneko-lua-language-server
-      stylua
-      luajit
-      luajitPackages.luacheck
-
-      # Nix support
-      #nixpkgs-fmt
-      nixfmt
-      rnix-lsp
-
-      # Rust support 
-      # rustup
-      my-rust
-      my-rust-analyzer
-      #cargo
-      #rustfmt
-      #clippy # rust-linting
-      # my-rust
-      # my-rust-analyzer
-      taplo-lsp # toml support
-
-      # Shell support
-      nodePackages.bash-language-server
-      shfmt
-      shellcheck
-
-      # JSON support
-      nodePackages.vscode-json-languageserver
-      jq
-
-      # YAML support
-      nodePackages.yaml-language-server
-    ];
+        # Lua support
+        sumneko-lua-language-server
+        stylua
+        luajit
+        luajitPackages.luacheck
+      ];
   };
 }
