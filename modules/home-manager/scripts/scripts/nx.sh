@@ -2,17 +2,17 @@
 
 function nx() {
 	function is_nixos() {
-		$(command -v nixos-rebuild >/dev/null)
+		command -v nixos-rebuild >/dev/null
 	}
 
 	function has_home-manager() {
-		$(command -v home-manager >/dev/null)
+		command -v home-manager >/dev/null
 	}
 
 	function nix() {
 		cmd="$1"
-		is_nixos && sudo nixos-rebuild $cmd --flake "/home/$USER/nixconf#$NIX_HOST"
-		has_home-manager && home-manager $cmd --flake "/home/$USER/nixconf#$NIX_HOST"
+		is_nixos && sudo nixos-rebuild "$cmd" --flake "/home/$USER/nixconf#$NIX_HOST"
+		has_home-manager && home-manager "$cmd" --flake "/home/$USER/nixconf#$NIX_HOST"
 	}
 
 	cmd="$1"

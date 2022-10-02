@@ -58,7 +58,7 @@ in {
       grep = "grep --color=auto";
       vim = "nvim";
       vi = "vim";
-      v = "vi";
+      e = "$EDITOR";
       j = "journalctl --full -e";
       jt = "j -t";
       py = "python3";
@@ -88,7 +88,7 @@ in {
       chrome = "google-chrome-stable";
       ff = "firefox";
       xev = "wev";
-      update = "nx update && hm update";
+      nxu = "nx update";
       tz = "tz US/Pacific US/Central Europe/Moscow";
       n = "navi";
       pr = "f(){local project=$(ls $HOME/projects | fzf); [ -n \"$project\" ] && cd \"$HOME/projects/$project\"};f;unset -f f";
@@ -164,7 +164,6 @@ in {
       export SUDO_PROMPT="$(tput bold)$(tput setaf 1)[sudo] $(tput setaf 7)password for $(tput setaf 6)$USER$(tput setaf 7):$(tput sgr0) "
       export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#6f6f6f"
       export FZF_DEFAULT_OPTS='--color=fg:#f8f8f2,hl:#bd93f9 --color=fg+:#f8f8f2,hl+:#bd93f9 --color=info:#ffb86c,prompt:#50fa7b,pointer:#ff79c6 --color=marker:#ff79c6,spinner:#ffb86c,header:#6272a4'
-      export EDITOR=nvim
       # Don't use xterm-256color https://github.com/NvChad/NvChad/issues/926#issuecomment-1108220606
       export TERM=xterm-color
       if [ -z "$NIX_PATH" ]; then
