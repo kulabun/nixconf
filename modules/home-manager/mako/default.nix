@@ -1,52 +1,67 @@
-{ config, pkgs, lib, ... }:
-let
-  cfg = config.settings;
-  font = cfg.programs.mako.font;
-  dummy-package = pkgs.runCommandLocal "dummy-package" { } "mkdir $out";
-in {
-  # xdg.configFile."mako/config".source = pkgs.substituteAll {
-  #   src = ./config/config;
-  #   fontName = font.name;
-  #   fontSize = font.size;
-  # };
-  programs.mako = {
-    enable = true;
-    package = dummy-package // { outPath = "@mako@"; };
-    sort = "-time";
-    maxVisible = 10;
-    layer = "overlay";
-    anchor = "top-right";
-    font = "${font.name} ${toString font.size}";
+{
+  config,
+  pkgs,
+  lib,
+  mylib,
+  ...
+}: let
+  font = config.settings.mako.font;
+  dummy-package = pkgs.runCommandLocal "dummy-package" {} "mkdir $out";
+in
+  with lib;
+  with mylib; {
+    options = {
+      settings.mako = {
+        enable = mylib.mkEnableOpt "mako";
+        font = mylib.mkFontOpt "mako";
+      };
+    };
 
-    backgroundColor = "#282a36";
-    textColor = "#cccccc";
-    width = 300;
-    height = 100;
-    margin = "20";
-    padding = "20";
-    progressColor = "over #5588AAFF";
-    icons = false;
-    maxIconSize = 64;
+    config = mkIf config.settings.mako.enable {
+      # xdg.configFile."mako/config".source = pkgs.substituteAll {
+      #   src = ./config/config;
+      #   fontName = font.name;
+      #   fontSize = font.size;
+      # };
+      programs.mako = {
+        enable = true;
+        package = dummy-package // {outPath = "@mako@";};
+        sort = "-time";
+        maxVisible = 10;
+        layer = "overlay";
+        anchor = "top-right";
+        font = "${font.name} ${toString font.size}";
 
-    markup = true;
-    actions = true;
-    format = "<b>%s</b>\\n%b";
-    defaultTimeout = 10000;
-    ignoreTimeout = false;
+        backgroundColor = "#282a36";
+        textColor = "#cccccc";
+        width = 300;
+        height = 100;
+        margin = "20";
+        padding = "20";
+        progressColor = "over #5588AAFF";
+        icons = false;
+        maxIconSize = 64;
 
-    borderRadius = 5;
-    borderSize = 1;
-    borderColor = "#f1fa8c";
+        markup = true;
+        actions = true;
+        format = "<b>%s</b>\\n%b";
+        defaultTimeout = 10000;
+        ignoreTimeout = false;
 
-    extraConfig = ''
-      [urgency=low]
-      border-color=#f1fa8c
+        borderRadius = 5;
+        borderSize = 1;
+        borderColor = "#f1fa8c";
 
-      [urgency=normal]
-      border-color=#f1fa8c
+        extraConfig = ''
+          [urgency=low]
+          border-color=#f1fa8c
 
-      [urgency=high]
-      border-color=#ff5555
-    '';
-  };
-}
+          [urgency=normal]
+          border-color=#f1fa8c
+
+          [urgency=high]
+          border-color=#ff5555
+        '';
+      };
+    };
+  }

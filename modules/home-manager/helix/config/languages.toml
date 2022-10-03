@@ -1,0 +1,17 @@
+[[language]]
+auto-format = true
+name = "nix"
+
+[language.formatter]
+args = ["--quiet"]
+command = "/nix/store/hbab0sz8vrw3i352vvvyzni0skbpc1dm-alejandra-1.4.0/bin/alejandra"
+
+[[language]]
+file-types = ["html", "tmpl"]
+name = "html"
+
+[[language]]
+name = "toml"
+
+[language.language-server]
+command = "/nix/store/hxbwijhszvxr2g1bihw72f4i3id1sbhp-taplo-lsp-0.2.6/bin/taplo"

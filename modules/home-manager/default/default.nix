@@ -6,28 +6,33 @@
   cfg = config.settings;
 in {
   imports = [
-    ../git
+    ../awscli2
+    ../btop
+    ../fish
+    ../flameshot
+    ../fonts
     ../gh
+    ../git
+    ../go-chromecast
+    ../google-chrome
+    ../google-cloud-sdk
     ../gpg
     ../gtk
+    ../helix
+    ../home-manager
+    ../lorri
+    ../navi
+    ../neovim
+    ../qmk
+    ../rclone
+    ../rofi
+    ../scripts
     ../ssh
+    ../taskwarrior
+    ../terraform
+    ../tig
     ../xdg
     ../zsh
-    #../fish
-    ../fonts
-    ../neovim
-    ../scripts
-    ../home-manager
-    ../helix
-    ../rofi
-    ../navi
-    ../lorri
-    ../qmk
-    ../taskwarrior
-    ../rclone
-    ../flameshot
-    ../btop
-    ../tig
 
     ../sway
     ../waybar
@@ -36,6 +41,65 @@ in {
     ../mako
     ../foot
   ];
+
+  settings = {
+    fonts.enable = true;
+
+    awscli2.enable = true;
+    btop.enable = true;
+    fish.enable = true;
+    flameshot.enable = true;
+    gh.enable = true;
+    git.enable = true;
+    go-chromecast.enable = true;
+    google-chrome.enable = false;
+    google-cloud-sdk.enable = true;
+    gpg.enable = true;
+    gtk.enable = true;
+    helix.enable = true;
+    home-manager.enable = true;
+    lorri.enable = true;
+    navi.enable = true;
+    neovim.enable = true;
+    qmk.enable = true;
+    rclone.enable = true;
+    rofi.enable = true;
+    scripts.enable = true;
+    ssh.enable = true;
+    taskwarrior.enable = true;
+    terraform.enable = true;
+    tig.enable = true;
+    xdg.enable = true;
+    zsh.enable = true;
+
+    sway.enable = true;
+    waybar.enable = true;
+    swayidle.enable = true;
+    swaylock.enable = true;
+    mako.enable = true;
+    foot.enable = true;
+
+    sway.font = {
+      name = "SauceCodePro Nerd Font";
+      size = 9;
+    };
+    foot.font = {
+      name = "SauceCodePro Nerd Font";
+      size = 9;
+    };
+    waybar.font = {
+      name = "SauceCodePro Nerd Font";
+      size = 10;
+    };
+    rofi.font = {
+      name = "JetBrainsMono Nerd Font";
+      size = 9;
+    };
+    mako.font = {
+      name = "JetBrainsMono Nerd Font";
+      size = 9;
+    };
+  };
 
   programs = {
     fzf.enable = true;
@@ -73,6 +137,10 @@ in {
     };
 
     packages = with pkgs; [
+      fend
+      dasel
+      choose
+
       nix-prefetch-scripts
       nix-index
       tealdeer

@@ -2,7 +2,18 @@
   config,
   pkgs,
   lib,
+  mylib,
   ...
 }: let
   cfg = config.settings;
-in {home.packages = with pkgs; [tig];}
+in
+  with lib;
+  with mylib; {
+    options = {
+      settings.tig.enable = mkEnableOpt "tig";
+    };
+
+    config = mkIf config.settings.tig.enable {
+      home.packages = with pkgs; [tig];
+    };
+  }

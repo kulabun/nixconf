@@ -1,92 +1,121 @@
 {
   inputs = {
-    # nixpkgs.url = "nixpkgs/nixos-unstable";
     nixpkgs.url = "nixpkgs/nixos-22.05";
+    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     rust-overlay.url = "github:oxalica/rust-overlay";
     # helix-master = {
     #   url = "github:helix-editor/helix";
     #   inputs.nixpkgs.follows = "nixpkgs";
     #   inputs.rust-overlay.follows = "rust-overlay";
     # };
+    nixos-hardware.url = "github:nixos/nixos-hardware";
 
     home-manager = {
       # url = "github:nix-community/home-manager";
       url = "github:nix-community/home-manager/release-22.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs:
-    let
-      system = "x86_64-linux";
-      nixpkgs = inputs.nixpkgs;
-      home-manager = inputs.home-manager;
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    nixpkgs-unstable,
+    home-manager,
+    ...
+  }: let
+    system = "x86_64-linux";
 
-      pkgs = import nixpkgs {
+    mkPkgs = pkgs: overlays:
+      import pkgs {
         inherit system;
-        overlays = [
-          (import ./overlay)
-          (import inputs.rust-overlay)
-          # (import inputs.helix-master)
-        ];
+        inherit overlays;
         config.allowUnfree = true;
       };
 
-      homeConfig = { user, machine }:
-        home-manager.lib.homeManagerConfiguration rec {
-          # inherit pkgs;
-          # modules = [ ./options/settings ./home-manager/profiles/${machine} ];
-          inherit pkgs;
-          inherit system;
-          extraSpecialArgs = {
-            inherit system;
-            inherit inputs;
-          };
-          configuration = { config, pkgs, lib, ... }: {
-            imports = [ ./hosts/${machine} ];
-          };
-          username = user;
-          homeDirectory = "/home/${username}";
-        };
-    in {
-      #isoImage = (baseSystem {
-      #  system = "x86_64-linux";
-      #  modules = [
-      #    ./profiles/iso.nix
-      #  ];
-      #});
+    pkgs = mkPkgs nixpkgs [
+      (import ./overlay)
+      (import inputs.rust-overlay)
+      # (import inputs.helix-master)
+    ];
 
-      nixosConfigurations = {
-        hx90 = nixpkgs.lib.nixosSystem {
+    pkgs' = mkPkgs nixpkgs-unstable [];
+
+    mylib = import ./lib {
+      inherit pkgs inputs;
+      lib = pkgs.lib;
+    };
+
+    homeConfig = {
+      user,
+      machine,
+    }:
+      home-manager.lib.homeManagerConfiguration rec {
+        # inherit pkgs;
+        # modules = [ ./options/settings ./home-manager/profiles/${machine} ];
+        inherit pkgs;
+        inherit system;
+        extraSpecialArgs = {
           inherit system;
-          inherit pkgs;
-          modules = [
-            ./hosts/hx90
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users."konstantin" = { imports = [ ./hosts/hx90/home ]; };
-                extraSpecialArgs = {
-                  inherit system;
-                  inherit inputs;
-                };
-              };
-            }
-          ];
+          inherit inputs;
+          inherit mylib;
         };
+        configuration = {
+          config,
+          pkgs,
+          lib,
+          ...
+        }: {
+          imports = [./hosts/${machine}];
+        };
+        username = user;
+        homeDirectory = "/home/${username}";
       };
+  in {
+    #isoImage = (baseSystem {
+    #  system = "x86_64-linux";
+    #  modules = [
+    #    ./profiles/iso.nix
+    #  ];
+    #});
 
-      homeConfigurations = {
-        # hx90 = homeConfig {
-        #   user = "konstantin";
-        #   machine = "hx90";
-        # };
-        dell5560 = homeConfig {
-          user = "klabun";
-          machine = "dell5560";
-        };
+    nixosConfigurations = {
+      hx90 = nixpkgs.lib.nixosSystem {
+        inherit system;
+        inherit pkgs;
+        modules = [
+          ./hosts/hx90
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users."konstantin" = {imports = [./hosts/hx90/home];};
+              extraSpecialArgs = {
+                inherit system;
+                inherit inputs;
+                inherit mylib;
+              };
+            };
+          }
+        ];
       };
     };
+
+    homeConfigurations = {
+      # hx90 = homeConfig {
+      #   user = "konstantin";
+      #   machine = "hx90";
+      # };
+      dell5560 = homeConfig {
+        user = "klabun";
+        machine = "dell5560";
+      };
+    };
+  };
 }

@@ -2,10 +2,17 @@
   config,
   pkgs,
   lib,
+  mylib,
   ...
-}: let
-  cfg = config.settings;
-in {
-  # programs.btop = {enable = true;};
-  home.packages = with pkgs; [btop];
+}:
+with lib;
+with mylib; {
+  options = {
+    settings.btop.enable = mkEnableOpt "btop";
+  };
+
+  config = mkIf config.settings.btop.enable {
+    # programs.btop = {enable = true;};
+    home.packages = with pkgs; [btop];
+  };
 }

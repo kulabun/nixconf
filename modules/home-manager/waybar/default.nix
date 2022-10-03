@@ -1,15 +1,30 @@
-{ config, pkgs, lib, ... }:
-let
-  cfg = config.settings;
-  font = cfg.programs.waybar.font;
-in {
-  xdg.configFile = {
-    "waybar/config".source = ./config/config;
-    "waybar/style.css".source = pkgs.substituteAll {
-      src = ./config/style.css;
-      fontName = font.name;
-      fontSize = font.size;
+{
+  config,
+  pkgs,
+  lib,
+  mylib,
+  ...
+}: let
+  font = config.settings.waybar.font;
+in
+  with lib;
+  with mylib; {
+    options = {
+      settings.waybar = {
+        enable = mylib.mkEnableOpt "waybar";
+        font = mylib.mkFontOpt "waybar";
+      };
     };
-  };
-  programs = { waybar.enable = true; };
-}
+
+    config = mkIf config.settings.waybar.enable {
+      xdg.configFile = {
+        "waybar/config".source = ./config/config;
+        "waybar/style.css".source = pkgs.substituteAll {
+          src = ./config/style.css;
+          fontName = font.name;
+          fontSize = font.size;
+        };
+      };
+      programs = {waybar.enable = true;};
+    };
+  }

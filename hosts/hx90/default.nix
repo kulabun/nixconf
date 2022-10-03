@@ -53,6 +53,9 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  # Requirede for chromecast https://github.com/NixOS/nixpkgs/issues/49630
+  services.avahi.enable = true;
+
   # Set your time zone.
   time.timeZone = "US/Pacific";
 
