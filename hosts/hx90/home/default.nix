@@ -1,11 +1,20 @@
-{ config, pkgs, ... }:
-let cfg = config.settings;
-in {
-  imports = [ ../../../options ../../../modules/home-manager/default ];
+{
+  config,
+  pkgs,
+  ...
+}: rec {
+  imports = [../../../modules/home-manager];
+
+  settings = {
+    user = "konstantin";
+    machine = "hx90";
+    secretsRootPath = "/home/konstantin/secrets";
+  };
+
   home = {
     enableNixpkgsReleaseCheck = true;
 
-    packages = with pkgs; [ ];
+    packages = with pkgs; [];
 
     # file = {
     #   #".config/ulauncher".source = ~/dotfiles/config/ulauncher;
@@ -18,6 +27,5 @@ in {
     # };
   };
 
-  programs = { ssh.includes = [ "${cfg.secretsRootPath}/ssh/config" ]; };
+  programs = {ssh.includes = ["${settings.secretsRootPath}/ssh/config"];};
 }
-

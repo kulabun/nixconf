@@ -161,6 +161,10 @@ in
               C-k = "expand_selection";
               C-l = "select_next_sibling";
 
+              # Multicursor
+              A-j = "copy_selection_on_prev_line";
+              A-k = "copy_selection_on_next_line";
+
               # Personal preference
               # o = ["open_below" "normal_mode"];
               # O = ["open_above" "normal_mode"];

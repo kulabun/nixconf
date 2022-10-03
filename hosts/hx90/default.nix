@@ -1,22 +1,18 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, ... }:
-
 {
-  imports = [ # Include the results of the hardware scan.
+  config,
+  pkgs,
+  ...
+}: {
+  imports = [
+    # Include the results of the hardware scan.
     ../../modules/nixos/default
 
     ./hardware-configuration.nix
     ./sway.nix
   ];
-
-  settings = {
-    user = "konstantin";
-    machine = "hx90";
-    secretsRootPath = "/home/konstantin/secrets";
-  };
 
   # Bootloader.
   boot = {
@@ -27,10 +23,10 @@
         efiSysMountPoint = "/boot/efi";
       };
     };
-    kernelModules = [ "mt7921e" ];
+    kernelModules = ["mt7921e"];
 
     # Setup keyfile
-    initrd = { secrets = { "/crypto_keyfile.bin" = null; }; };
+    initrd = {secrets = {"/crypto_keyfile.bin" = null;};};
   };
 
   # MiniForum HX90 has MediaTek 7921k Wi-Fi module. It is supported by mt7921e kernel module, but device is not mapped to this kernel module. So we need to do it.
@@ -106,7 +102,7 @@
   users.users.konstantin = {
     isNormalUser = true;
     description = "Konstantin";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = ["networkmanager" "wheel" "docker"];
     shell = pkgs.zsh;
     packages = with pkgs; [
       usbutils # lsusb
@@ -164,5 +160,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.05"; # Did you read the comment?
-
 }

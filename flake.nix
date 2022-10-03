@@ -76,46 +76,48 @@
         username = user;
         homeDirectory = "/home/${username}";
       };
-  in {
-    #isoImage = (baseSystem {
-    #  system = "x86_64-linux";
-    #  modules = [
-    #    ./profiles/iso.nix
-    #  ];
-    #});
+  in
+    with pkgs.lib;
+    with mylib; {
+      #isoImage = (baseSystem {
+      #  system = "x86_64-linux";
+      #  modules = [
+      #    ./profiles/iso.nix
+      #  ];
+      #});
 
-    nixosConfigurations = {
-      hx90 = nixpkgs.lib.nixosSystem {
-        inherit system;
-        inherit pkgs;
-        modules = [
-          ./hosts/hx90
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              users."konstantin" = {imports = [./hosts/hx90/home];};
-              extraSpecialArgs = {
-                inherit system;
-                inherit inputs;
-                inherit mylib;
+      nixosConfigurations = {
+        hx90 = nixpkgs.lib.nixosSystem {
+          inherit system;
+          inherit pkgs;
+          modules = [
+            ./hosts/hx90
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users."konstantin" = {imports = [./hosts/hx90/home];};
+                extraSpecialArgs = {
+                  inherit system;
+                  inherit inputs;
+                  inherit mylib;
+                };
               };
-            };
-          }
-        ];
+            }
+          ];
+        };
       };
-    };
 
-    homeConfigurations = {
-      # hx90 = homeConfig {
-      #   user = "konstantin";
-      #   machine = "hx90";
-      # };
-      dell5560 = homeConfig {
-        user = "klabun";
-        machine = "dell5560";
+      homeConfigurations = {
+        # hx90 = homeConfig {
+        #   user = "konstantin";
+        #   machine = "hx90";
+        # };
+        dell5560 = homeConfig {
+          user = "klabun";
+          machine = "dell5560";
+        };
       };
     };
-  };
 }
