@@ -2,10 +2,6 @@
   imports = [ ./settings/default.nix ];
 
   settings = {
-    user = "konstantin";
-    machine = "hx90";
-    secretsRootPath = "/home/konstantin/secrets";
-
     programs = {
       sway.font = {
         name = "SauceCodePro Nerd Font";

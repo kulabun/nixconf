@@ -12,6 +12,12 @@
     ./sway.nix
   ];
 
+  settings = {
+    user = "konstantin";
+    machine = "hx90";
+    secretsRootPath = "/home/konstantin/secrets";
+  };
+
   # Bootloader.
   boot = {
     loader = {

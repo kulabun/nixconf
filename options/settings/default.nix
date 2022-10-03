@@ -6,13 +6,11 @@ with lib; {
       mkOption {
         inherit description;
         type = types.str;
-        readOnly = true;
       };
     intOption = description:
       mkOption {
         inherit description;
         type = types.int;
-        readOnly = true;
       };
     font = {
       name = strOption "The font name";
