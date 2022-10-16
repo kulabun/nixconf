@@ -1,0 +1,31 @@
+{
+  "name": "my-snippets",
+  "contributes": {
+    "snippets": [
+      {
+        "language": [
+          "rust"
+        ],
+        "path": "./rust.json"
+      },
+      {
+        "language": [
+          "python"
+        ],
+        "path": "./python.json"
+      },
+      {
+        "language": [
+          "shell"
+        ],
+        "path": "./shell.json"
+      },
+      {
+        "language": [
+          "nix"
+        ],
+        "path": "./nix.json"
+      }
+    ]
+  }
+}

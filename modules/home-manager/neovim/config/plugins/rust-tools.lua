@@ -37,4 +37,4 @@ M = {
 	ft = { "rust", "rs" },
 }
 
-return {}
+return M

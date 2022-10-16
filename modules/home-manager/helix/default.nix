@@ -45,11 +45,6 @@ in
 
     config = mkIf config.settings.helix.enable {
       home = {
-        sessionVariables = {
-          EDITOR = "hx";
-          VISUAL = "hx";
-        };
-
         packages = let
         in
           with pkgs; [
@@ -111,6 +106,11 @@ in
           {
             name = "html";
             file-types = ["html" "tmpl"];
+          }
+
+          {
+            name = "bash";
+            formatter.command = "${pkgs.shfmt}/bin/shfmt";
           }
 
           {

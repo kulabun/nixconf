@@ -1,0 +1,43 @@
+{
+  "module main function": {
+    "prefix": "main",
+    "body": [
+      "{",
+      "  config,",
+      "  pkgs,",
+      "  lib,",
+      "  ...",
+      "}:",
+      "with lib; {",
+      "  $1",
+      "}"
+    ],
+    "description": "Creates main function for new config"
+  },
+  "module main function with let": {
+    "prefix": "mainlet",
+    "body": [
+      "{",
+      "  config,",
+      "  pkgs,",
+      "  lib,",
+      "  ...",
+      "}: let",
+      "  $1",
+      "in",
+      "  with lib; {",
+      "    ",
+      "  }"
+    ],
+    "description": "Creates main function with let for new config"
+  },
+  "let": {
+    "prefix": "let",
+    "body": [
+      "let",
+      "  $1",
+      "in"
+    ],
+    "description": "Insert a `let ... in` block"
+  }
+}

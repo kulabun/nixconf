@@ -25,8 +25,10 @@ with mylib; {
         recursive = true;
       };
       "nvim/lua/custom" = {
-        source = ./config;
-        recursive = true;
+        # Unfortunately with Flakes ./config does not work as expected
+        # https://github.com/nix-community/home-manager/issues/2085
+        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixconf/modules/home-manager/neovim/config";
+        #recursive = true;
       };
     };
 
@@ -68,8 +70,55 @@ with mylib; {
         with pkgs; [
           neovim
           tree-sitter
+          nodejs
+          python3
 
-          # Lua support
+          #--------------
+          # C
+          clang-tools
+
+          # JSON
+          gojq
+
+          # HTML, CSS
+          nodePackages.vscode-langservers-extracted
+          nodePackages.prettier
+
+          # Go
+          go
+          gopls
+
+          # Rust
+          my-rust
+          my-rust-analyzer
+
+          # Nix
+          alejandra
+          rnix-lsp
+          statix
+
+          # TOML
+          taplo-cli
+
+          # Shell
+          nodePackages.bash-language-server
+          shfmt
+          shellcheck
+
+          # YAML
+          yaml-language-server
+
+          # JavaScript / TypeScript
+          nodePackages.typescript-language-server
+
+          # Terraform
+          terraform-ls
+
+          # Python
+          python3Packages.python-lsp-server
+          black
+
+          # Lua
           sumneko-lua-language-server
           stylua
           luajit

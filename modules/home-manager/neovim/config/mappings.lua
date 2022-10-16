@@ -1,5 +1,11 @@
 local M = {}
 
+M.disabled = {
+  n = {
+		["<leader>h"] = "",
+  };
+};
+
 M.diffview = {
 	n = {
 		["<leader>gv"] = { "<cmd> :DiffviewOpen<CR>", "Open DiffView", opts = { nowait = true } },
@@ -32,7 +38,7 @@ M.telescope = {
 
 M.null_ls = {
 	n = {
-		["<C-l>"] = { "<cmd>lua vim.lsp.buf.formatting()<cr>" },
+		["="] = { "<cmd>lua vim.lsp.buf.formatting()<cr>" },
 	},
 }
 
@@ -44,9 +50,11 @@ M.trouble = {
 
 M.general = {
 	n = {
+		["<C-l>"] = { ":bn<cr>", "[Custom] next buffer" },
+		["<C-h>"] = { ":bp<cr>", "[Custom] previous buffer" },
 		["<C-w>"] = { ":bd<cr>", "[Custom] close buffer" },
-		["<C-j>"] = { ":bprevious<cr>", "[Custom] previous buffer" },
-		["<C-k>"] = { ":bnext<cr>", "[Custom] next buffer" },
+		["<C-A-w>"] = { ":bd!<cr>", "[Custom] close buffer" },
+
 		["<leader>c"] = {
 			"<cmd>lua require('Comment.api').toggle.linewise.current()<CR>",
 			"蘒  toggle comment",

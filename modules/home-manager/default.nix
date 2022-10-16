@@ -13,6 +13,7 @@ in
         secretsRootPath = mkStrOpt "Secrets root path";
         user = mkStrOpt "user";
         machine = mkStrOpt "machine";
+        editor = mkStrOpt "editor";
       };
     };
 
@@ -55,6 +56,8 @@ in
 
     config = {
       settings = {
+        editor = "nvim";
+
         fonts.enable = true;
 
         awscli2.enable = true;
@@ -131,6 +134,8 @@ in
       home = {
         sessionPath = ["$HOME/.local/bin" "$HOME/bin"];
         sessionVariables = {
+          EDITOR = config.settings.editor;
+          VISUAL = config.settings.editor;
           PAGER = "less -R";
           TIME_STYLE = "long-iso"; # for core-utils
           DEFAULT_BROWSER = "firefox";
