@@ -43,6 +43,7 @@ in
       ./taskwarrior
       ./terraform
       ./tig
+      ./ulauncher
       ./xdg
       ./zsh
 
@@ -84,6 +85,7 @@ in
         taskwarrior.enable = true;
         terraform.enable = true;
         tig.enable = true;
+        ulauncher.enable = false;
         xdg.enable = true;
         zsh.enable = true;
 
