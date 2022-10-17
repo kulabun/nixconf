@@ -19,8 +19,8 @@ with mylib; {
         source = pkgs.fetchFromGitHub {
           owner = "NvChad";
           repo = "NvChad";
-          rev = "27560319cc4cf753e5a4d8713f82206d84a70d61";
-          sha256 = "0aw41nm81897k444k7v4pxd0x390532vm1n3b82gdxqag7hvywg7";
+          rev = "dc669313c1e3e4348c65d622734e57d7459b6f83";
+          sha256 = "0fmrhqh4r49whl1wk5fxyw5gscyg23h4hzrh9wra1lxjwbcfdyq0";
         };
         recursive = true;
       };
@@ -28,7 +28,7 @@ with mylib; {
         # Unfortunately with Flakes ./config does not work as expected
         # https://github.com/nix-community/home-manager/issues/2085
         source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixconf/modules/home-manager/neovim/config";
-        #recursive = true;
+        recursive = true;
       };
     };
 
@@ -72,6 +72,7 @@ with mylib; {
           tree-sitter
           nodejs
           python3
+          # neovide
 
           #--------------
           # C

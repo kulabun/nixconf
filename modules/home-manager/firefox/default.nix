@@ -13,6 +13,6 @@ with mylib; {
   config = mkIf config.settings.firefox.enable {
     programs.firefox = {
       enable = true;
-      };
+    };
   };
 }

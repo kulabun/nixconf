@@ -1,5 +1,6 @@
 M = {
 	after = "nvim-lspconfig",
+	requires = { "nvim-lua/plenary.nvim" },
 	config = function()
 		local null_ls = require("null-ls")
 
@@ -65,11 +66,11 @@ M = {
 			},
 		})
 	end,
-    on_attach = function()
-        -- for 0.8.0 nvim
-        --vim.cmd "autocmd BufWritePre <buffer> lua vim.lsp.buf.format({ bufnr = bufnr })"
-        vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
-      end,
+	on_attach = function()
+		-- for 0.8.0 nvim
+		--vim.cmd "autocmd BufWritePre <buffer> lua vim.lsp.buf.format({ bufnr = bufnr })"
+		vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
+	end,
 }
 
 return M

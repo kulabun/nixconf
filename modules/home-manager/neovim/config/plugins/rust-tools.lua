@@ -1,4 +1,5 @@
 M = {
+	after = "nvim-lspconfig",
 	config = function()
 		require("rust-tools").setup({
 			tools = { -- rust-tools options
