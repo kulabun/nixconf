@@ -9,29 +9,29 @@ function nx() {
 		command -v home-manager >/dev/null
 	}
 
-	function nix() {
-		cmd="$1"
-		is_nixos && sudo nixos-rebuild "$cmd" --flake "/home/$USER/nixconf#$NIX_HOST"
-		has_home-manager && home-manager "$cmd" --flake "/home/$USER/nixconf#$NIX_HOST"
+	function nix-exec() {
+		cmd="$*"
+		is_nixos && sudo nixos-rebuild "$cmd" --flake "/home/$USER/nixconf#$NIX_HOST" --extra-experimental-features "nix-command flakes"
+		has_home-manager && home-manager "$cmd" --flake "/home/$USER/nixconf#$NIX_HOST" --extra-experimental-features "nix-command flakes"
 	}
 
 	cmd="$1"
 	case $cmd in
 	update)
-		nix switch
+		nix-exec switch
 		;;
 
 	upgrade)
-		nix flake update --commit-lock-file "/home/$USER/nixconf" --extra-experimental-features "nix-command flakes"
-		nix switch
+		nix-exec flake update --commit-lock-file "/home/$USER/nixconf"
+		nix-exec switch
 		;;
 
 	boot)
-		is_nixos && sudo nixos-rebuild boot --flake "/home/$USER/nixconf#$NIX_HOST"
+		is_nixos && nix-exec boot
 		;;
 
 	build)
-		nix build
+		nix-exec build
 		;;
 
 	clean)
