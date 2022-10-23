@@ -1,11 +1,14 @@
-{ config, pkgs, lib, ... }:
-
-let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   # bash script to let dbus know about important env variables and
   # propogate them to relevent services run at the end of sway config
   # see
   # https://github.com/emersion/xdg-desktop-portal-wlr/wiki/"It-doesn't-work"-Troubleshooting-Checklist
-  # note: this is pretty much the same as  /etc/sway/config.d/nixos.conf but also restarts  
+  # note: this is pretty much the same as  /etc/sway/config.d/nixos.conf but also restarts
   # some user services to make sure they have the correct environment variables
   dbus-sway-environment = pkgs.writeTextFile {
     name = "dbus-sway-environment";
@@ -38,7 +41,6 @@ let
       gsettings set $gnome_schema gtk-theme 'Dracula'
     '';
   };
-
 in {
   nixpkgs.overlays = [
     (self: super: {
@@ -54,6 +56,7 @@ in {
 
   #services.xserver.displayManager.sessionPackages = [ sway-systemd ];
   #services.xserver.displayManager.defaultSession = "sway-systemd";
+  services.gnome.gnome-keyring.enable = true;
   environment.systemPackages = with pkgs; [
     sway
     dbus-sway-environment
@@ -96,7 +99,7 @@ in {
     enable = true;
     wlr.enable = true;
     # gtk portal needed to make gtk apps happy
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    extraPortals = [pkgs.xdg-desktop-portal-gtk];
     gtkUsePortal = true;
   };
 
@@ -104,7 +107,7 @@ in {
   programs.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
-    extraPackages = [ ];
+    extraPackages = [];
   };
 
   # Fix auto suspend
@@ -127,4 +130,3 @@ in {
     %wheel      ALL=(ALL:ALL) NOPASSWD: ${pkgs.kbd}/bin/chvt
   '';
 }
-

@@ -289,6 +289,8 @@ in
 
           #seat * hide_cursor when-typing enable
           seat * hide_cursor 5000
+
+          exec ${pkgs.xorg.xprop}/bin/xprop -root -f _XWAYLAND_GLOBAL_OUTPUT_SCALE 32c -set _XWAYLAND_GLOBAL_OUTPUT_SCALE 2
         '';
       };
     };
