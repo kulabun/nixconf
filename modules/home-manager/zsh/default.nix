@@ -177,7 +177,7 @@ in
           export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#6f6f6f"
           export FZF_DEFAULT_OPTS='--color=fg:#f8f8f2,hl:#bd93f9 --color=fg+:#f8f8f2,hl+:#bd93f9 --color=info:#ffb86c,prompt:#50fa7b,pointer:#ff79c6 --color=marker:#ff79c6,spinner:#ffb86c,header:#6272a4'
           # Don't use xterm-256color https://github.com/NvChad/NvChad/issues/926#issuecomment-1108220606
-          export TERM=xterm-color
+          #export TERM=xterm-color
           if [ -z "$NIX_PATH" ]; then
             export NIX_PATH=home-manager=$HOME/.nix-defexpr/channels/home-manager:nixpkgs=$HOME/.nix-defexpr/channels/nixpkgs
           fi

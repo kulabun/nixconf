@@ -1,10 +1,10 @@
-{ 
-  "sh": {
-    "prefix": ["sh", "#!", "shebang"],
-    "body": "#!/bin/sh\n"
-  },
+{
   "bash": {
-    "prefix": ["bash", "#!", "shebang"],
+    "prefix": [
+      "shb",
+      "#!",
+      "shebang"
+    ],
     "body": "#!/usr/bin/env bash\n"
   },
   "echo": {

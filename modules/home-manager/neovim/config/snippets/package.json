@@ -16,7 +16,11 @@
       },
       {
         "language": [
-          "shell"
+          "sh",
+          "shell",
+          "shellscript",
+          "bash",
+          "zsh"
         ],
         "path": "./shell.json"
       },

@@ -11,7 +11,7 @@ function nx() {
 
 	function nix-exec() {
 		cmd="$*"
-		is_nixos && sudo nixos-rebuild "$cmd" --flake "/home/$USER/nixconf#$NIX_HOST" --extra-experimental-features "nix-command flakes"
+		is_nixos && sudo nixos-rebuild "$cmd" --flake "/home/$USER/nixconf#$NIX_HOST" 
 		has_home-manager && home-manager "$cmd" --flake "/home/$USER/nixconf#$NIX_HOST" --extra-experimental-features "nix-command flakes"
 	}
 

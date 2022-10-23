@@ -9,6 +9,7 @@
     #   inputs.rust-overlay.follows = "rust-overlay";
     # };
     nixos-hardware.url = "github:nixos/nixos-hardware";
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
 
     home-manager = {
       # url = "github:nix-community/home-manager";
@@ -41,6 +42,7 @@
     pkgs = mkPkgs nixpkgs [
       (import ./overlay)
       (import inputs.rust-overlay)
+      (import inputs.neovim-nightly-overlay)
       # (import inputs.helix-master)
     ];
 

@@ -17,18 +17,18 @@ with mylib; {
     xdg.configFile = {
       "nvim" = {
         source = pkgs.fetchFromGitHub {
-          owner = "NvChad";
-          repo = "NvChad";
-          rev = "dc669313c1e3e4348c65d622734e57d7459b6f83";
-          sha256 = "0fmrhqh4r49whl1wk5fxyw5gscyg23h4hzrh9wra1lxjwbcfdyq0";
+          owner = "AstroNvim";
+          repo = "AstroNvim";
+          rev = "893665a969129eb528e54b7e4bee1e6c952d6d25";
+          sha256 = "1wm4lpm3j4k6njf620ncq9gpy0zkrqgijzbg6y9jahb3wxl1qz15";
         };
         recursive = true;
       };
-      "nvim/lua/custom" = {
-        # Unfortunately with Flakes ./config does not work as expected
+      "nvim/lua/user" = {
+        # Unfortunately with Flakes ./config does not work as expected, so the url is provided as a string
         # https://github.com/nix-community/home-manager/issues/2085
         source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixconf/modules/home-manager/neovim/config";
-        recursive = true;
+        #recursive = true;
       };
     };
 
@@ -68,7 +68,9 @@ with mylib; {
         };
       in
         with pkgs; [
-          neovim
+          alacritty
+          kitty
+          neovim-nightly
           tree-sitter
           nodejs
           python3
