@@ -66,6 +66,7 @@
           inherit system;
           inherit inputs;
           inherit mylib;
+          inherit pkgs';
         };
         configuration = {
           config,
@@ -94,6 +95,7 @@
           inherit pkgs;
           modules = [
             ./hosts/hx90
+	    ./modules/nix
             home-manager.nixosModules.home-manager
             {
               home-manager = {
@@ -104,6 +106,7 @@
                   inherit system;
                   inherit inputs;
                   inherit mylib;
+                  inherit pkgs';
                 };
               };
             }

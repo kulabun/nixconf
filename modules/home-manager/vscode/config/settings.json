@@ -1,0 +1,18 @@
+{
+  "editor.fontFamily": "SauceCodePro Nerd Font",
+  "editor.fontSize": 12,
+  "editor.inlineSuggest.enabled": true,
+  "files.autoSave": "onFocusChange",
+  "files.insertFinalNewline": true,
+  "keyboard.dispatch": "keyCode",
+  "telemetry.telemetryLevel": "off",
+  "terminal.explorerKind": "external",
+  "terminal.external.linuxExec": "foot",
+  "vscode-neovim.neovimExecutablePaths.linux": "/nix/store/1zs25kb4qrribqr2572q9w39capsi77a-vscode-neovim/bin/vscode-neovim",
+  "window.autoDetectHighContrast": false,
+  "window.menuBarVisibility": "hidden",
+  "workbench.colorTheme": "GitHub Dark Dimmed",
+  "workbench.editor.limit.enabled": true,
+  "workbench.settings.editor": "json",
+  "workbench.tips.enabled": false
+}

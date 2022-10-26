@@ -20,6 +20,7 @@ in
     imports = [
       ./awscli2
       ./btop
+      ./dev-tools
       ./fish
       ./flameshot
       ./fonts
@@ -45,6 +46,7 @@ in
       ./terraform
       ./tig
       ./ulauncher
+      ./vscode
       ./xdg
       ./zsh
 
@@ -64,6 +66,7 @@ in
 
         awscli2.enable = true;
         btop.enable = true;
+        dev-tools.enable = true;
         fish.enable = true;
         flameshot.enable = true;
         gh.enable = true;
@@ -73,11 +76,11 @@ in
         google-cloud-sdk.enable = true;
         gpg.enable = true;
         gtk.enable = true;
-        helix.enable = true;
+        helix.enable = false;
         home-manager.enable = true;
-	jetbrains = {
-	  idea-community.enable = true;
-	};
+        jetbrains = {
+          idea-community.enable = true;
+        };
         lorri.enable = true;
         navi.enable = true;
         neovim.enable = true;
@@ -90,6 +93,7 @@ in
         terraform.enable = true;
         tig.enable = true;
         ulauncher.enable = false;
+        vscode.enable = true;
         xdg.enable = true;
         zsh.enable = true;
 
@@ -120,6 +124,10 @@ in
           name = "JetBrainsMono Nerd Font";
           size = 9;
         };
+        vscode.font = {
+          name = "SauceCodePro Nerd Font";
+          size = 12;
+        };
       };
 
       programs = {
@@ -149,7 +157,8 @@ in
           MOZ_WEBRENDER = 1;
           _JAVA_AWT_WM_NONREPARENTING = 1;
           XDG_SESSION_TYPE = "wayland";
-	  GDK_SCALE = 2;
+          GDK_SCALE = 2;
+          XCURSOR_SIZE = 128;
           GSETTINGS_SCHEMA_DIR = "${pkgs.glib.getSchemaPath pkgs.gtk3}";
 
           # Secrets storage
@@ -210,10 +219,6 @@ in
           ranger
           terraform
         ];
-      };
-
-      programs.vscode = {
-        enable = true;
       };
 
       services = {

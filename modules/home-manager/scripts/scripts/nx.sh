@@ -22,7 +22,7 @@ function nx() {
 		;;
 
 	upgrade)
-		nix-exec flake update --commit-lock-file "/home/$USER/nixconf"
+		nix flake update --commit-lock-file "/home/$USER/nixconf" --extra-experimental-features "nix-command flakes"
 		nix-exec switch
 		;;
 

@@ -1,9 +1,8 @@
-{
-  config,
-  pkgs,
-  lib,
-  mylib,
-  ...
+{ config
+, pkgs
+, lib
+, mylib
+, ...
 }:
 with lib;
 with mylib; {
@@ -31,12 +30,12 @@ with mylib; {
           event = "after-resume";
           command = "swaymsg 'output * dpms on'";
         }
-        {
-          event = "after-resume";
-          # gdm runs on tt7, while sway on different one. after wake up gdm appear ahead of swaylock, I dont want that
-          command = ''
-            w | egrep tty[1-9] | sed "s/.* tty([1-9]) .*/1/g" | xargs sudo chvt'';
-        }
+        # {
+        #   event = "after-resume";
+        #   # gdm runs on tt7, while sway on different one. after wake up gdm appear ahead of swaylock, I dont want that
+        #   command = ''
+        #     w | egrep tty[1-9] | sed "s/.* tty([1-9]) .*/1/g" | xargs sudo chvt'';
+        # }
       ];
 
       timeouts = [

@@ -189,27 +189,6 @@ local config = {
 		init = {
 			{ "https://gitlab.com/__tpb/monokai-pro.nvim" },
 			{ "tpope/vim-surround" },
-			{
-				"tzachar/cmp-tabnine",
-				run = "./install.sh",
-				requires = "hrsh7th/nvim-cmp",
-				config = function()
-					astronvim.add_user_cmp_source("cmp_tabnine")
-					local tabnine = require("cmp_tabnine.config")
-					tabnine:setup({
-						max_lines = 1000,
-						max_num_results = 20,
-						sort = true,
-						run_on_every_keystroke = true,
-						snippet_placeholder = "..",
-						ignored_file_types = { -- default is not to ignore
-							-- uncomment to ignore in lua:
-							-- lua = true
-						},
-						show_prediction_strength = true,
-					})
-				end,
-			},
 			-- You can disable default plugins as follows:
 			-- ["goolord/alpha-nvim"] = { disable = true },
 
@@ -331,54 +310,6 @@ local config = {
 		["mason-lspconfig"] = { disable = true },
 		["mason-null-ls"] = { disable = true },
 		["rafamadriz/friendly-snippets"] = { disable = true },
-
-		cmp = function(config)
-			local cmp = require("cmp")
-			local luasnip = require("luasnip")
-
-			config.mapping["<Tab>"] = cmp.mapping(function(fallback)
-				-- This little snippet will confirm with tab, and if no entry is selected, will confirm the first item
-				if cmp.visible() then
-					local entry = cmp.get_selected_entry()
-					if not entry then
-						cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-					end
-					cmp.confirm()
-				else
-					fallback()
-				end
-			end, { "i", "s", "c" })
-
-			local source_mapping = {
-				cmp_tabnine = "[TN]",
-				buffer = "[Buffer]",
-				nvim_lsp = "[LSP]",
-				nvim_lua = "[Lua]",
-				path = "[Path]",
-			}
-
-			local lspkind = require("lspkind")
-			config.formatting = {
-				format = function(entry, vim_item)
-					vim_item.kind = lspkind.presets.default[vim_item.kind]
-					local menu = source_mapping[entry.source.name]
-					if entry.source.name == "cmp_tabnine" then
-						if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
-							menu = entry.completion_item.data.detail .. " " .. menu
-						end
-						vim_item.kind = ""
-					end
-					vim_item.menu = menu
-					return vim_item
-				end,
-			}
-
-			config.experimental = {
-				ghost_text = true,
-			}
-
-			return config
-		end,
 	},
 
 	-- LuaSnip Options
@@ -401,7 +332,6 @@ local config = {
 	-- true == 1000
 	cmp = {
 		source_priority = {
-			cmp_tabnine = 2000,
 			nvim_lsp = 1000,
 			luasnip = 750,
 			buffer = 500,
@@ -429,6 +359,13 @@ local config = {
 	-- augroups/autocommands and custom filetypes also this just pure lua so
 	-- anything that doesn't fit in the normal config locations above can go here
 	polish = function()
+		-- Disable comment new line
+		vim.api.nvim_create_autocmd("BufWinEnter", {
+			pattern = "*",
+			callback = function()
+				vim.opt_local.formatoptions:remove({ "c", "r", "o" })
+			end,
+		})
 		-- Set up custom filetypes
 		-- vim.filetype.add {
 		--   extension = {

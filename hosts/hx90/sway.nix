@@ -1,9 +1,9 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: let
+{ config
+, pkgs
+, lib
+, ...
+}:
+let
   # bash script to let dbus know about important env variables and
   # propogate them to relevent services run at the end of sway config
   # see
@@ -32,16 +32,19 @@
     name = "configure-gtk";
     destination = "/bin/configure-gtk";
     executable = true;
-    text = let
-      schema = pkgs.gsettings-desktop-schemas;
-      datadir = "${schema}/share/gsettings-schemas/${schema.name}";
-    in ''
-      export XDG_DATA_DIRS=${datadir}:$XDG_DATA_DIRS
-      gnome_schema=org.gnome.desktop.interface
-      gsettings set $gnome_schema gtk-theme 'Dracula'
-    '';
+    text =
+      let
+        schema = pkgs.gsettings-desktop-schemas;
+        datadir = "${schema}/share/gsettings-schemas/${schema.name}";
+      in
+      ''
+        export XDG_DATA_DIRS=${datadir}:$XDG_DATA_DIRS
+        gnome_schema=org.gnome.desktop.interface
+        gsettings set $gnome_schema gtk-theme 'Dracula'
+      '';
   };
-in {
+in
+{
   nixpkgs.overlays = [
     (self: super: {
       sway = super.sway.override {
@@ -99,7 +102,7 @@ in {
     enable = true;
     wlr.enable = true;
     # gtk portal needed to make gtk apps happy
-    extraPortals = [pkgs.xdg-desktop-portal-gtk];
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     gtkUsePortal = true;
   };
 
@@ -107,7 +110,37 @@ in {
   programs.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
-    extraPackages = [];
+    extraPackages = [ ];
+    extraSessionCommands = ''
+      # TODO: Why doesn't it work?
+
+      # Disable HiDPI scaling for X apps
+      # https://wiki.archlinux.org/index.php/HiDPI#GUI_toolkits
+      export GDK_SCALE=2
+
+      export XDG_SESSION_TYPE=wayland
+      export XDG_SESSION_DESKTOP=sway
+      export MOZ_ENABLE_WAYLAND=1
+
+      # Tell toolkits to use wayland
+      export CLUTTER_BACKEND=wayland
+      export QT_QPA_PLATFORM=wayland-egl
+      export QT_QPA_PLATFORMTHEME=qt5ct
+      export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+      export ECORE_EVAS_ENGINE=wayland-egl
+      export ELM_ENGINE=wayland_egl
+      export SDL_VIDEODRIVER=wayland
+
+      # Fix Java
+      export _JAVA_AWT_WM_NONREPARENTING=1
+
+      export NO_AT_BRIDGE=1
+      export QT_AUTO_SCREEN_SCALE_FACTOR=0
+      export GTK_IM_MODULE=ibus
+      export QT_IM_MODULE=ibus
+      export XMODIFIERS=@im=ibus
+      export IBUS_DISCARD_PASSWORD_APPS='firefox,.*chrome.*'
+    '';
   };
 
   # Fix auto suspend
@@ -126,7 +159,7 @@ in {
 
   # services.xserver.displayManager.gdm.autoSuspend = false;
 
-  security.sudo.extraConfig = ''
-    %wheel      ALL=(ALL:ALL) NOPASSWD: ${pkgs.kbd}/bin/chvt
-  '';
+  # security.sudo.extraConfig = ''
+  #   %wheel      ALL=(ALL:ALL) NOPASSWD: ${pkgs.kbd}/bin/chvt
+  # '';
 }

@@ -31,6 +31,14 @@ in {
       ];
   });
 
+  #jetbrains.idea-community = super.jetbrains.idea-community.overrideAttrs (old: rec {
+  #  version = "2022.2.3";
+  #  src = super.lib.fetchurl {
+  #    url = "https://download.jetbrains.com/idea/ideaIC-${version}.tar.gz";
+  #    sha256 = "1vglidfy7vz85l480c40v79qd013w850iblz16sqvma8mnpzm9ab";
+  #  };
+  #});
+
   # rustc = super.rustc.overrideAttrs (attrs: {
   #   postInstall = ''
   #     RUST_SRC_PATH=$out/lib/rustlib/src/rust

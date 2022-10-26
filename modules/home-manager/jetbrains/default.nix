@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  pkgs',
   lib,
   mylib,
   ...
@@ -12,8 +13,8 @@ with mylib; {
   };
 
   config = mkIf config.settings.jetbrains.idea-community.enable {
-    home.packages = with pkgs; [
-      jetbrains.idea-community
+    home.packages = [
+      pkgs'.jetbrains.idea-community
     ];
   };
 }

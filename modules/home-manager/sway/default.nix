@@ -1,32 +1,38 @@
-{
-  config,
-  pkgs,
-  lib,
-  mylib,
-  ...
-}: let
+{ config
+, pkgs
+, lib
+, mylib
+, ...
+}:
+let
   toFloat = x: x + 0.0;
   font = config.settings.sway.font;
 in
-  with lib;
-  with mylib; {
-    options = {
-      settings.sway = {
-        enable = mylib.mkEnableOpt "sway";
-        font = mylib.mkFontOpt "sway";
-      };
+with lib;
+with mylib; {
+  options = {
+    settings.sway = {
+      enable = mylib.mkEnableOpt "sway";
+      font = mylib.mkFontOpt "sway";
     };
+  };
 
-    config = mkIf config.settings.sway.enable {
-      home.file = {"Pictures/swaybg.png".source = ./pictures/nix.png;};
-      wayland.windowManager.sway = {
-        enable = true;
-        package = null; # Package is installed with nixos. Dont install duplicate.
-        # Enable sway-session.target to link to graphical-session.target for systemd
-        systemdIntegration = true;
-        wrapperFeatures.gtk = true;
-        wrapperFeatures.base = true;
-        config = let
+  config = mkIf config.settings.sway.enable {
+    home.file = {
+      "Pictures/swaybg.png".source = ./pictures/nix.png;
+    };
+    xdg.configFile = {
+      "environment.d/sway.conf".source = ./env.d/sway.conf;
+    };
+    wayland.windowManager.sway = {
+      enable = true;
+      package = null; # Package is installed with nixos. Dont install duplicate.
+      # Enable sway-session.target to link to graphical-session.target for systemd
+      systemdIntegration = true;
+      wrapperFeatures.gtk = true;
+      wrapperFeatures.base = true;
+      config =
+        let
           left = "h";
           down = "j";
           up = "k";
@@ -34,7 +40,8 @@ in
           mod = "Mod4";
           #terminal = "${pkgs.foot}/bin/foot";
           terminal = "${pkgs.foot}/bin/footclient";
-        in {
+        in
+        {
           modifier = "${mod}";
           terminal = "${terminal}";
 
@@ -43,7 +50,7 @@ in
 
           fonts = {
             # Font usedfor window tiles, navbar, ...
-            names = [font.name];
+            names = [ font.name ];
             size = toFloat font.size;
           };
 
@@ -67,10 +74,12 @@ in
           ];
 
           startup = [
-            {command = "nm-applet --indicator";}
-            {command = "mako";}
-            {command = "ulauncher --hide-window";}
+            { command = "nm-applet --indicator"; }
+            { command = "mako"; }
+            { command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY"; }
           ];
+
+          assigns = { };
 
           input = {
             # Input modules: $ man sway-input
@@ -109,7 +118,7 @@ in
             };
           };
 
-          floating = {modifier = "${mod}";};
+          floating = { modifier = "${mod}"; };
 
           keybindings = {
             "${mod}+Delete" = "bar mode toggle";
@@ -202,15 +211,15 @@ in
                 command = "floating enable, sticky enable";
               }
               {
-                criteria = {class = "Pavucontrol";};
+                criteria = { class = "Pavucontrol"; };
                 command = "floating enable";
               }
               {
-                criteria = {app_id = "ulauncher";};
+                criteria = { app_id = "ulauncher"; };
                 command = "floating enable, border none, move up 300px";
               }
               {
-                criteria = {app_id = "zenity";};
+                criteria = { app_id = "zenity"; };
                 command = "floating enable, border none, move up 300px";
               }
               # Slack screen sharing
@@ -223,27 +232,27 @@ in
               }
               # Fix for a bug in chrome that make breaks sway hotkeys in chrome-apps
               {
-                criteria = {app_id = "^chrome-.*";};
+                criteria = { app_id = "^chrome-.*"; };
                 command = "shortcuts_inhibitor disable";
               }
               {
-                criteria = {class = "^jetbrains-idea$";};
+                criteria = { class = "^jetbrains-idea$"; };
                 command = "border pixel 1";
               }
               {
-                criteria = {app_id = "^chrome-app.slack.com.*";};
+                criteria = { app_id = "^chrome-app.slack.com.*"; };
                 command = "border pixel 1";
               }
               {
-                criteria = {app_id = "^chrome-mail.google.com.*";};
+                criteria = { app_id = "^chrome-mail.google.com.*"; };
                 command = "border pixel 1";
               }
               {
-                criteria = {app_id = "^chrome-calendar.google.com.*";};
+                criteria = { app_id = "^chrome-calendar.google.com.*"; };
                 command = "border pixel 1";
               }
               {
-                criteria = {app_id = "^chrome-.*.zoom.us.*";};
+                criteria = { app_id = "^chrome-.*.zoom.us.*"; };
                 command = "border pixel 1";
               }
               {
@@ -254,12 +263,16 @@ in
                 command = "border none, floating enable, move position center, move up 300px";
               }
               {
-                criteria = {app_id = "^.*";};
+                criteria = { app_id = "^.*"; };
                 command = "inhibit_idle fullscreen";
               }
               {
-                criteria = {class = "^.*";};
+                criteria = { class = "^.*"; };
                 command = "inhibit_idle fullscreen";
+              }
+              {
+                criteria = { app_id = "code-url-handler"; };
+                command = "border pixel 1";
               }
             ];
           };
@@ -276,22 +289,71 @@ in
           ];
         };
 
-        extraConfig = ''
-          bindswitch --reload --locked lid:on exec swaymsg output eDP-1 disable
-          bindswitch --reload --locked lid:off exec swaymsg output eDP-1 enable
+      extraConfig = ''
+        bindswitch --reload --locked lid:on exec swaymsg output eDP-1 disable
+        bindswitch --reload --locked lid:off exec swaymsg output eDP-1 enable
 
-          bindsym --to-code XF86AudioRaiseVolume exec 'pactl set-sink-volume @DEFAULT_SINK@ +5%'
-          bindsym --to-code XF86AudioLowerVolume exec 'pactl set-sink-volume @DEFAULT_SINK@ -5%'
-          bindsym --to-code XF86AudioMute exec 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
-          bindsym --to-code XF86AudioRewind exec 'playerctl previous'
-          bindsym --to-code XF86AudioPlay exec 'playerctl play-pause'
-          bindsym --to-code XF86AudioForward exec 'playerctl next'
+        bindsym --to-code XF86AudioRaiseVolume exec 'pactl set-sink-volume @DEFAULT_SINK@ +5%'
+        bindsym --to-code XF86AudioLowerVolume exec 'pactl set-sink-volume @DEFAULT_SINK@ -5%'
+        bindsym --to-code XF86AudioMute exec 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
+        bindsym --to-code XF86AudioRewind exec 'playerctl previous'
+        bindsym --to-code XF86AudioPlay exec 'playerctl play-pause'
+        bindsym --to-code XF86AudioForward exec 'playerctl next'
 
-          #seat * hide_cursor when-typing enable
-          seat * hide_cursor 5000
+        #seat * hide_cursor when-typing enable
+        seat * hide_cursor 5000
 
-          exec ${pkgs.xorg.xprop}/bin/xprop -root -f _XWAYLAND_GLOBAL_OUTPUT_SCALE 32c -set _XWAYLAND_GLOBAL_OUTPUT_SCALE 2
-        '';
-      };
+        exec ${pkgs.xorg.xprop}/bin/xprop -root -f _XWAYLAND_GLOBAL_OUTPUT_SCALE 32c -set _XWAYLAND_GLOBAL_OUTPUT_SCALE 2
+      '';
+
+      extraSessionCommands = ''
+        # TODO: deduplicate it with home.sessionVariables
+
+        # Disable HiDPI scaling for X apps
+        # https://wiki.archlinux.org/index.php/HiDPI#GUI_toolkits
+        export GDK_SCALE=2
+
+        export XDG_SESSION_TYPE=wayland
+        export XDG_SESSION_DESKTOP=sway
+        export MOZ_ENABLE_WAYLAND=1
+        # Tell toolkits to use wayland
+        export CLUTTER_BACKEND=wayland
+        export QT_QPA_PLATFORM=wayland-egl
+        export QT_QPA_PLATFORMTHEME=qt5ct
+        export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+        export ECORE_EVAS_ENGINE=wayland-egl
+        export ELM_ENGINE=wayland_egl
+        export SDL_VIDEODRIVER=wayland
+
+        # Fix Java
+        export _JAVA_AWT_WM_NONREPARENTING=1
+
+        export NO_AT_BRIDGE=1
+        export QT_AUTO_SCREEN_SCALE_FACTOR=0
+        export GTK_IM_MODULE=ibus
+        export QT_IM_MODULE=ibus
+        export XMODIFIERS=@im=ibus
+        export IBUS_DISCARD_PASSWORD_APPS='firefox,.*chrome.*'
+        export EDITOR=${config.settings.editor}
+        export VISUAL=${config.settings.editor}
+        export PAGER="less -R"
+        export TIME_STYLE="long-iso" # for core-utils
+        export DEFAULT_BROWSER="firefox"
+        export MOZ_ENABLE_WAYLAND=1
+        export MOZ_WEBRENDER=1
+        export _JAVA_AWT_WM_NONREPARENTING=1
+        export XDG_SESSION_TYPE="wayland"
+        export GDK_SCALE=2
+        export XCURSOR_SIZE=128
+        export GSETTINGS_SCHEMA_DIR="${pkgs.glib.getSchemaPath pkgs.gtk3}"
+
+        # Secrets storage
+        # TODO: use sops instead
+        export SECRETS_STORE=${cfg.secretsRootPath}
+
+        # Stores nix host profile name
+        export NIX_HOST=${cfg.machine}
+      '';
     };
-  }
+  };
+}
