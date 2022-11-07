@@ -113,6 +113,8 @@ printf '{ extensions = [\n'
 function list_extensions() {
 	$CODE --list-extensions
 	cat <<EXT
+	christian-kohler.path-intellisense
+	eamodio.gitlens
 EXT
 }
 

@@ -1,18 +1,51 @@
 {
+  // General Settings
+  // ---------------------------------------
+  // make vscode use keycodes rather than key names, everything is broken without it
+  "keyboard.dispatch": "keyCode",
+  // Theme configuration
+  "workbench.colorTheme": "GitHub Dark Dimmed",
   "editor.fontFamily": "SauceCodePro Nerd Font",
   "editor.fontSize": 12,
+  "window.menuBarVisibility": "toggle",
+  "window.autoDetectHighContrast": false,
+  "terminal.integrated.fontSize": 12,
+  "terminal.integrated.fontFamily": "SauceCodePro Nerd Font",
+  // Show suggestion in curernt line
   "editor.inlineSuggest.enabled": true,
-  "files.autoSave": "onFocusChange",
-  "files.insertFinalNewline": true,
-  "keyboard.dispatch": "keyCode",
-  "telemetry.telemetryLevel": "off",
+  // relative numbers to use with vim
+  "editor.lineNumbers": "relative",
+  // use external terminal
   "terminal.explorerKind": "external",
   "terminal.external.linuxExec": "foot",
-  "vscode-neovim.neovimExecutablePaths.linux": "/nix/store/1zs25kb4qrribqr2572q9w39capsi77a-vscode-neovim/bin/vscode-neovim",
-  "window.autoDetectHighContrast": false,
-  "window.menuBarVisibility": "hidden",
-  "workbench.colorTheme": "GitHub Dark Dimmed",
+  // don't bother me with tips
+  "workbench.tips.enabled": false,
+  // dont send my data to Microsoft
+  "telemetry.telemetryLevel": "off",
+  // scroll screen when cursor is near the edge
+  "editor.cursorSurroundingLines": 8,
+  // start with empty file
+  "workbench.startupEditor": "newUntitledFile",
+  "files.autoSave": "onFocusChange",
+  "files.insertFinalNewline": true,
   "workbench.editor.limit.enabled": true,
-  "workbench.settings.editor": "json",
-  "workbench.tips.enabled": false
+  "extensions.ignoreRecommendations": true,
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "search.useIgnoreFiles": true,
+  "search.useGlobalIgnoreFiles": true,
+  // ---------------------------------------
+  // Plugins confinguration
+  // ---------------------------------------
+  "gitlens.showWelcomeOnInstall": false,
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": false,
+    "markdown": false
+  },
+  "vscode-neovim.neovimExecutablePaths.linux": "/nix/store/1zs25kb4qrribqr2572q9w39capsi77a-vscode-neovim/bin/vscode-neovim",
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
 }

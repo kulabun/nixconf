@@ -18,10 +18,10 @@
       vscodeExtUniqueId = "esbenp.prettier-vscode";
     }
     {
-      name = "GitHub-copilot-1.55.7117";
+      name = "GitHub-copilot-1.56.7152";
       src = {
-        url = "https://github.gallerycdn.vsassets.io/extensions/github/copilot/1.55.7117/1666623974492/Microsoft.VisualStudio.Services.VSIXPackage";
-        sha256 = "11mmdimk1llq08kdn0hsi1n3rf3dnhm2awp2sp407mfk2xqr7ayk";
+        url = "https://github.gallerycdn.vsassets.io/extensions/github/copilot/1.56.7152/1666969671739/Microsoft.VisualStudio.Services.VSIXPackage";
+        sha256 = "00v8q0w0wx0ddynjckaqy22rddp744z5d2a1sc2j7zsqqm6jyqgm";
         name = "copilot-GitHub.zip";
       };
       vscodeExtUniqueId = "GitHub.copilot";
@@ -36,6 +36,15 @@
       vscodeExtUniqueId = "GitHub.github-vscode-theme";
     }
     {
+      name = "hashicorp-terraform-2.24.3";
+      src = {
+        url = "https://hashicorp.gallerycdn.vsassets.io/extensions/hashicorp/terraform/2.24.3/1665667707436/Microsoft.VisualStudio.Services.VSIXPackage";
+        sha256 = "121wwdg579yyfcjwl7xvd1l0vv3d4rlr1vj4yd25ah6r5kkq56p7";
+        name = "terraform-hashicorp.zip";
+      };
+      vscodeExtUniqueId = "hashicorp.terraform";
+    }
+    {
       name = "ms-azuretools-vscode-docker-1.22.2";
       src = {
         url = "https://ms-azuretools.gallerycdn.vsassets.io/extensions/ms-azuretools/vscode-docker/1.22.2/1666111139888/Microsoft.VisualStudio.Services.VSIXPackage";
@@ -45,22 +54,31 @@
       vscodeExtUniqueId = "ms-azuretools.vscode-docker";
     }
     {
-      name = "ms-python-python-2022.17.12981938";
+      name = "ms-python-python-2022.17.13020517";
       src = {
-        url = "https://ms-python.gallerycdn.vsassets.io/extensions/ms-python/python/2022.17.12981938/1666727209254/Microsoft.VisualStudio.Services.VSIXPackage";
-        sha256 = "0vq98jh0qflqdxrk9whkgw41gsh64v4nywc6d44q7h1ybg16f1mw";
+        url = "https://ms-python.gallerycdn.vsassets.io/extensions/ms-python/python/2022.17.13020517/1667020807043/Microsoft.VisualStudio.Services.VSIXPackage";
+        sha256 = "0ygh4qyygpbmv5iws14v1yf2k0c900ji0bvbfyj2z0hcb2s0zci6";
         name = "python-ms-python.zip";
       };
       vscodeExtUniqueId = "ms-python.python";
     }
     {
-      name = "ms-vscode-remote-remote-containers-0.261.0";
+      name = "ms-vscode-remote-remote-containers-0.262.0";
       src = {
-        url = "https://ms-vscode-remote.gallerycdn.vsassets.io/extensions/ms-vscode-remote/remote-containers/0.261.0/1666686179124/Microsoft.VisualStudio.Services.VSIXPackage";
-        sha256 = "0xl5vwc71i40fciniw4i1kpgcp0fk4mwnb8dj71qwvmdwglml45p";
+        url = "https://ms-vscode-remote.gallerycdn.vsassets.io/extensions/ms-vscode-remote/remote-containers/0.262.0/1666907134532/Microsoft.VisualStudio.Services.VSIXPackage";
+        sha256 = "14ssw7pnbbr32vfgim3lmxawwifbgx5znqr0i99g2892h9rm3d1g";
         name = "remote-containers-ms-vscode-remote.zip";
       };
       vscodeExtUniqueId = "ms-vscode-remote.remote-containers";
+    }
+    {
+      name = "rust-lang-rust-analyzer-0.4.1265";
+      src = {
+        url = "https://rust-lang.gallerycdn.vsassets.io/extensions/rust-lang/rust-analyzer/0.4.1265/1667177392574/Microsoft.VisualStudio.Services.VSIXPackage";
+        sha256 = "0q3c2ff0i3jhxgk20vy3d25x61iqxzhhg87nmddcsa18f3w2nb0i";
+        name = "rust-analyzer-rust-lang.zip";
+      };
+      vscodeExtUniqueId = "rust-lang.rust-analyzer";
     }
     {
       name = "VisualStudioExptTeam-intellicode-api-usage-examples-0.2.6";
@@ -81,22 +99,22 @@
       vscodeExtUniqueId = "VisualStudioExptTeam.vscodeintellicode";
     }
     {
-      name = "HashiCorp-terraform-2.24.3";
+      name = "christian-kohler-path-intellisense-2.8.1";
       src = {
-        url = "https://hashicorp.gallerycdn.vsassets.io/extensions/hashicorp/terraform/2.24.3/1665667707436/Microsoft.VisualStudio.Services.VSIXPackage";
-        sha256 = "121wwdg579yyfcjwl7xvd1l0vv3d4rlr1vj4yd25ah6r5kkq56p7";
-        name = "terraform-HashiCorp.zip";
+        url = "https://christian-kohler.gallerycdn.vsassets.io/extensions/christian-kohler/path-intellisense/2.8.1/1654770568656/Microsoft.VisualStudio.Services.VSIXPackage";
+        sha256 = "1j7q4mzj173sl6xl3zjw40hnqvyqsrsczakmv63066k4k0rb6clm";
+        name = "path-intellisense-christian-kohler.zip";
       };
-      vscodeExtUniqueId = "HashiCorp.terraform";
+      vscodeExtUniqueId = "christian-kohler.path-intellisense";
     }
     {
-      name = "rust-lang-rust-analyzer-0.4.1260";
+      name = "eamodio-gitlens-2022.10.2605";
       src = {
-        url = "https://rust-lang.gallerycdn.vsassets.io/extensions/rust-lang/rust-analyzer/0.4.1260/1666745150870/Microsoft.VisualStudio.Services.VSIXPackage";
-        sha256 = "0c62ww08ayl6k9zg73lgvs8kzgp0vbq5zinplkbnsmvpmv04xvpw";
-        name = "rust-analyzer-rust-lang.zip";
+        url = "https://eamodio.gallerycdn.vsassets.io/extensions/eamodio/gitlens/2022.10.2605/1666775345449/Microsoft.VisualStudio.Services.VSIXPackage";
+        sha256 = "1kz7v9w10zd6dnhbxavcy2kns27p3nh18aq181ch5hvkbgn3140d";
+        name = "gitlens-eamodio.zip";
       };
-      vscodeExtUniqueId = "rust-lang.rust-analyzer";
+      vscodeExtUniqueId = "eamodio.gitlens";
     }
 ];
 }

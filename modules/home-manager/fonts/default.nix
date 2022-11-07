@@ -13,6 +13,8 @@ with mylib; {
   config = mkIf config.settings.fonts.enable {
     home.packages = with pkgs; [
       font-awesome
+      font-vscode-codicons
+
       (nerdfonts.override {
         fonts = [
           "DroidSansMono"

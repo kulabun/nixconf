@@ -1,0 +1,50 @@
+{
+  "extensions": [
+    {
+      "publisher": "asvetliakov",
+      "extension": "vscode-neovim"
+    },
+    {
+      "publisher": "esbenp",
+      "extension": "prettier-vscode"
+    },
+    {
+      "publisher": "GitHub",
+      "extension": "copilot"
+    },
+    {
+      "publisher": "GitHub",
+      "extension": "github-vscode-theme"
+    },
+    {
+      "publisher": "hashicorp",
+      "extension": "terraform",
+      "arch": "linux-x64"
+    },
+    {
+      "publisher": "ms-azuretools",
+      "extension": "vscode-docker"
+    },
+    {
+      "publisher": "ms-python",
+      "extension": "python"
+    },
+    {
+      "publisher": "ms-vscode-remote",
+      "extension": "remote-containers"
+    },
+    {
+      "publisher": "rust-lang",
+      "extension": "rust-analyzer",
+      "arch": "linux-x64"
+    },
+    {
+      "publisher": "VisualStudioExptTeam",
+      "extension": "intellicode-api-usage-examples"
+    },
+    {
+      "publisher": "VisualStudioExptTeam",
+      "extension": "vscodeintellicode"
+    }
+  ]
+}
