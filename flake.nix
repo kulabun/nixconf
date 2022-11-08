@@ -2,7 +2,7 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-22.05";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
-    rust-overlay.url = "github:oxalica/rust-overlay";
+    # rust-overlay.url = "github:oxalica/rust-overlay";
     # helix-master = {
     #   url = "github:helix-editor/helix";
     #   inputs.nixpkgs.follows = "nixpkgs";
@@ -41,7 +41,7 @@
 
     pkgs = mkPkgs nixpkgs [
       (import ./overlay)
-      (import inputs.rust-overlay)
+      # (import inputs.rust-overlay)
       (import inputs.neovim-nightly-overlay)
       # (import inputs.helix-master)
     ];
