@@ -75,7 +75,7 @@ packer.startup(function(use)
   })
   -- add icons to autocomplete menu
   use({
-   "onsails/lspkind.nvim",
+    "onsails/lspkind.nvim",
     config = require("klabun.plugins.lspkind").config,
   })
 
@@ -189,6 +189,14 @@ packer.startup(function(use)
       "neovim/nvim-lspconfig",
     },
     config = require("klabun.plugins.nullls").config,
+  })
+
+  -- -----------------------------------------------
+  -- Editing
+  -- -----------------------------------------------
+  use({
+    "kylechui/nvim-surround",
+    config = require("klabun.plugins.surround").config,
   })
 
   -- -----------------------------------------------

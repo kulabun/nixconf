@@ -44,7 +44,7 @@
     "plaintext": false,
     "markdown": false
   },
-  "vscode-neovim.neovimExecutablePaths.linux": "/nix/store/1zs25kb4qrribqr2572q9w39capsi77a-vscode-neovim/bin/vscode-neovim",
+  "vscode-neovim.neovimExecutablePaths.linux": "/nix/store/spn60fx3wncs6rhk7xzs1mfn4rvjpsxi-user-environment/bin/vscode-neovim",
   "extensions.experimental.affinity": {
     "asvetliakov.vscode-neovim": 1
   },

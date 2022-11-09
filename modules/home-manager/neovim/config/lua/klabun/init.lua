@@ -2,6 +2,7 @@ require 'klabun.options'
 require 'klabun.core'
 require 'klabun.mappings'
 require 'klabun.plugins'
+require 'klabun.autocmds'
 
 function P(...)
     local objects = vim.tbl_map(vim.inspect, {...})

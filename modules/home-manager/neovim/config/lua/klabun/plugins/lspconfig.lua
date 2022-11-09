@@ -10,8 +10,21 @@ M.config = function()
 		"rnix",
 		-- rust
 		"rust_analyzer",
-
+		-- python
+		"pylsp",
+		-- go
+		"gopls",
+		-- javascript
+		"eslint",
+		-- typescript
+		"tsserver",
+		-- html
+		"html",
+		-- css
+		"cssls",
+    -- json
 		"jsonls",
+		-- yaml
 		"yamlls",
 	}
 	has_cmp, cmp = pcall(require, "cmp_nvim_lsp")

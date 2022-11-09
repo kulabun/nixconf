@@ -64,7 +64,7 @@ with mylib; {
 
       shellAliases = {
         ls = "exa --color=auto";
-        l = "ls -lh --icons";
+        l = "exa --color=auto --group-directories-first --classify --icons -lh";
         ll = "l -a";
         cat = "bat --plain";
         grep = "grep --color=auto";
