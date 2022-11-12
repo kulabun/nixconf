@@ -7,6 +7,7 @@ vim.api.nvim_set_keymap("n", "<F1>", "<cmd>Neotree filesystem toggle left<cr>", 
 -- Terminal
 vim.api.nvim_set_keymap("n", "<F2>", "<cmd>ToggleTerm<cr>", { noremap = true })
 vim.api.nvim_set_keymap("t", "<F2>", "<cmd>ToggleTerm<cr>", { noremap = true })
+vim.api.nvim_set_keymap("t", "<S-Esc>", "<C-\\><C-n>", { noremap = true })
 
 ------------------------------------------------------------------------------------------------
 -- Bufferline
@@ -84,3 +85,9 @@ vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, {})
 local telescope = require("telescope.builtin")
 vim.keymap.set("n", "<leader>tf", telescope.find_files, {})
 vim.keymap.set("n", "<leader>th", telescope.help_tags, {})
+
+-- Ex-mode Abbreviations
+vim.cmd([[ca "q wq]])
+vim.cmd([[ca ps PackerSync]])
+vim.cmd([[ca ls LspInfo]])
+

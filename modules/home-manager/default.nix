@@ -107,8 +107,8 @@ in
         foot.enable = true;
 
         sway = {
-          #terminal = "${pkgs.foot}/bin/footclient";
-          terminal = "${pkgs.kitty}/bin/kitty";
+          terminal = "${pkgs.foot}/bin/footclient";
+          # terminal = "${pkgs.kitty}/bin/kitty";
         };
 
         sway.font = {
