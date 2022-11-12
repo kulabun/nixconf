@@ -34,6 +34,7 @@ in
       ./helix
       ./home-manager
       ./jetbrains
+      ./kitty
       ./lorri
       ./navi
       ./neovim
@@ -81,6 +82,7 @@ in
         jetbrains = {
           idea-community.enable = true;
         };
+        kitty.enable = true;
         lorri.enable = true;
         navi.enable = true;
         neovim.enable = true;
@@ -104,11 +106,20 @@ in
         mako.enable = true;
         foot.enable = true;
 
+        sway = {
+          #terminal = "${pkgs.foot}/bin/footclient";
+          terminal = "${pkgs.kitty}/bin/kitty";
+        };
+
         sway.font = {
           name = "SauceCodePro Nerd Font";
           size = 9;
         };
         foot.font = {
+          name = "SauceCodePro Nerd Font";
+          size = 9;
+        };
+        kitty.font = {
           name = "SauceCodePro Nerd Font";
           size = 9;
         };

@@ -13,6 +13,7 @@ vim.opt.history = 100 -- Number of commands to remember in a history table
 vim.opt.ignorecase = true -- Case insensitive searching
 vim.opt.laststatus = 3 -- globalstatus
 vim.opt.lazyredraw = true -- lazily redraw screen
+-- vim.opt.listchars = { tab = "->", space = "⋅", eol = "↴" } -- Replace invisible characters with provided
 vim.opt.listchars = { tab = "->", space = " ", trail = "·" } -- Replace invisible characters with provided
 vim.opt.list = true -- Show invisible characters
 vim.opt.mouse = "" -- Disable mouse support 
@@ -43,34 +44,16 @@ vim.opt.whichwrap = "" -- Don't wrap line on movement
 vim.opt.wildignorecase = true -- Ignore case on file path completion
 vim.opt.wrap = true -- Visually wraps line into two when it's longer then display width
 vim.opt.writebackup = false -- Disable making a backup before overwriting a file
-
+                           
 vim.g.autoformat_enabled = true -- enable or disable auto formatting at start (lsp.formatting.format_on_save must be enabled)
 vim.g.autopairs_enabled = true -- enable autopairs at start
 vim.g.cmp_enabled = true -- enable completion at start
 vim.g.diagnostics_enabled = true -- enable diagnostics at start
 vim.g.highlighturl_enabled = true -- highlight URLs by default
 vim.g.icons_enabled = true -- disable icons in the UI (disable if no nerd font is available)
-vim.g.load_black = false -- disable black
-vim.g.loaded_2html_plugin = true -- disable 2html
-vim.g.loaded_getscriptPlugin = true -- disable getscript
-vim.g.loaded_getscript = true -- disable getscript
-vim.g.loaded_gzip = true -- disable gzip
-vim.g.loaded_logipat = true -- disable logipat
-vim.g.loaded_matchit = true -- disable matchit
-vim.g.loaded_netrwFileHandlers = true -- disable netrw
-vim.g.loaded_netrwPlugin = true -- disable netrw
-vim.g.loaded_netrwSettngs = true -- disable netrw
-vim.g.loaded_remote_plugins = true -- disable remote plugins
-vim.g.loaded_tarPlugin = true -- disable tar
-vim.g.loaded_tar = true -- disable tar
-vim.g.loaded_vimballPlugin = true -- disable vimball
-vim.g.loaded_vimball = true -- disable vimball
-vim.g.loaded_zipPlugin = true -- disable zip
-vim.g.loaded_zip = true -- disable zip
 vim.g.mapleader = " " -- set leader key
-vim.g.status_diagnostics_enabled = true -- enable diagnostics in statusline
-vim.g.zipPlugin = false -- disable zip
 vim.g.nolazyredraw = true -- Don't redraw while executing macros
+vim.g.status_diagnostics_enabled = true -- enable diagnostics in statusline
 
 vim.cmd([[
   set nolazyredraw

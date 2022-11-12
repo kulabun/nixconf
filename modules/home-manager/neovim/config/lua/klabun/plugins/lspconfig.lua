@@ -22,7 +22,7 @@ M.config = function()
 		"html",
 		-- css
 		"cssls",
-    -- json
+		-- json
 		"jsonls",
 		-- yaml
 		"yamlls",
@@ -30,10 +30,16 @@ M.config = function()
 	has_cmp, cmp = pcall(require, "cmp_nvim_lsp")
 	local lsp_config = {}
 	if has_cmp then
-	  lsp_config["capabilities"] = cmp.default_capabilities()
+		lsp_config["capabilities"] = cmp.default_capabilities()
 	end
 	for _, lsp in ipairs(servers) do
 		require("lspconfig")[lsp].setup(lsp_config)
+	end
+
+	local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+	for type, icon in pairs(signs) do
+		local hl = "DiagnosticSign" .. type
+		vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 	end
 end
 

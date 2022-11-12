@@ -7,6 +7,7 @@
 }: let
   toFloat = x: x + 0.0;
   font = config.settings.sway.font;
+  terminal = config.settings.sway.terminal;
 in
   with lib;
   with mylib; {
@@ -14,6 +15,7 @@ in
       settings.sway = {
         enable = mylib.mkEnableOpt "sway";
         font = mylib.mkFontOpt "sway";
+        terminal = mylib.mkStrOpt "sway";
       };
     };
 
@@ -38,7 +40,7 @@ in
           right = "l";
           mod = "Mod4";
           #terminal = "${pkgs.foot}/bin/foot";
-          terminal = "${pkgs.foot}/bin/footclient";
+          #terminal = "${pkgs.foot}/bin/footclient";
         in {
           modifier = "${mod}";
           terminal = "${terminal}";

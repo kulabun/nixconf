@@ -1,8 +1,8 @@
 M = {}
 
 M.config = function()
-  require('lspkind').init({
-    -- preset = 'codicons',
+  require("lspkind").init({
+    preset = "codicons",
   })
 end
 

@@ -6,7 +6,7 @@ M = {
           enabled = false
         },
       },
-    })
+   })
   end,
 }
 

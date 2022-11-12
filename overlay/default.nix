@@ -31,7 +31,7 @@ in {
       ];
   });
 
-  font-vscode-codicons = callPackage (import ./codicons.nix) {};
+  # font-vscode-codicons = callPackage (import ./codicons.nix) {};
 
   #jetbrains.idea-community = super.jetbrains.idea-community.overrideAttrs (old: rec {
   #  version = "2022.2.3";

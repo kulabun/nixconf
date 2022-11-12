@@ -47,7 +47,7 @@ packer.startup(function(use)
   --   config = require("klabun.plugins.sonokai").config,
   -- })
 
-  -- natifications, popups
+  -- notifications, popups
   use({
     "folke/noice.nvim",
     requires = {
@@ -59,6 +59,10 @@ packer.startup(function(use)
   -- statusbar and tabline
   use({
     "rebelot/heirline.nvim",
+    requires = {
+      "kyazdani42/nvim-web-devicons",
+      "lewis6991/gitsigns.nvim",
+    },
     config = require("klabun.plugins.heirline").config,
   })
   -- display LSP status
@@ -78,6 +82,19 @@ packer.startup(function(use)
     "onsails/lspkind.nvim",
     config = require("klabun.plugins.lspkind").config,
   })
+  use({
+    "akinsho/bufferline.nvim",
+    requires = "kyazdani42/nvim-web-devicons",
+    config = require("klabun.plugins.bufferline").config,
+  })
+  -- use({
+  --   "feline-nvim/feline.nvim",
+  --   requires = {
+  --     "kyazdani42/nvim-web-devicons",
+  --     "lewis6991/gitsigns.nvim",
+  --   },
+  --   config = require("klabun.plugins.feline").config,
+  -- })
 
   -- -----------------------------------------------
   -- Git
@@ -115,7 +132,21 @@ packer.startup(function(use)
   -- -----------------------------------------------
   use({
     "nvim-treesitter/nvim-treesitter",
+    requires = {
+      "nvim-treesitter/nvim-treesitter-textobjects",
+      "nvim-treesitter/nvim-treesitter-refactor",
+      "nvim-treesitter/nvim-treesitter-context",
+      "nvim-treesitter/playground",
+    },
     config = require("klabun.plugins.treesitter").config,
+  })
+  use({
+    "folke/todo-comments.nvim", 
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "folke/trouble.nvim",
+    },
+    config = require("klabun.plugins.todocomments").config,
   })
 
   -- -----------------------------------------------
@@ -197,6 +228,15 @@ packer.startup(function(use)
   use({
     "kylechui/nvim-surround",
     config = require("klabun.plugins.surround").config,
+  })
+
+  -- -----------------------------------------------
+  -- Editing
+  -- -----------------------------------------------
+  use({
+    "weilbith/nvim-code-action-menu",
+    cmd = "CodeActionMenu",
+    config = require("klabun.plugins.codeactionmenu").config,
   })
 
   -- -----------------------------------------------

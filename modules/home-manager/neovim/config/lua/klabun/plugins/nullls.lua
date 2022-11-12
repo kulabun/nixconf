@@ -48,7 +48,7 @@ M = {
 				-- lua
 				null_ls.builtins.diagnostics.luacheck.with({ extra_args = { "--global vim" } }),
 				-- todo comments
-				null_ls.builtins.diagnostics.todo_comments,
+				-- null_ls.builtins.diagnostics.todo_comments,
 
 				-- ----------------------------------------------------
 				-- Code Actions
@@ -61,7 +61,6 @@ M = {
 				null_ls.builtins.code_actions.shellcheck,
 				-- git
 				null_ls.builtins.code_actions.gitsigns,
-				null_ls.builtins.code_actions.gitrebase,
 
 				-- ----------------------------------------------------
 				-- Completions
