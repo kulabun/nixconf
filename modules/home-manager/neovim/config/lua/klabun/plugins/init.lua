@@ -238,6 +238,9 @@ packer.startup(function(use)
     cmd = "CodeActionMenu",
     config = require("klabun.plugins.codeactionmenu").config,
   })
+  -- use({
+  --   "andymass/vim-matchup",
+  -- })
 
   -- -----------------------------------------------
   -- Completion

@@ -1,7 +1,7 @@
 require 'klabun.options'
 require 'klabun.core'
-require 'klabun.mappings'
 require 'klabun.plugins'
+require 'klabun.mappings'
 require 'klabun.autocmds'
 
 function P(...)

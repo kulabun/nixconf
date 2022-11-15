@@ -140,7 +140,7 @@ local Diagnostics = {
   update = { "DiagnosticChanged", "BufEnter" },
   hl = { bg = "bg_dark" },
 
-  Split,
+  Space,
   {
     provider = function()
       local errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
@@ -173,6 +173,7 @@ local Diagnostics = {
     end,
     hl = { fg = "yellow" },
   },
+  Split,
 }
 local FileEncoding = {
   Split,
@@ -369,12 +370,12 @@ M.statusline = function()
         local mode = vim.fn.mode(1) -- :h mode()
         return mode ~= "t" and mode ~= "nt"
       end,
-      Git,
       Diagnostics,
-      Location,
+      Git,
 
       Align,
 
+      Location,
       LanguageServer,
       M.linter(),
       M.formatter(),
