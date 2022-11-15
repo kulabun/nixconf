@@ -62,6 +62,8 @@ packer.startup(function(use)
     requires = {
       "kyazdani42/nvim-web-devicons",
       "lewis6991/gitsigns.nvim",
+      "jose-elias-alvarez/null-ls.nvim",
+      "github/copilot.vim",
     },
     config = require("klabun.plugins.heirline").config,
   })
