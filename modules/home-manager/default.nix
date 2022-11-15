@@ -21,6 +21,7 @@ with lib; {
     ./awscli2
     ./btop
     ./dev-tools
+    ./firefox
     ./fish
     ./flameshot
     ./fonts
@@ -70,16 +71,17 @@ with lib; {
       awscli2.enable = true;
       btop.enable = true;
       dev-tools.enable = true;
+      # firefox.enable = false;
       fish.enable = true;
       flameshot.enable = true;
       gh.enable = true;
       git.enable = true;
       go-chromecast.enable = true;
-      google-chrome.enable = false;
+      # google-chrome.enable = false;
       google-cloud-sdk.enable = true;
       gpg.enable = true;
       gtk.enable = true;
-      helix.enable = false;
+      # helix.enable = false;
       home-manager.enable = true;
       jetbrains = {
         idea-community.enable = true;
@@ -92,15 +94,15 @@ with lib; {
       rclone.enable = true;
       rofi.enable = true;
       scripts.enable = true;
-      slack.enable = false;
+      # slack.enable = false;
       ssh.enable = true;
       taskwarrior.enable = true;
       terraform.enable = true;
       tig.enable = true;
-      ulauncher.enable = false; # broken on nixos
+      # ulauncher.enable = false; # broken on nixos
       vscode.enable = true;
       xdg.enable = true;
-      zoom-us.enable = false; # broken on wayland
+      # zoom-us.enable = false; # broken on wayland
       zsh.enable = true;
 
       sway.enable = true;

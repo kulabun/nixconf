@@ -1,9 +1,8 @@
-{
-  config,
-  pkgs,
-  ...
+{ config
+, pkgs
+, ...
 }: rec {
-  imports = [../../../modules/home-manager];
+  imports = [ ../../../modules/home-manager ];
 
   settings = {
     user = "konstantin";
@@ -14,7 +13,7 @@
   home = {
     enableNixpkgsReleaseCheck = true;
 
-    packages = with pkgs; [];
+    packages = with pkgs; [ ];
 
     # file = {
     #   #".config/ulauncher".source = ~/dotfiles/config/ulauncher;
@@ -27,5 +26,10 @@
     # };
   };
 
-  programs = {ssh.includes = ["${settings.secretsRootPath}/ssh/config"];};
+  programs = { ssh.includes = [ "${settings.secretsRootPath}/ssh/config" ]; };
+
+  wayland.windowManager.sway = {
+    package = null; # Package is installed with nixos. Dont install duplicate.
+    # Enable sway-session.target to link to graphical-session.target for systemd
+  };
 }

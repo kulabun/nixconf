@@ -28,7 +28,7 @@ in
       };
       wayland.windowManager.sway = {
         enable = true;
-        package = null; # Package is installed with nixos. Dont install duplicate.
+        # package = null; # Package is installed with nixos. Dont install duplicate.
         # Enable sway-session.target to link to graphical-session.target for systemd
         systemdIntegration = true;
         wrapperFeatures.gtk = true;
@@ -45,7 +45,8 @@ in
           modifier = "${mod}";
           terminal = "${terminal}";
 
-          workspaceLayout = "stacking";
+          # only default layout allow no borders
+          # workspaceLayout = "stacking";
           defaultWorkspace = "workspace 1";
 
           fonts = {
@@ -287,6 +288,10 @@ in
             {
               app_id = "firefox";
               title = "Password Required";
+            }
+            {
+              app_id = "firefox";
+              title = "About Mozilla Firefox";
             }
           ];
         };
