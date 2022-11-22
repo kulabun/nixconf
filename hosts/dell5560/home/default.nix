@@ -14,6 +14,10 @@ in
     enableNixpkgsReleaseCheck = true;
     packages = with pkgs; [ consul vault gcc cvm gr venv ];
     # packages = with pkgs; [ consul vault gcc cvm gr venv xwayland wlroots glib wayland ];
+    sessionVariables = {
+      GDK_SCALE = 2;
+      XCURSOR_SIZE = 128;
+    };
   };
 
   settings = {
@@ -31,6 +35,7 @@ in
       initExtra = ''
         [ -e "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
         [ -e /home/klabun/.nix-profile/etc/profile.d/nix.sh ] && . /home/klabun/.nix-profile/etc/profile.d/nix.sh;
+        export GDK_SCALE=1
       '';
       shellAliases = {
         ind = "f(){local project=$(ls $HOME/indeed | fzf); [ -n \"$project\" ] && cd \"$HOME/indeed/$project\"};f;unset -f f";

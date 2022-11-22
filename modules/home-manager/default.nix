@@ -174,8 +174,6 @@ with lib; {
         MOZ_WEBRENDER = 1;
         _JAVA_AWT_WM_NONREPARENTING = 1;
         XDG_SESSION_TYPE = "wayland";
-        GDK_SCALE = 2;
-        XCURSOR_SIZE = 128;
         GSETTINGS_SCHEMA_DIR = "${pkgs.glib.getSchemaPath pkgs.gtk3}";
 
         # Secrets storage

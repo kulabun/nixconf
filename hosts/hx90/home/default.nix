@@ -13,6 +13,10 @@
   home = {
     enableNixpkgsReleaseCheck = true;
 
+    sessionVariables = {
+      GDK_SCALE = 2;
+      XCURSOR_SIZE = 128;
+    };
     packages = with pkgs; [ ];
 
     # file = {
