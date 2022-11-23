@@ -142,16 +142,12 @@ with mylib; {
           systemd-cat --identifier=sway ${pkgs.sway}/bin/sway
         fi
 
-        if [ -f "$HOME/.zprofile.local" ]; then
-          source "$HOME/.zprofile.local"
-        fi
+        [ -f "$HOME/.zprofile.local" ] && source "$HOME/.zprofile.local"
       '';
 
       initExtra = ''
         #NIX_PROFILES=${config.home.profileDirectory}
-        if [ -f "$HOME/.zshrc.local" ]; then
-          source "$HOME/.zshrc.local"
-        fi
+        [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
 
         function unbind() {
           if bindkey "$1" > /dev/null; then

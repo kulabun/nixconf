@@ -5,6 +5,7 @@
   mylib,
   ...
 }: let
+  cfg = config.settings;
 in
   with lib;
   with mylib; {
@@ -17,6 +18,7 @@ in
         enable = true;
         forwardAgent = true;
         matchBlocks."*".identitiesOnly = true;
+        includes = [ "${cfg.secretsRootPath}/ssh/config" "~/.ssh/config.local" ];
         #includes = [ "config.local" ];
       };
     };

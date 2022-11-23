@@ -7,12 +7,13 @@ let
   cvm = pkgs.writeShellScriptBin "cvm" (builtins.readFile ./scripts/cvm.sh);
   gr = pkgs.writeShellScriptBin "gr" (builtins.readFile ./scripts/gr.sh);
   venv = pkgs.writeShellScriptBin "venv" (builtins.readFile ./scripts/venv.sh);
+  fix-ubuntu-sway = pkgs.writeShellScriptBin "fix-ubuntu-sway" (builtins.readFile ./scripts/fix-ubuntu-sway.sh);
 in
 {
   imports = [ ../../../modules/home-manager ];
   home = {
     enableNixpkgsReleaseCheck = true;
-    packages = with pkgs; [ consul vault gcc cvm gr venv ];
+    packages = with pkgs; [ consul vault gcc cvm gr venv fix-ubuntu-sway ];
     # packages = with pkgs; [ consul vault gcc cvm gr venv xwayland wlroots glib wayland ];
     sessionVariables = {
       GDK_SCALE = 2;
@@ -27,13 +28,13 @@ in
   };
 
   programs = {
-    ssh.includes = [ "${cfg.secretsRootPath}/ssh/config" "~/.ssh/config.local" ];
+    # ssh.includes = [ "${cfg.secretsRootPath}/ssh/config" "~/.ssh/config.local" ];
     zsh = {
       profileExtra = ''
-        [ -e "$HOME/.zprofile.local" ] && source "$HOME/.zprofile.local"
+        # [ -e "$HOME/.zprofile.local" ] && source "$HOME/.zprofile.local"
       '';
       initExtra = ''
-        [ -e "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
+        # [ -e "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
         [ -e /home/klabun/.nix-profile/etc/profile.d/nix.sh ] && . /home/klabun/.nix-profile/etc/profile.d/nix.sh;
         export GDK_SCALE=1
       '';
