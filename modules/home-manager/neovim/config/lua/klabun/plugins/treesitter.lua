@@ -9,6 +9,8 @@ M = {
 
     treesitter.setup({
       ensure_installed = {
+        "vim",
+
         -- programming
         "bash",
         "lua",
@@ -21,6 +23,7 @@ M = {
 
         -- documents
         "markdown",
+        "markdown_inline",
 
         -- data representation
         "json",

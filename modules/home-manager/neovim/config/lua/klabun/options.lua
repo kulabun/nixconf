@@ -54,6 +54,10 @@ vim.g.icons_enabled = true -- disable icons in the UI (disable if no nerd font i
 vim.g.mapleader = " " -- set leader key
 vim.g.nolazyredraw = true -- Don't redraw while executing macros
 vim.g.status_diagnostics_enabled = true -- enable diagnostics in statusline
+vim.g.loaded_node_provider = 0
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_ruby_provider = 0
 
 vim.cmd([[
   set nolazyredraw

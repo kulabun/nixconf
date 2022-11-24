@@ -30,7 +30,6 @@ M.config = function()
       { name = "nvim_lsp", priority = 1000 }, -- lsp based completion
       { name = "calc", priority = 300 }, -- calculator
       { name = "buffer", priority = 200 }, -- buffer based completion
-      { name = "emoji", priority = 100 }, -- smiles
     },
   })
 end

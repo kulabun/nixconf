@@ -1,9 +1,14 @@
 M = {
   config = function()
-    require("which-key").setup {
-
+    local cfg = {
+      key_labels = {
+        ["<space>"] = "SPC",
+        ["<cr>"] = "RET",
+        ["<tab>"] = "TAB",
+      },
     }
-    end
+    require("which-key").setup(cfg)
+  end,
 }
 
 return M
