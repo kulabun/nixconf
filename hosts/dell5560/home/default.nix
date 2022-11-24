@@ -1,5 +1,6 @@
 { config
 , pkgs
+, pkgs'
 , ...
 }:
 let
@@ -17,17 +18,103 @@ in
   home = {
     enableNixpkgsReleaseCheck = true;
     packages = with pkgs; [ consul vault gcc cvm gr venv fix-ubuntu-sway ];
-    # packages = with pkgs; [ consul vault gcc cvm gr venv xwayland wlroots glib wayland ];
-    sessionVariables = {
-      GDK_SCALE = 2;
-      XCURSOR_SIZE = 128;
-    };
+    # packages = with pkgs; [ consul vault gcc cvm gr venv fix-ubuntu-sway xwayland wlroots glib wayland ];
+    # packages = with pkgs; [ consul vault gcc cvm gr venv fix-ubuntu-sway xwayland wlroots glib wayland xdg-desktop-portal-wlr xdg-desktop-portal-gtk xorg.xprop pipewire pipewire-media-session ];
   };
 
   settings = {
-    # slack.enable = true;
-    # zoom-us.enable = true;
-    # firefox.enable = true;
+    user = "klabun";
+    machine = "dell5560";
+    secretsRootPath = "/home/klabun/secrets";
+
+    editor = "nvim";
+
+    fonts.enable = true;
+
+    awscli2.enable = true;
+    btop.enable = true;
+    dev-tools.enable = true;
+    # firefox.enable = false;
+    fish.enable = true;
+    flameshot.enable = true;
+    gh.enable = true;
+    git.enable = true;
+    # go-chromecast.enable = true;
+    # google-chrome.enable = false;
+    # google-cloud-sdk.enable = true;
+    gpg.enable = true;
+    gtk.enable = true;
+    # helix.enable = false;
+    home-manager.enable = true;
+    #jetbrains.idea-community.enable = true; # Disable for now till I mirgrate from toolbox
+    #jetbrains.idea-ultimate.enable = true;
+    #kitty.enable = true;
+    lorri.enable = true;
+    navi.enable = true;
+    neovim.enable = true;
+    qmk.enable = true;
+    rclone.enable = true;
+    rofi.enable = true;
+    scripts.enable = true;
+    # slack.enable = false;
+    ssh.enable = true;
+    taskwarrior.enable = true;
+    terraform.enable = true;
+    tig.enable = true;
+    # ulauncher.enable = false; # broken on nixos
+    vscode.enable = true;
+    webapps.google-calendar.enable = true;
+    webapps.google-drive.enable = true;
+    webapps.google-keep.enable = true;
+    webapps.google-mail.enable = true;
+    # webapps.google-photos.enable = false;
+    # webapps.telegram.enable = false;
+    # webapps.whatsapp.enable = false;
+    webapps.youtube-music.enable = true;
+    xdg.enable = true;
+    # zoom-us.enable = false; # broken on wayland
+    zsh.enable = true;
+
+    sway.enable = true;
+    waybar.enable = true;
+    swayidle.enable = true;
+    swaylock.enable = true;
+    mako.enable = true;
+    foot.enable = true;
+
+    sway = {
+      terminal = "${pkgs.foot}/bin/footclient";
+      # terminal = "${pkgs.kitty}/bin/kitty";
+    };
+
+    sway.font = {
+      name = "SauceCodePro Nerd Font";
+      size = 9;
+    };
+    foot.font = {
+      name = "SauceCodePro Nerd Font";
+      size = 9;
+    };
+    kitty.font = {
+      name = "SauceCodePro Nerd Font";
+      size = 9;
+    };
+    waybar.font = {
+      name = "SauceCodePro Nerd Font";
+      size = 10;
+    };
+    rofi.font = {
+      name = "JetBrainsMono Nerd Font";
+      size = 9;
+    };
+    mako.font = {
+      name = "JetBrainsMono Nerd Font";
+      size = 9;
+    };
+    vscode.font = {
+      name = "SauceCodePro Nerd Font";
+      size = 12;
+    };
   };
 
   programs = {
@@ -35,11 +122,18 @@ in
     zsh = {
       profileExtra = ''
         # [ -e "$HOME/.zprofile.local" ] && source "$HOME/.zprofile.local"
+        # export WLR_NO_HARDWARE_CURSORS=1
+        # if [ -z $DISPLAY ] && [ $TTY = "/dev/tty1" ]; then
+        #   # https://wiki.archlinux.org/title/Sway#Automatically_on_TTY_login
+        #   # Disabled as managing sway from homemanager turned out to be a bad idea.
+        #   # Remove slash before dollar sign to start using it.
+        #   systemd-cat --identifier=sway ${pkgs.sway}/bin/sway
+        # fi
       '';
       initExtra = ''
         # [ -e "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
+        #export GDK_SCALE=1
         [ -e /home/klabun/.nix-profile/etc/profile.d/nix.sh ] && . /home/klabun/.nix-profile/etc/profile.d/nix.sh;
-        export GDK_SCALE=1
       '';
       shellAliases = {
         ind = "f(){local project=$(ls $HOME/indeed | fzf); [ -n \"$project\" ] && cd \"$HOME/indeed/$project\"};f;unset -f f";

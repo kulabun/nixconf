@@ -1,9 +1,9 @@
-{
-  config,
-  pkgs,
-  lib,
-  mylib,
-  ...
+{ config
+, pkgs
+, pkgs'
+, lib
+, mylib
+, ...
 }:
 with lib;
 with mylib; {
@@ -12,6 +12,8 @@ with mylib; {
   };
 
   config = mkIf config.settings.google-chrome.enable {
-    home.packages = with pkgs; [google-chrome];
+    home.packages = with pkgs; [
+      google-chrome
+    ];
   };
 }

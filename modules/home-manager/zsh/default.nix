@@ -135,13 +135,6 @@ with mylib; {
       };
 
       profileExtra = ''
-        if [ -z $DISPLAY ] && [ $TTY = "/dev/tty1" ]; then
-          # https://wiki.archlinux.org/title/Sway#Automatically_on_TTY_login
-          # Disabled as managing sway from homemanager turned out to be a bad idea.
-          # Remove slash before dollar sign to start using it.
-          systemd-cat --identifier=sway ${pkgs.sway}/bin/sway
-        fi
-
         [ -f "$HOME/.zprofile.local" ] && source "$HOME/.zprofile.local"
       '';
 
