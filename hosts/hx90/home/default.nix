@@ -9,8 +9,6 @@
     machine = "hx90";
     secretsRootPath = "/home/konstantin/secrets";
 
-    editor = "nvim";
-
     fonts.enable = true;
 
     awscli2.enable = true;
@@ -34,6 +32,7 @@
     kitty.enable = true;
     lorri.enable = true;
     navi.enable = true;
+    neovim.default = true;
     neovim.enable = true;
     qmk.enable = true;
     rclone.enable = true;

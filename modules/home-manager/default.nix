@@ -13,7 +13,6 @@ with lib; {
       secretsRootPath = mkStrOpt "Secrets root path";
       user = mkStrOpt "user";
       machine = mkStrOpt "machine";
-      editor = mkStrOpt "editor";
     };
   };
 
@@ -83,8 +82,6 @@ with lib; {
     home = {
       sessionPath = [ "$HOME/.local/bin" "$HOME/bin" ];
       sessionVariables = {
-        EDITOR = config.settings.editor;
-        VISUAL = config.settings.editor;
         PAGER = "less -R";
         TIME_STYLE = "long-iso"; # for core-utils
         DEFAULT_BROWSER = "firefox";

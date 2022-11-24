@@ -127,6 +127,7 @@ with mylib; {
           yaml-language-server
 
           # JavaScript / TypeScript
+          nodePackages.typescript
           nodePackages.typescript-language-server
 
           # Terraform

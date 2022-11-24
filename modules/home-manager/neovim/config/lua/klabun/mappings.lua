@@ -87,7 +87,14 @@ vim.keymap.set("n", "<leader>tf", telescope.find_files, {})
 vim.keymap.set("n", "<leader>th", telescope.help_tags, {})
 
 -- Ex-mode Abbreviations
-vim.cmd([[ca "q wq]])
-vim.cmd([[ca ps PackerSync]])
-vim.cmd([[ca ls LspInfo]])
+vim.cmd([[
+fun! SetupCommandAlias(from, to)
+  exec 'cnoreabbrev <expr> '.a:from
+        \ .' ((getcmdtype() is# ":" && getcmdline() is# "'.a:from.'")'
+        \ .'? ("'.a:to.'") : ("'.a:from.'"))'
+endfun
+call SetupCommandAlias("ps","PackerSync")
+call SetupCommandAlias("ls","LspInfo")
+]])
+vim.cmd([[ cnoreabbrev <expr> "q ((getcmdtype() is# ':' && getcmdline() is# '"q')?('wq'):('"q')) ]])
 

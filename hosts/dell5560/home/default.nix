@@ -27,8 +27,6 @@ in
     machine = "dell5560";
     secretsRootPath = "/home/klabun/secrets";
 
-    editor = "nvim";
-
     fonts.enable = true;
 
     awscli2.enable = true;
@@ -51,6 +49,7 @@ in
     #kitty.enable = true;
     lorri.enable = true;
     navi.enable = true;
+    neovim.default = true;
     neovim.enable = true;
     qmk.enable = true;
     rclone.enable = true;

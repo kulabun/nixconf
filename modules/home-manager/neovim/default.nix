@@ -1,16 +1,19 @@
-{
-  inputs,
-  system,
-  config,
-  pkgs,
-  lib,
-  mylib,
-  ...
+{ inputs
+, system
+, config
+, pkgs
+, lib
+, mylib
+, ...
 }:
+let
+  neovim = pkgs.neovim-nightly;
+in
 with lib;
 with mylib; {
   options = {
     settings.neovim.enable = mkEnableOpt "neovim";
+    settings.neovim.default = mkEnableOpt "neovim";
   };
 
   config = mkIf config.settings.neovim.enable {
@@ -41,18 +44,21 @@ with mylib; {
       vi = "vim";
     };
 
-    home = {
-      # sessionVariables = {
-      #   EDITOR = "nvim";
-      #   VISUAL = "nvim";
-      # };
-
-      packages = with pkgs; [
-        neovim-nightly
-        python3Packages.pynvim
-        nodePackages.neovim
-        neovide
-      ];
-    };
+    home =
+      {
+        packages = [
+          neovim
+          pkgs.python3Packages.pynvim
+          pkgs.nodePackages.neovim
+          pkgs.neovide
+        ];
+      }
+      // optionalAttrs config.settings.neovim.default {
+        sessionVariables = rec {
+          EDITOR = "${neovim}/bin/nvim";
+          VISUAL = EDITOR;
+          SUDOEDITOR = EDITOR;
+        };
+      };
   };
 }
