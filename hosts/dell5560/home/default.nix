@@ -10,6 +10,9 @@ let
   fix-ubuntu-sway = pkgs.writeShellScriptBin "fix-ubuntu-sway" (builtins.readFile ./scripts/fix-ubuntu-sway.sh);
 in
 {
+  # Should be enabled if home-manager is running on Non-NixOS Linux 
+  targets.genericLinux.enable = true;
+
   imports = [ ../../../modules/home-manager ];
   home = {
     enableNixpkgsReleaseCheck = true;
