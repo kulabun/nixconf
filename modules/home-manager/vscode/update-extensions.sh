@@ -115,6 +115,7 @@ function list_extensions() {
 	cat <<EXT
 	christian-kohler.path-intellisense
 	eamodio.gitlens
+	TabNine.tabnine-vscode
 EXT
 }
 

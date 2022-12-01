@@ -1,12 +1,30 @@
 { extensions = [
     {
-      name = "asvetliakov-vscode-neovim-0.0.93";
+      name = "asvetliakov-vscode-neovim-0.0.94";
       src = {
-        url = "https://asvetliakov.gallerycdn.vsassets.io/extensions/asvetliakov/vscode-neovim/0.0.93/1666384497869/Microsoft.VisualStudio.Services.VSIXPackage";
-        sha256 = "1hxgmqpyvfv4zgkm48ga3llldgv1d6ajvjqcgwinnp7q60b6w4wm";
+        url = "https://asvetliakov.gallerycdn.vsassets.io/extensions/asvetliakov/vscode-neovim/0.0.94/1668296062067/Microsoft.VisualStudio.Services.VSIXPackage";
+        sha256 = "12l4p9qanv2y82saksy5lfzaandha7b9b5baz8rzsn6wy2nyvz8v";
         name = "vscode-neovim-asvetliakov.zip";
       };
       vscodeExtUniqueId = "asvetliakov.vscode-neovim";
+    }
+    {
+      name = "christian-kohler-path-intellisense-2.8.3";
+      src = {
+        url = "https://christian-kohler.gallerycdn.vsassets.io/extensions/christian-kohler/path-intellisense/2.8.3/1669013584775/Microsoft.VisualStudio.Services.VSIXPackage";
+        sha256 = "0bx0vqxk9rv23pdk1x2zz25ahpmi9aniphc7sn9qq3d3rm15njh1";
+        name = "path-intellisense-christian-kohler.zip";
+      };
+      vscodeExtUniqueId = "christian-kohler.path-intellisense";
+    }
+    {
+      name = "eamodio-gitlens-2022.11.2204";
+      src = {
+        url = "https://eamodio.gallerycdn.vsassets.io/extensions/eamodio/gitlens/2022.11.2204/1669108128112/Microsoft.VisualStudio.Services.VSIXPackage";
+        sha256 = "0npr9fymfjnrq7xvfj6fdc04lysz28qncf9r8syv0w9873f3695h";
+        name = "gitlens-eamodio.zip";
+      };
+      vscodeExtUniqueId = "eamodio.gitlens";
     }
     {
       name = "esbenp-prettier-vscode-9.9.0";
@@ -18,10 +36,10 @@
       vscodeExtUniqueId = "esbenp.prettier-vscode";
     }
     {
-      name = "GitHub-copilot-1.56.7152";
+      name = "GitHub-copilot-1.61.7372";
       src = {
-        url = "https://github.gallerycdn.vsassets.io/extensions/github/copilot/1.56.7152/1666969671739/Microsoft.VisualStudio.Services.VSIXPackage";
-        sha256 = "00v8q0w0wx0ddynjckaqy22rddp744z5d2a1sc2j7zsqqm6jyqgm";
+        url = "https://github.gallerycdn.vsassets.io/extensions/github/copilot/1.61.7372/1668765159049/Microsoft.VisualStudio.Services.VSIXPackage";
+        sha256 = "1znrij8al8r8x7j9ra13ahpbsiwf66qnayqcg3nd60pbrjkv5g4r";
         name = "copilot-GitHub.zip";
       };
       vscodeExtUniqueId = "GitHub.copilot";
@@ -36,10 +54,10 @@
       vscodeExtUniqueId = "GitHub.github-vscode-theme";
     }
     {
-      name = "hashicorp-terraform-2.24.3";
+      name = "hashicorp-terraform-2.25.0";
       src = {
-        url = "https://hashicorp.gallerycdn.vsassets.io/extensions/hashicorp/terraform/2.24.3/1665667707436/Microsoft.VisualStudio.Services.VSIXPackage";
-        sha256 = "121wwdg579yyfcjwl7xvd1l0vv3d4rlr1vj4yd25ah6r5kkq56p7";
+        url = "https://hashicorp.gallerycdn.vsassets.io/extensions/hashicorp/terraform/2.25.0/1668444470876/Microsoft.VisualStudio.Services.VSIXPackage";
+        sha256 = "0jvs25f95rwjdb3244ry3md3wgfvva0pb8ddmlbfv31zxpwzmyjk";
         name = "terraform-hashicorp.zip";
       };
       vscodeExtUniqueId = "hashicorp.terraform";
@@ -54,28 +72,28 @@
       vscodeExtUniqueId = "ms-azuretools.vscode-docker";
     }
     {
-      name = "ms-python-python-2022.17.13020517";
+      name = "ms-python-python-2022.19.13261009";
       src = {
-        url = "https://ms-python.gallerycdn.vsassets.io/extensions/ms-python/python/2022.17.13020517/1667020807043/Microsoft.VisualStudio.Services.VSIXPackage";
-        sha256 = "0ygh4qyygpbmv5iws14v1yf2k0c900ji0bvbfyj2z0hcb2s0zci6";
+        url = "https://ms-python.gallerycdn.vsassets.io/extensions/ms-python/python/2022.19.13261009/1669112006685/Microsoft.VisualStudio.Services.VSIXPackage";
+        sha256 = "1h36zrdyxjin0w1mkkqn6bh2ih0ydd4x85r6c5an68pm4i06m09x";
         name = "python-ms-python.zip";
       };
       vscodeExtUniqueId = "ms-python.python";
     }
     {
-      name = "ms-vscode-remote-remote-containers-0.262.0";
+      name = "ms-vscode-remote-remote-containers-0.264.0";
       src = {
-        url = "https://ms-vscode-remote.gallerycdn.vsassets.io/extensions/ms-vscode-remote/remote-containers/0.262.0/1666907134532/Microsoft.VisualStudio.Services.VSIXPackage";
-        sha256 = "14ssw7pnbbr32vfgim3lmxawwifbgx5znqr0i99g2892h9rm3d1g";
+        url = "https://ms-vscode-remote.gallerycdn.vsassets.io/extensions/ms-vscode-remote/remote-containers/0.264.0/1668511134823/Microsoft.VisualStudio.Services.VSIXPackage";
+        sha256 = "0bib5hqs2bwz71bz6vh61pl1p3khgkx6lcflpg6msg6cxshxxg5h";
         name = "remote-containers-ms-vscode-remote.zip";
       };
       vscodeExtUniqueId = "ms-vscode-remote.remote-containers";
     }
     {
-      name = "rust-lang-rust-analyzer-0.4.1265";
+      name = "rust-lang-rust-analyzer-0.4.1298";
       src = {
-        url = "https://rust-lang.gallerycdn.vsassets.io/extensions/rust-lang/rust-analyzer/0.4.1265/1667177392574/Microsoft.VisualStudio.Services.VSIXPackage";
-        sha256 = "0q3c2ff0i3jhxgk20vy3d25x61iqxzhhg87nmddcsa18f3w2nb0i";
+        url = "https://rust-lang.gallerycdn.vsassets.io/extensions/rust-lang/rust-analyzer/0.4.1298/1669423193716/Microsoft.VisualStudio.Services.VSIXPackage";
+        sha256 = "1p6znid0pqj8718sdd7y6dz151jqzi956r1ggzv6iab7p5ixdc4m";
         name = "rust-analyzer-rust-lang.zip";
       };
       vscodeExtUniqueId = "rust-lang.rust-analyzer";
@@ -99,22 +117,31 @@
       vscodeExtUniqueId = "VisualStudioExptTeam.vscodeintellicode";
     }
     {
-      name = "christian-kohler-path-intellisense-2.8.1";
+      name = "christian-kohler-path-intellisense-2.8.3";
       src = {
-        url = "https://christian-kohler.gallerycdn.vsassets.io/extensions/christian-kohler/path-intellisense/2.8.1/1654770568656/Microsoft.VisualStudio.Services.VSIXPackage";
-        sha256 = "1j7q4mzj173sl6xl3zjw40hnqvyqsrsczakmv63066k4k0rb6clm";
+        url = "https://christian-kohler.gallerycdn.vsassets.io/extensions/christian-kohler/path-intellisense/2.8.3/1669013584775/Microsoft.VisualStudio.Services.VSIXPackage";
+        sha256 = "0bx0vqxk9rv23pdk1x2zz25ahpmi9aniphc7sn9qq3d3rm15njh1";
         name = "path-intellisense-christian-kohler.zip";
       };
       vscodeExtUniqueId = "christian-kohler.path-intellisense";
     }
     {
-      name = "eamodio-gitlens-2022.10.2605";
+      name = "eamodio-gitlens-2022.11.2204";
       src = {
-        url = "https://eamodio.gallerycdn.vsassets.io/extensions/eamodio/gitlens/2022.10.2605/1666775345449/Microsoft.VisualStudio.Services.VSIXPackage";
-        sha256 = "1kz7v9w10zd6dnhbxavcy2kns27p3nh18aq181ch5hvkbgn3140d";
+        url = "https://eamodio.gallerycdn.vsassets.io/extensions/eamodio/gitlens/2022.11.2204/1669108128112/Microsoft.VisualStudio.Services.VSIXPackage";
+        sha256 = "0npr9fymfjnrq7xvfj6fdc04lysz28qncf9r8syv0w9873f3695h";
         name = "gitlens-eamodio.zip";
       };
       vscodeExtUniqueId = "eamodio.gitlens";
+    }
+    {
+      name = "TabNine-tabnine-vscode-3.6.25";
+      src = {
+        url = "https://tabnine.gallerycdn.vsassets.io/extensions/tabnine/tabnine-vscode/3.6.25/1669281924968/Microsoft.VisualStudio.Services.VSIXPackage";
+        sha256 = "0r2kvcjl8yh3q6vql3wn9260nbp2v1apcvvv5gxxd2gp4nasxln9";
+        name = "tabnine-vscode-TabNine.zip";
+      };
+      vscodeExtUniqueId = "TabNine.tabnine-vscode";
     }
 ];
 }
