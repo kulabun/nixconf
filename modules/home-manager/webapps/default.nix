@@ -6,36 +6,6 @@
 , ...
 }:
 let
-  # makeWebApp =
-  #   { server
-  #   , icon ? "${pkgs.moka-icon-theme}/share/icons/Moka/48x48/apps/google-chrome.png"
-  #   , comment ? null
-  #   , desktopName ? null
-  #   , categories ? null
-  #   , browser ? "${pkgs'.google-chrome}/bin/google-chrome-stable"
-  #   ,
-  #   }:
-  #   pkgs.makeDesktopItem
-  #     ({
-  #       inherit icon;
-  #       name = server;
-  #       exec = "${browser} --app=https://${server}/";
-  #     }
-  #     // (
-  #       if comment != null
-  #       then { inherit comment; }
-  #       else { }
-  #     )
-  #     // (
-  #       if desktopName != null
-  #       then { inherit desktopName; }
-  #       else { }
-  #     )
-  #     // (
-  #       if categories != null
-  #       then { inherit categories; }
-  #       else { }
-  #     ));
   makeElectronApp = { name, url }:
     pkgs'.callPackage
       ({ pkgs
@@ -82,17 +52,17 @@ let
       }}/bin/${name}";
     };
 
-  google-mail = makeWebApp {
-    name = "google-mail";
-    desktopName = "Google Mail";
-    url = "https://mail.google.com";
-    icon = "${pkgs.moka-icon-theme}/share/icons/Moka/48x48/web/GMail-mail.google.com.png";
-  };
   google-calendar = makeWebApp {
     name = "google-calendar";
     desktopName = "Google Calendar";
     url = "https://calendar.google.com";
     icon = "${pkgs.moka-icon-theme}/share/icons/Moka/48x48/web/google-calendar.png";
+  };
+  google-docs = makeWebApp {
+    name = "google-docs";
+    desktopName = "Google Docs";
+    url = "https://docs.google.com";
+    icon = "${pkgs.moka-icon-theme}/share/icons/Moka/48x48/web/google-docs.png";
   };
   google-drive = makeWebApp {
     name = "google-drive";
@@ -106,11 +76,17 @@ let
     url = "https://keep.google.com";
     icon = "${pkgs.moka-icon-theme}/share/icons/Moka/48x48/web/google-keep.png";
   };
-  google-docs = makeWebApp {
-    name = "google-docs";
-    desktopName = "Google Docs";
-    url = "https://docs.google.com";
-    icon = "${pkgs.moka-icon-theme}/share/icons/Moka/48x48/web/google-docs.png";
+  google-mail = makeWebApp {
+    name = "google-mail";
+    desktopName = "Google Mail";
+    url = "https://mail.google.com";
+    icon = "${pkgs.moka-icon-theme}/share/icons/Moka/48x48/web/GMail-mail.google.com.png";
+  };
+  google-meet = makeWebApp {
+    name = "google-meet";
+    desktopName = "Google Meet";
+    url = "https://meet.google.com";
+    icon = "${pkgs.moka-icon-theme}/share/icons/Moka/48x48/web/web-google-hangouts.png";
   };
   google-photos = makeWebApp {
     name = "google-photos";
@@ -118,17 +94,23 @@ let
     url = "https://photos.google.com";
     icon = "${pkgs.moka-icon-theme}/share/icons/Moka/48x48/web/web-google-photos.png";
   };
-  whatsapp = makeWebApp {
-    name = "whatsapp";
-    desktopName = "WhatsApp";
-    url = "https://web.whatsapp.com";
-    icon = "${pkgs.moka-icon-theme}/share/icons/Moka/48x48/web/whatsapp.png";
+  messenger = makeWebApp {
+    name = "messenger";
+    desktopName = "Messenger";
+    url = "https://www.messenger.com";
+    icon = "${pkgs.moka-icon-theme}/share/icons/Moka/48x48/web/messenger.png";
   };
   telegram = makeWebApp {
     name = "telegram";
     desktopName = "Telegram";
     url = "https://web.telegram.org";
     icon = "${pkgs.moka-icon-theme}/share/icons/Moka/48x48/web/telegram.png";
+  };
+  whatsapp = makeWebApp {
+    name = "whatsapp";
+    desktopName = "WhatsApp";
+    url = "https://web.whatsapp.com";
+    icon = "${pkgs.moka-icon-theme}/share/icons/Moka/48x48/web/whatsapp.png";
   };
   youtube-music = makeWebApp {
     name = "youtube-music";
@@ -141,27 +123,33 @@ with lib;
 with mylib; {
   options = {
     settings.webapps = {
-      google-mail.enable = mkEnableOpt "google-mail";
       google-calendar.enable = mkEnableOpt "google-calendar";
+      google-docs.enable = mkEnableOpt "google-docs";
       google-drive.enable = mkEnableOpt "google-drive";
       google-keep.enable = mkEnableOpt "google-keep";
+      google-mail.enable = mkEnableOpt "google-mail";
+      google-meet.enable = mkEnableOpt "google-meet";
       google-photos.enable = mkEnableOpt "google-photos";
-      youtube-music.enable = mkEnableOpt "youtube-music";
-      whatsapp.enable = mkEnableOpt "whatsapp";
+      messenger.enable = mkEnableOpt "messenger";
       telegram.enable = mkEnableOpt "telegram";
+      whatsapp.enable = mkEnableOpt "whatsapp";
+      youtube-music.enable = mkEnableOpt "youtube-music";
     };
   };
 
   config = {
     home.packages =
       [ ]
-      ++ optional config.settings.webapps.google-mail.enable google-mail
       ++ optional config.settings.webapps.google-calendar.enable google-calendar
+      ++ optional config.settings.webapps.google-docs.enable google-docs
       ++ optional config.settings.webapps.google-drive.enable google-drive
       ++ optional config.settings.webapps.google-keep.enable google-keep
+      ++ optional config.settings.webapps.google-mail.enable google-mail
+      ++ optional config.settings.webapps.google-meet.enable google-meet
       ++ optional config.settings.webapps.google-photos.enable google-photos
-      ++ optional config.settings.webapps.youtube-music.enable youtube-music
+      ++ optional config.settings.webapps.messenger.enable messenger
+      ++ optional config.settings.webapps.telegram.enable telegram
       ++ optional config.settings.webapps.whatsapp.enable whatsapp
-      ++ optional config.settings.webapps.telegram.enable telegram;
+      ++ optional config.settings.webapps.youtube-music.enable youtube-music;
   };
 }
