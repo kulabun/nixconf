@@ -51,6 +51,7 @@ with lib; {
     ./vscode
     ./webapps
     ./xdg
+    ./zellij
     ./zoom-us
     ./zsh
 
