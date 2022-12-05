@@ -241,8 +241,8 @@
         "plugin-copilot-lua": "plugin-copilot-lua"
       },
       "locked": {
-        "lastModified": 1670217583,
-        "narHash": "sha256-qMa710xMl/yXdi92AkVHGsHeEnWEz7NInrFHZUt1MLk=",
+        "lastModified": 1670219489,
+        "narHash": "sha256-lR3N8jrp6jo5KE5CKWSr5lZq7Gd3U8RE6umohVMqNog=",
         "path": "/home/konstantin/projects/nvim-flake",
         "type": "path"
       },
