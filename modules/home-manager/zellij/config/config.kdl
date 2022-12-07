@@ -28,7 +28,7 @@ pane_frames false
 // Choose the theme that is specified in the themes section.
 // Default: default
 //
-theme "catpuccin-mocha" 
+theme "monokai-pro" 
 
 // The name of the default layout to load on startup
 // Default: "default"
@@ -103,30 +103,30 @@ copy_command "wl-copy"
 //
 // theme_dir "/path/to/my/theme_dir"
 themes {
-    catpuccin-mocha {
-        fg 205 214 244
-        bg 88 91 112
-        black 24 24 37
-        red 243 139 168
-        green 166 227 161
-        yellow 249 226 175
-        blue 137 180 250
-        magenta 245 194 231
-        cyan 137 220 235
-        white 205 214 244
-        orange 250 179 135
-    }
-    tokyo-night {
-        fg 169 177 214
-        bg 26 27 38
-        black 56 62 90
-        red 249 51 87
-        green 158 206 106
-        yellow 224 175 104
-        blue 122 162 247
-        magenta 187 154 247
-        cyan 42 195 222
-        white 192 202 245
-        orange 255 158 100
-    }
+  catpuccin-mocha {
+      fg 205 214 244
+      bg 88 91 112
+      black 24 24 37
+      red 243 139 168
+      green 166 227 161
+      yellow 249 226 175
+      blue 137 180 250
+      magenta 245 194 231
+      cyan 137 220 235
+      white 205 214 244
+      orange 250 179 135
+  }
+  monokai-pro {
+      fg 84 88 98
+      bg 44 37 37
+      black 25 24 26
+      red 253 103 131
+      green 173 218 120
+      yellow 249 204 108
+      blue 133 218 204
+      magenta 253 104 131
+      cyan 81 182 194
+      white 220 224 232
+      orange 243 150 96
+  }
 }

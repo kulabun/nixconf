@@ -1,7 +1,9 @@
 {
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-22.05";
+    nixpkgs.url = "nixpkgs/nixos-22.11";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
+    # neovim-kl.url = "path:/home/konstantin/projects/nvim-flake";
+    neovim-kl.url = "github:kulabun/neovim-flake";
     # rust-overlay.url = "github:oxalica/rust-overlay";
     # helix-master = {
     #   url = "github:helix-editor/helix";
@@ -13,7 +15,7 @@
 
     home-manager = {
       # url = "github:nix-community/home-manager";
-      url = "github:nix-community/home-manager/release-22.05";
+      url = "github:nix-community/home-manager/release-22.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -43,6 +45,11 @@
       (import ./overlay)
       # (import inputs.rust-overlay)
       (import inputs.neovim-nightly-overlay)
+      (
+        final: prev: {
+          neovim-kl = inputs.neovim-kl.packages.${system}.neovim-kl;
+        }
+      )
       # (import inputs.helix-master)
     ];
 
@@ -95,7 +102,7 @@
           inherit pkgs;
           modules = [
             ./hosts/hx90
-	    ./modules/nix
+            ./modules/nix
             home-manager.nixosModules.home-manager
             {
               home-manager = {

@@ -13,6 +13,7 @@ in
 {
   # Should be enabled if home-manager is running on Non-NixOS Linux 
   targets.genericLinux.enable = true;
+  stateVersion = "22.11"
 
   imports = [ ../../../modules/home-manager ];
   home = {
@@ -67,6 +68,7 @@ in
     webapps.google-keep.enable = true;
     webapps.google-mail.enable = true;
     # webapps.google-photos.enable = false;
+    # webapps.messenger.enable = false;
     # webapps.telegram.enable = false;
     # webapps.whatsapp.enable = false;
     webapps.youtube-music.enable = true;

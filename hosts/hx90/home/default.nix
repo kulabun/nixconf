@@ -3,6 +3,7 @@
 , ...
 }: rec {
   imports = [ ../../../modules/home-manager ];
+  
 
   settings = {
     user = "konstantin";
@@ -19,16 +20,14 @@
     flameshot.enable = true;
     gh.enable = true;
     git.enable = true;
-    go-chromecast.enable = true;
+    # go-chromecast.enable = true;
     # google-chrome.enable = false;
     google-cloud-sdk.enable = true;
     gpg.enable = true;
     gtk.enable = true;
     # helix.enable = false;
     home-manager.enable = true;
-    jetbrains = {
-      idea-community.enable = true;
-    };
+    jetbrains.idea-community.enable = true;
     kitty.enable = true;
     lorri.enable = true;
     navi.enable = true;
@@ -46,13 +45,17 @@
     # ulauncher.enable = false; # broken on nixos
     vscode.enable = true;
     webapps.google-calendar.enable = true;
+    webapps.google-docs.enable = true;
     webapps.google-drive.enable = true;
     webapps.google-keep.enable = true;
     webapps.google-mail.enable = true;
+    webapps.google-meet.enable = true;
     webapps.google-photos.enable = true;
+    webapps.messenger.enable = true;
     webapps.telegram.enable = true;
     webapps.whatsapp.enable = true;
     xdg.enable = true;
+    zellij.enable = true;
     # zoom-us.enable = false; # broken on wayland
     zsh.enable = true;
 
@@ -100,6 +103,7 @@
 
   home = {
     enableNixpkgsReleaseCheck = true;
+    stateVersion = "22.11";
 
     sessionVariables = {
       GDK_SCALE = 2;
