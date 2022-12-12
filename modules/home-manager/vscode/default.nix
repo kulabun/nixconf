@@ -20,9 +20,9 @@ let
     # See https://github.com/NixOS/nixpkgs/issues/197682
     vscode-with-extensions.override {
       vscodeExtensions = with pkgs.vscode-extensions; [ ms-python.python ] 
-        ++ filter (name: name != "ms-python.python") (map
+        ++ map
           (extension: vscode-utils.buildVscodeExtension (extension // { src = fetchurl extension.src; }))
-          (import ./extensions.nix).extensions);
+          (import ./extensions.nix).extensions;
     };
 in
 with lib;
