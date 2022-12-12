@@ -113,9 +113,12 @@ printf '{ extensions = [\n'
 function list_extensions() {
 	$CODE --list-extensions
 	cat <<EXT
-	christian-kohler.path-intellisense
-	eamodio.gitlens
-	TabNine.tabnine-vscode
+golang.Go
+haskell.haskell
+vscjava.vscode-spring-initializr
+vscjava.vscode-java-pack
+vscjava.vscode-gradle
+vscodevim.vim
 EXT
 }
 

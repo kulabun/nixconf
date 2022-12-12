@@ -79,6 +79,7 @@ in
             nodejs
             python3
             go
+
             # my-rust
             rustup
 
@@ -124,6 +125,10 @@ in
             alejandra
             rnix-lsp
             statix
+
+            # go
+            delve
+            go-tools # staticcheck
 
             # TOML
             taplo-cli

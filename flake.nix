@@ -2,8 +2,8 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-22.11";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
-    # neovim-kl.url = "path:/home/konstantin/projects/nvim-flake";
-    neovim-kl.url = "github:kulabun/neovim-flake";
+    neovim-kl.url = "path:/home/konstantin/projects/neovim-flake";
+    # neovim-kl.url = "github:kulabun/neovim-flake";
     # rust-overlay.url = "github:oxalica/rust-overlay";
     # helix-master = {
     #   url = "github:helix-editor/helix";
