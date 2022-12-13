@@ -26,7 +26,10 @@ in
         terminal = alacritty
       '';
 
-      home.packages = with pkgs; [rofi-wayland-vpn networkmanager_dmenu];
+      home.packages = with pkgs; [
+        rofi-wayland-vpn 
+        networkmanager_dmenu # TODO: check why it's failing with segmentaiotn fault
+      ];
 
       programs.rofi = {
         enable = true;

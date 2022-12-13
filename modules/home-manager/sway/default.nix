@@ -143,7 +143,8 @@ with mylib; {
             "${mod}+Space" = "focus mode_toggle";
             "${mod}+p" = "focus parent";
             "${mod}+Shift+p" = "focus child";
-            "${mod}+n" = "exec ${pkgs.networkmanager_dmenu}/bin/networkmanager_dmenu";
+            # "${mod}+n" = "exec ${pkgs.networkmanager_dmenu}/bin/networkmanager_dmenu";
+            "${mod}+n" = "exec ${pkgs.rofi-wayland-vpn}/bin/rofi-vpn";
             "${mod}+s" = "exec ${pkgs.rofi-wayland}/bin/rofi -show power-menu";
 
             # Scratchpad
