@@ -2,8 +2,8 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-22.11";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
-    neovim-kl.url = "path:/home/konstantin/projects/neovim-flake";
-    # neovim-kl.url = "github:kulabun/neovim-flake";
+    # neovim-kl.url = "path:/home/konstantin/projects/neovim-flake";
+    neovim-kl.url = "github:kulabun/neovim-flake";
     # rust-overlay.url = "github:oxalica/rust-overlay";
     # helix-master = {
     #   url = "github:helix-editor/helix";
@@ -61,30 +61,17 @@
     };
 
     homeConfig = {
-      user,
       machine,
     }:
       home-manager.lib.homeManagerConfiguration rec {
-        # inherit pkgs;
-        # modules = [ ./options/settings ./home-manager/profiles/${machine} ];
         inherit pkgs;
-        inherit system;
+        modules = [ ./hosts/${machine}/home ];
         extraSpecialArgs = {
           inherit system;
           inherit inputs;
           inherit mylib;
           inherit pkgs';
         };
-        configuration = {
-          config,
-          pkgs,
-          lib,
-          ...
-        }: {
-          imports = [./hosts/${machine}];
-        };
-        username = user;
-        homeDirectory = "/home/${username}";
       };
   in
     with pkgs.lib;
@@ -127,7 +114,6 @@
         #   machine = "hx90";
         # };
         dell5560 = homeConfig {
-          user = "klabun";
           machine = "dell5560";
         };
       };

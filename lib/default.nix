@@ -9,6 +9,7 @@
   # mylib = foldr (a: b: a // b) {} [
   #   (importModule ./options.nix)
   # ];
-  mylib = import ./options.nix {inherit lib pkgs inputs;};
+  options = import ./options.nix {inherit lib pkgs inputs;};
+  webapp = import ./webapp {inherit lib pkgs inputs;};
 in
-  mylib
+  options // webapp
