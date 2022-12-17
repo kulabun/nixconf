@@ -12,6 +12,7 @@
 
     ./hardware-configuration.nix
     ./sway.nix
+    ./kde.nix
   ];
 
   # Bootloader.
@@ -66,7 +67,7 @@
   #programs.sway.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.displayManager.gdm.enable = false; # use sdde + KDE
   services.xserver.desktopManager.gnome.enable = false;
 
   # Configure keymap in X11
