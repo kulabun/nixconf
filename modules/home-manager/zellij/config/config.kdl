@@ -1,3 +1,26 @@
+keybinds {
+    locked {
+        bind "Alt h" "Alt Left" { MoveFocusOrTab "Left"; }
+        bind "Alt l" "Alt Right" { MoveFocusOrTab "Right"; }
+        bind "Alt j" "Alt Down" { MoveFocus "Down"; }
+        bind "Alt k" "Alt Up" { MoveFocus "Up"; }
+        
+        bind "Alt n" { NewTab; }
+        bind "Alt x" { CloseTab; }
+    }
+    normal {
+        bind "Alt n" { NewTab; SwitchToMode "Locked";}
+        bind "Alt x" { CloseTab; SwitchToMode "Locked";} 
+    }
+    tab {
+        bind "Alt n" { NewTab; }
+        bind "Alt x" { CloseTab; }
+    }
+    pane {
+        bind "Alt n" { NewPane; }
+        bind "Alt x" { CloseFocus; }
+    }
+}
 // Choose what to do when zellij receives SIGTERM, SIGINT, SIGQUIT or SIGHUP
 // eg. when terminal window with an active zellij session is closed
 // Options:
@@ -86,7 +109,7 @@ copy_command "wl-copy"
 // Path to the default editor to use to edit pane scrollbuffer
 // Default: $EDITOR or $VISUAL
 //
-// scrollback_editor "/usr/bin/vim"
+scrollback_editor "nvim --clean"
 
 // When attaching to an existing session with other users,
 // should the session be mirrored (true)

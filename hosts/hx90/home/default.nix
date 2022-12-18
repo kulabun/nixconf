@@ -9,6 +9,11 @@
     user = "konstantin";
     machine = "hx90";
     secretsRootPath = "/home/konstantin/secrets";
+    cursor = {
+      theme = "capitaine-cursors-white";
+      # theme = "capitaine-cursors";
+      size = 32;
+    };
 
     fonts.enable = true;
 
@@ -51,6 +56,7 @@
     webapps.google-mail.enable = true;
     webapps.google-meet.enable = true;
     webapps.google-photos.enable = true;
+    webapps.youtube-music.enable = true;
     webapps.messenger.enable = true;
     webapps.telegram.enable = true;
     webapps.whatsapp.enable = true;
@@ -64,13 +70,17 @@
     swayidle.enable = true;
     swaylock.enable = true;
     mako.enable = true;
-    foot.enable = true;
+    # foot.enable = true;
 
     sway = {
-      terminal = "${pkgs.foot}/bin/footclient";
-      # terminal = "${pkgs.kitty}/bin/kitty";
+      # terminal = "${pkgs.foot}/bin/footclient";
+      terminal = "${pkgs.kitty}/bin/kitty";
     };
 
+    gtk.font = {
+      name = "DejaVu Sans";
+      size = 9;
+    };
     sway.font = {
       name = "SauceCodePro Nerd Font";
       size = 9;
@@ -107,7 +117,8 @@
 
     sessionVariables = {
       GDK_SCALE = 2;
-      XCURSOR_SIZE = 128;
+      XCURSOR_SIZE = settings.cursor.size;
+      XCURSOR_THEME = settings.cursor.theme;
     };
     packages = with pkgs; [ ];
 

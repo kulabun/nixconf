@@ -5,9 +5,15 @@
 , ...
 }:
 let
+  inherit (pkgs) writeScriptBin;
+
   toFloat = x: x + 0.0;
   font = config.settings.sway.font;
   terminal = config.settings.sway.terminal;
+  cursor = config.settings.cursor;
+
+  sway-make-screenshot = writeScriptBin "sway-make-screenshot" (builtins.readFile ./scripts/sway-make-screenshot.sh);
+  rofi-gopass = writeScriptBin "rofi-gopass" (builtins.readFile ./scripts/rofi-gopass.sh);
 in
 with lib;
 with mylib; {
@@ -20,9 +26,17 @@ with mylib; {
   };
 
   config = mkIf config.settings.sway.enable {
-    home.file = {
-      "Pictures/swaybg.png".source = ./pictures/nix.png;
+    home = {
+      file = {
+        "Pictures/swaybg.png".source = ./pictures/nix.png;
+      };
+
+      packages = [ 
+        sway-make-screenshot 
+        rofi-gopass
+      ];
     };
+
     xdg.configFile = {
       "environment.d/sway.conf".source = ./env.d/sway.conf;
     };
@@ -41,8 +55,6 @@ with mylib; {
           up = "k";
           right = "l";
           mod = "Mod4";
-          #terminal = "${pkgs.foot}/bin/foot";
-          #terminal = "${pkgs.foot}/bin/footclient";
         in
         {
           modifier = "${mod}";
@@ -60,8 +72,8 @@ with mylib; {
 
           gaps = {
             # Gaps for containters
-            inner = 0;
-            outer = 0;
+            inner = 2;
+            outer = 2;
           };
 
           bars = [
@@ -78,12 +90,56 @@ with mylib; {
           ];
 
           startup = [
-            { command = "nm-applet --indicator"; }
-            { command = "mako"; }
+            { command = "systemd-cat --identifier=nm-applet nm-applet --indicator "; }
+            { command = "systemd-cat --identifier=mako mako"; }
             { command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY"; }
+            { command = "systemd-cat --identifier=udiskie udiskie --no-automount --tray"; }
+            { command = "systemd-cat --identifier=blueberry blueberry-tray"; }
           ];
 
-          assigns = { };
+          assigns = { 
+            # browser
+            "1" = [
+              { app_id = "^firefox$"; }
+            ];
+            # ide
+            "2" = [
+              { class = "^jetbrains-[a-z-]+$"; } # class exists only for XWayland apps
+              { app_id = "^code-url-handler$"; }
+            ];
+            # docs
+            "6" = [
+              { title = "^google-keep$"; app_id = "^(google-webapps|Electron)$"; }
+              { title = "^google-docs$"; app_id = "^(google-webapps|Electron)$"; }
+              { title = "^google-drive$"; app_id = "^(google-webapps|Electron)$"; }
+            ];
+            # chat
+            "7" = [
+              { title = "^slack$"; app_id = "^(slack-webapps|Electron)$"; }
+              { title = "^telegram$"; app_id = "^(telegram-webapps|Electron)$"; }
+              { title = "^whatsapp$"; app_id = "^(whatsapp-webapps|Electron)$"; }
+              { title = "^messenger$"; app_id = "^(meta-webapps|Electron)$"; }
+            ];
+            # mail
+            "8" = [
+              { title = "^google-mail$"; app_id = "^(google-webapps|Electron)$"; }
+            ];
+            # calendar
+            "9" = [
+              { title = "^google-calendar$"; app_id = "^(google-webapps|Electron)$"; }
+            ];
+            # conference
+            "10" = [
+              { 
+                title = "^zoom$";
+                app_id = "^(zoom-webapps|Electron)$"; 
+              }
+              { 
+                title = "^google-meet$"; 
+                app_id = "^(google-webapps|Electron)$"; 
+              }
+            ];
+          };
 
           input = {
             # Input modules: $ man sway-input
@@ -122,30 +178,51 @@ with mylib; {
             };
           };
 
-          floating = { modifier = "${mod}"; };
+          floating = { 
+            modifier = "${mod}";
+          };
 
           keybindings = {
             "${mod}+Delete" = "bar mode toggle";
-            "${mod}+Return" = "exec ${terminal}";
+            "${mod}+Shift+Return" = "exec ${terminal}";
+            "${mod}+Return" = "exec TARGET_ZELLIJ_SESSION=main ${terminal}";
             "${mod}+Shift+q" = "kill";
             "${mod}+Shift+c" = "reload";
             "${mod}+Shift+e" = "exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'";
-            "${mod}+Shift+i" = "exec swaylock"; # TODO: it doesnt work
+            "${mod}+Shift+i" = "exec swaylock";
 
             # Layout control
-            "${mod}+z" = "splith";
-            "${mod}+v" = "splitv";
-            "${mod}+a" = "layout stacking";
-            "${mod}+o" = "layout tabbed";
+            # TODO: move layout change to dedicated mode?
+            "${mod}+s" = "layout stacking";
+            "${mod}+t" = "layout tabbed";
             "${mod}+e" = "layout default";
             "${mod}+f" = "fullscreen";
             "${mod}+Shift+Space" = "floating toggle";
             "${mod}+Space" = "focus mode_toggle";
-            "${mod}+p" = "focus parent";
-            "${mod}+Shift+p" = "focus child";
-            # "${mod}+n" = "exec ${pkgs.networkmanager_dmenu}/bin/networkmanager_dmenu";
-            "${mod}+n" = "exec ${pkgs.rofi-wayland-vpn}/bin/rofi-vpn";
-            "${mod}+s" = "exec ${pkgs.rofi-wayland}/bin/rofi -show power-menu";
+            "${mod}+Shift+a" = "focus parent";
+            "${mod}+a" = "focus child";
+            "${mod}+z" = "splith";
+            "${mod}+v" = "splitv";
+
+            "${mod}+d" = "exec ${pkgs.rofi-wayland}/bin/rofi -show drun";
+            "${mod}+n" = "exec ${pkgs.networkmanager_dmenu}/bin/networkmanager_dmenu";
+            "${mod}+p" = "exec ${pkgs.rofi-wayland}/bin/rofi -show power-menu";
+            "${mod}+w" = "exec ${rofi-gopass}/bin/rofi-gopass";
+            # TODO:
+            # mod + b = [b]luetooth
+            # mod + o = s[o]und
+            # run/rofi mode?
+            # mod + enter:
+            # - t terminal
+            # - z zellij
+            # - w password
+            # - p power 
+            # - a audio
+            # - e editor
+            # - n network
+            # - b bluetooth
+            # - l launcher
+
 
             # Scratchpad
             "${mod}+Shift+g" = "move scratchpad";
@@ -190,9 +267,7 @@ with mylib; {
             "${mod}+Shift+8" = "move container to workspace 8";
             "${mod}+Shift+9" = "move container to workspace 9";
             "${mod}+Shift+0" = "move container to workspace 10";
-            "Print" = "exec sway-make-screenshot";
-
-            "${mod}+d" = "exec ${pkgs.rofi-wayland}/bin/rofi -show drun";
+            "Print" = "exec ${sway-make-screenshot}/bin/sway-make-screenshot";
           };
 
           window = {
@@ -201,6 +276,28 @@ with mylib; {
             hideEdgeBorders = "both";
 
             commands = [
+              # Firefox
+              { 
+                criteria = {
+                  app_id = "firefox";
+                  title = "moz-extension:.+";
+                };
+                command = "floating enable";
+              }
+              {
+                criteria = {
+                  app_id = "firefox";
+                  title = "Password Required";
+                };
+                command = "floating enable";
+              }
+              {
+                criteria = {
+                  app_id = "firefox";
+                  title = "About Mozilla Firefox";
+                };
+                command = "floating enable";
+              }
               {
                 criteria = {
                   app_id = "firefox";
@@ -213,12 +310,25 @@ with mylib; {
                   app_id = "firefox";
                   title = "Firefox — Sharing Indicator";
                 };
-                command = "floating enable, sticky enable";
+                command = "floating enable, sticky enable, move to scratchpad";
               }
+
+              # Slack screen sharing
+              # {
+              #   criteria = {
+              #     app_id = "";
+              #     title = ".* is sharing your screen.";
+              #   };
+              #   command = "floating enable, move to scratchpad";
+              # }
+
+              # Fix for a bug in chrome that make breaks sway hotkeys in chrome-apps
               {
-                criteria = { class = "Pavucontrol"; };
-                command = "floating enable";
+                criteria = { app_id = "^chrome-.*"; };
+                command = "shortcuts_inhibitor disable";
               }
+
+              # Floating
               {
                 criteria = { app_id = "ulauncher"; };
                 command = "floating enable, border none, move up 300px";
@@ -227,48 +337,30 @@ with mylib; {
                 criteria = { app_id = "zenity"; };
                 command = "floating enable, border none, move up 300px";
               }
-              # Slack screen sharing
               {
                 criteria = {
-                  app_id = "";
-                  title = ".* is sharing your screen.";
-                };
-                command = "floating enable, border none, sticky disable, move to scratchpad";
-              }
-              # Fix for a bug in chrome that make breaks sway hotkeys in chrome-apps
-              {
-                criteria = { app_id = "^chrome-.*"; };
-                command = "shortcuts_inhibitor disable";
-              }
-              {
-                criteria = { class = "^jetbrains-idea$"; };
-                command = "border pixel 1";
-              }
-              {
-                criteria = { app_id = "^chrome-app.slack.com.*"; };
-                command = "border pixel 1";
-              }
-              {
-                criteria = { app_id = "^chrome-mail.google.com.*"; };
-                command = "border pixel 1";
-              }
-              {
-                criteria = { app_id = "^chrome-calendar.google.com.*"; };
-                command = "border pixel 1";
-              }
-              {
-                criteria = { app_id = "^chrome-.*.zoom.us.*"; };
-                command = "border pixel 1";
-              }
-              {
-                criteria = {
-                  app_id = "jetbrains-idea";
+                  class = "^jetbrains-[a-z-]+$";
                   title = "win*";
                 };
-                command = "border none, floating enable, move position center, move up 300px";
+                command = "floating enable, move position center, move up 300px";
               }
               {
-                criteria = { app_id = "code-url-handler"; };
+                criteria = {
+                    app_id = "pavucontrol";
+                };
+                command = "floating enable";
+              }
+              # {
+              #   criteria = { 
+              #     app_id = "^code-url-handler$";
+              #   };
+              #   command = "floating enable";
+              # }
+
+              # No border
+              {
+                criteria = { app_id = "^.*"; };
+                # command = "border 1";
                 command = "border none";
               }
 
@@ -283,21 +375,6 @@ with mylib; {
               }
             ];
           };
-
-          floating.criteria = [
-            {
-              app_id = "firefox";
-              title = "moz-extension:.+";
-            }
-            {
-              app_id = "firefox";
-              title = "Password Required";
-            }
-            {
-              app_id = "firefox";
-              title = "About Mozilla Firefox";
-            }
-          ];
         };
 
       extraConfig = ''
@@ -314,6 +391,11 @@ with mylib; {
         # doesn't work well on websites were you can type in a hover popup
         #seat * hide_cursor when-typing enable
         seat * hide_cursor 5000
+        seat * xcursor_theme ${cursor.theme} ${toString cursor.size}
+        exec_always {
+          gsettings set org.gnome.desktop.interface cursor-theme ${cursor.theme}
+          gsettings set org.gnome.desktop.interface cursor-size ${toString cursor.size}
+        }
       '';
 
       # Disabled because it doesn't work when you set package to null. And I have to set it to null on my NixOS and Ubuntu hosts

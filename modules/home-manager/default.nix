@@ -13,6 +13,10 @@ with lib; {
       secretsRootPath = mkStrOpt "Secrets root path";
       user = mkStrOpt "user";
       machine = mkStrOpt "machine";
+      cursor = {
+        theme = mkStrOpt "cursor theme";
+        size = mkIntOpt "cursor size";
+      };
     };
   };
 
@@ -91,6 +95,10 @@ with lib; {
         _JAVA_AWT_WM_NONREPARENTING = 1;
         XDG_SESSION_TYPE = "wayland";
         GSETTINGS_SCHEMA_DIR = "${pkgs.glib.getSchemaPath pkgs.gtk3}";
+
+        # Configure cursor theme
+        XCURSOR_SIZE = cfg.cursor.size;
+        XCURSOR_THEME = cfg.cursor.theme;
 
         # Secrets storage
         # TODO: use sops instead

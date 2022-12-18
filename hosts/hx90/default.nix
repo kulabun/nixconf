@@ -49,8 +49,11 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
-  # Requirede for chromecast https://github.com/NixOS/nixpkgs/issues/49630
+  # Required for chromecast https://github.com/NixOS/nixpkgs/issues/49630
   services.avahi.enable = true;
+
+  # PC/SC Smart Card Daemon
+  services.pcscd.enable = true;
 
   # Set your time zone.
   time.timeZone = "US/Pacific";
@@ -59,8 +62,7 @@
   i18n.defaultLocale = "en_US.utf8";
 
   # Enable the X11 windowing system.
-  services.xserver.enable =
-    true; # BUG: when removed cursor disappers in wayland
+  services.xserver.enable = true; # BUG: when removed cursor disappers in wayland
   #programs.sway.enable = true;
 
   # Enable the GNOME Desktop Environment.

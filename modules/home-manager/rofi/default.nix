@@ -6,6 +6,7 @@
   ...
 }: let
   font = config.settings.rofi.font;
+  terminal = config.settings.sway.terminal;
 in
   with lib;
   with mylib; {
@@ -19,16 +20,16 @@ in
     config = mkIf config.settings.rofi.enable {
       xdg.configFile."networkmanager-dmenu/config.ini".text = ''
         [dmenu]
-        dmenu_command = ${pkgs.rofi-wayland}/bin/rofi
+        dmenu_command = ${pkgs.rofi-wayland}/bin/rofi -dmenu
         rofi_highlight = True
         [editor]
         gui_if_available = True
-        terminal = alacritty
+        terminal = ${terminal}
       '';
 
       home.packages = with pkgs; [
         rofi-wayland-vpn 
-        networkmanager_dmenu # TODO: check why it's failing with segmentaiotn fault
+        networkmanager_dmenu
       ];
 
       programs.rofi = {

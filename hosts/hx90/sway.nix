@@ -83,6 +83,8 @@ in
     wev # same as xev for xorg but for wayland
     ulauncher
     clipman
+    polkit
+    polkit_gnome
   ];
 
   services.pipewire = {
@@ -143,19 +145,23 @@ in
     '';
   };
 
-  # Fix auto suspend
-  # https://github.com/NixOS/nixpkgs/issues/100390
-  security.polkit.extraConfig = ''
-    polkit.addRule(function(action, subject) {
-        if (action.id == "org.freedesktop.login1.suspend" ||
-            action.id == "org.freedesktop.login1.suspend-multiple-sessions" ||
-            action.id == "org.freedesktop.login1.hibernate" ||
-            action.id == "org.freedesktop.login1.hibernate-multiple-sessions")
-        {
-            return polkit.Result.NO;
-        }
-    });
-  '';
+  security.polkit = {
+    enable = true;
+  
+    # Fix auto suspend
+    # https://github.com/NixOS/nixpkgs/issues/100390
+    extraConfig = ''
+      polkit.addRule(function(action, subject) {
+          if (action.id == "org.freedesktop.login1.suspend" ||
+              action.id == "org.freedesktop.login1.suspend-multiple-sessions" ||
+              action.id == "org.freedesktop.login1.hibernate" ||
+              action.id == "org.freedesktop.login1.hibernate-multiple-sessions")
+          {
+              return polkit.Result.NO;
+          }
+      });
+    '';
+  };
 
   # services.xserver.displayManager.gdm.autoSuspend = false;
 

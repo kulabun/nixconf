@@ -203,6 +203,45 @@ with mylib; {
               =ping "$@"
           fi
         }
+
+        #########################################################################################################
+        # Fix slow paste. See https://github.com/zsh-users/zsh-autosuggestions/issues/238#issuecomment-389324292
+        #########################################################################################################
+        pasteinit() {
+          OLD_SELF_INSERT=''${''${(s.:.)widgets[self-insert]}[2,3]}
+          zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
+        }
+
+        pastefinish() {
+          zle -N self-insert $OLD_SELF_INSERT
+        }
+        zstyle :bracketed-paste-magic paste-init pasteinit
+        zstyle :bracketed-paste-magic paste-finish pastefinish
+        #########################################################################################################
+
+        #################################################################################################### 
+        # Run Zellij on terminal start
+        #################################################################################################### 
+        local function zellij_start() {
+          command -v zellij >/dev/null 2>&1 || return 1
+          test -z "$ZELLIJ" || return 1
+
+          if test -n "$TARGET_ZELLIJ_SESSION"; then
+            zellij attach -c "$TARGET_ZELLIJ_SESSION"
+          else
+            zellij
+          fi
+          # elif zellij ls | grep "No active"; then
+          #   zellij
+          # else
+          #   echo "Doy you want to attach to an existing Zellij session? (Ctrl+C to start new session)"
+          #   local session=$(zellij ls | ${pkgs.fzf}/bin/fzf)
+          #   test -n "$session" && zellij attach -c "$session" || zellij
+          # fi
+        }
+        zellij_start
+        #################################################################################################### 
+
       '';
     };
   };

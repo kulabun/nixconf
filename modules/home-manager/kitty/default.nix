@@ -34,7 +34,8 @@ with lib; {
       theme = "Monokai Pro";
       settings = {
         confirm_os_window_close = 0;
-        background = "#2D2A2E";
+        background = "#2d2a2e";
+        selection_background = "#fcfcfa";
         scrollback_lines = 10000;
         enable_audio_bell = false;
         update_check_interval = 0;

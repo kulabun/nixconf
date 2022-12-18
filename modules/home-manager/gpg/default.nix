@@ -12,10 +12,14 @@ with mylib; {
   };
 
   config = mkIf config.settings.gpg.enable {
-    home.packages = with pkgs; [pinentry-curses];
+    home.packages = with pkgs; [
+      pinentry-curses
+      gcr # required for pinentry-gnome3
+    ];
     services.gpg-agent = {
       enable = true;
-      pinentryFlavor = "curses";
+      pinentryFlavor = "gnome3";
+      # pinentryFlavor = "curses";
     };
     programs.gpg.enable = true;
   };
