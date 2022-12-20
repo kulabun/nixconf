@@ -32,6 +32,7 @@ with mylib; {
       };
 
       packages = [ 
+        pkgs.udiskie # expected udisks2 service to be started on system level
         sway-make-screenshot 
         rofi-gopass
       ];
@@ -93,8 +94,8 @@ with mylib; {
             { command = "systemd-cat --identifier=nm-applet nm-applet --indicator "; }
             { command = "systemd-cat --identifier=mako mako"; }
             { command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY"; }
-            { command = "systemd-cat --identifier=udiskie udiskie --no-automount --tray"; }
-            { command = "systemd-cat --identifier=blueberry blueberry-tray"; }
+            { command = "systemd-cat --identifier=udiskie ${pkgs.udiskie}/bin/udiskie --no-automount --tray"; }
+            { command = "systemd-cat --identifier=blueberry ${pkgs.blueberry}/bin/blueberry-tray"; }
           ];
 
           assigns = { 
@@ -330,12 +331,16 @@ with mylib; {
 
               # Floating
               {
+                criteria = { app_id = "^.*blueman.*$"; title = "Bluetooth Devices"; };
+                command = "floating enable, border none";
+              }
+              {
                 criteria = { app_id = "ulauncher"; };
                 command = "floating enable, border none, move up 300px";
               }
               {
                 criteria = { app_id = "zenity"; };
-                command = "floating enable, border none, move up 300px";
+                command = "floating enable, border none";
               }
               {
                 criteria = {

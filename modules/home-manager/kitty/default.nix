@@ -43,7 +43,9 @@ with lib; {
       };
       keybindings = {
         "ctrl+c" = "copy_or_interrupt";
+        "ctrl+shift+c" = "no_op";
         "ctrl+v" = "paste_from_clipboard";
+        "ctrl+shift+v" = "no_op";
       };
     };
   };

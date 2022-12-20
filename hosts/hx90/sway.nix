@@ -163,6 +163,9 @@ in
     '';
   };
 
+  services.udisks2.enable = true;
+  services.blueman.enable = true;
+
   # services.xserver.displayManager.gdm.autoSuspend = false;
 
   # security.sudo.extraConfig = ''

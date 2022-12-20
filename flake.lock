@@ -257,14 +257,17 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1670823764,
-        "narHash": "sha256-lxrRzQHtGFV4S1X5x/DCzm4WQfqR/WA+FksguKzh1Dc=",
-        "path": "/home/konstantin/projects/neovim-flake",
-        "type": "path"
+        "lastModified": 1671402019,
+        "narHash": "sha256-tT0ETR++dJEWMoJsxJudInmCvX/PxBkdIotgkTCpVBE=",
+        "owner": "kulabun",
+        "repo": "neovim-flake",
+        "rev": "23d37f8c8cc9f59acc3c83d155075f25403d28f9",
+        "type": "github"
       },
       "original": {
-        "path": "/home/konstantin/projects/neovim-flake",
-        "type": "path"
+        "owner": "kulabun",
+        "repo": "neovim-flake",
+        "type": "github"
       }
     },
     "neovim-nightly-overlay": {

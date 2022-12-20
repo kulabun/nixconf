@@ -115,6 +115,8 @@ with lib; {
 
         nix-prefetch-scripts
         nix-index
+        nvfetcher
+
         tealdeer
         bashcards # flashcards for learning stuff
         cht-sh
@@ -163,6 +165,7 @@ with lib; {
     services = {
       #blueman-applet.enable = true; # doesnt work on wayland
       playerctld.enable = true;
+      blueman-applet.enable = true;
     };
   };
 }
