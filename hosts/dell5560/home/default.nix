@@ -38,6 +38,7 @@ in
       venv
       fix-ubuntu-sway
       slack-webapp
+      insomnia
     ];
     # packages = with pkgs; [ consul vault gcc cvm gr venv fix-ubuntu-sway xwayland wlroots glib wayland ];
     # packages = with pkgs; [ consul vault gcc cvm gr venv fix-ubuntu-sway xwayland wlroots glib wayland xdg-desktop-portal-wlr xdg-desktop-portal-gtk xorg.xprop pipewire pipewire-media-session ];
@@ -47,6 +48,11 @@ in
     user = "klabun";
     machine = "dell5560";
     secretsRootPath = "/home/klabun/secrets";
+    cursor = {
+      theme = "capitaine-cursors-white";
+      # theme = "capitaine-cursors";
+      size = 32;
+    };
 
     fonts.enable = true;
 
@@ -67,7 +73,7 @@ in
     home-manager.enable = true;
     #jetbrains.idea-community.enable = true; # Disable for now till I mirgrate from toolbox
     #jetbrains.idea-ultimate.enable = true;
-    #kitty.enable = true;
+    kitty.enable = true;
     lorri.enable = true;
     navi.enable = true;
     neovim.default = true;
@@ -93,6 +99,7 @@ in
     # webapps.whatsapp.enable = false;
     webapps.youtube-music.enable = true;
     xdg.enable = true;
+    zellij.enable = true;
     # zoom-us.enable = false; # broken on wayland
     zsh.enable = true;
 
@@ -104,10 +111,15 @@ in
     foot.enable = true;
 
     sway = {
-      terminal = "${pkgs.foot}/bin/footclient";
+      terminal = "/usr/bin/kitty";
       # terminal = "${pkgs.kitty}/bin/kitty";
+      # terminal = "${pkgs.foot}/bin/footclient";
     };
 
+    gtk.font = {
+      name = "DejaVu Sans";
+      size = 9;
+    };
     sway.font = {
       name = "SauceCodePro Nerd Font";
       size = 9;
@@ -211,14 +223,6 @@ in
           resolution = "3840x2160";
           position = "0,0";
         };
-      };
-
-      assigns = {
-        "3" = [{ class = "^jetbrains-idea$"; }];
-        "7" = [{ app_id = "^chrome-app.slack.com.*"; }];
-        "8" = [{ app_id = "^chrome-mail.google.com.*"; }];
-        "9" = [{ app_id = "^chrome-calendar.google.com.*"; }];
-        "10" = [{ app_id = "^chrome-.*.zoom.us.*"; }];
       };
     };
   };

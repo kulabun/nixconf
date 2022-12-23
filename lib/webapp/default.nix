@@ -1,6 +1,8 @@
 {pkgs, ...}:
 rec {
- makeElectronApp = { name, url }:
+  inherit (pkgs.lib) concatStringsSep optionalString;
+
+  makeElectronApp = { name, wmClass, url, clearUserAgent }:
     pkgs.callPackage
       ({ pkgs
        , stdenv
@@ -8,6 +10,11 @@ rec {
        }:
         let
           electron = pkgs.electron_21;
+          extraArgs = concatStringsSep " " [
+            (optionalString (wmClass != null) "--wmclass='${wmClass}'")
+            "--title=${name}" # the title is used in addition to wmclass(app_id) to make apps share profile but differenciate them
+            (optionalString clearUserAgent "--clear-user-agent")
+          ];
         in
         stdenv.mkDerivation {
           inherit name;
@@ -21,17 +28,18 @@ rec {
             cat ${./src/webapp.main.js} > $out/lib/${name}/main.js
             mkdir -p $out/bin
             echo '#!/bin/sh' > $out/bin/${name}
-            echo "${electron}/bin/electron --enable-features=UseOzonePlatform --ozone-platform=wayland --url=${url} $out/lib/${name}" >> $out/bin/${name}
+            echo "systemd-cat --identifier=${name} -- ${electron}/bin/electron --enable-features=UseOzonePlatform --ozone-platform=wayland ${extraArgs} --url=${url} $out/lib/${name}" >> $out/bin/${name}
             chmod +x $out/bin/${name}
           '';
         })
       { };
-
   makeWebApp =
     { name
     , desktopName
     , icon
     , url
+    , wmClass ? null
+    , clearUserAgent ? true # should be false for google apps
     , categories ? [ ]
     ,
     }:
@@ -44,6 +52,8 @@ rec {
       exec = "${makeElectronApp {
         inherit name;
         inherit url;
+        inherit wmClass;
+        inherit clearUserAgent;
       }}/bin/${name}";
     };
 }
