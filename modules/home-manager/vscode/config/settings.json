@@ -45,7 +45,6 @@
     "plaintext": false,
     "markdown": false
   },
-  "vscode-neovim.neovimExecutablePaths.linux": "@neovimBin@",
   "extensions.experimental.affinity": {
     "asvetliakov.vscode-neovim": 1
   },

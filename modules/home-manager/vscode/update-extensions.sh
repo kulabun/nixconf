@@ -88,6 +88,9 @@ function get_vsixpkg() {
 		        name = "$2-$1.zip";
 		      };
 		      vscodeExtUniqueId = "$1.$2";
+		      vscodeExtPublisher = "$1";
+		      vscodeExtName = "$2";
+		      version = "$VER";
 		    }
 	EOF
 }
@@ -123,7 +126,7 @@ EXT
 }
 
 # Note that we are only looking to update extensions that are already installed.
-for i in $(list_extensions); do
+for i in $(list_extensions | grep -v "ms-python.python"); do
 	OWNER=$(echo "$i" | cut -d. -f1)
 	EXT=$(echo "$i" | cut -d. -f2)
 
