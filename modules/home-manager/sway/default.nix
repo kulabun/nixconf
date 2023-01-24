@@ -104,7 +104,7 @@ with mylib; {
               { app_id = "^firefox$"; }
             ];
             # ide
-            "2" = [
+            "3" = [
               { class = "^jetbrains-[a-z-]+$"; } # class exists only for XWayland apps
               { app_id = "^code-url-handler$"; }
             ];
