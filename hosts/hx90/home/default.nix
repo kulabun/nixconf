@@ -33,6 +33,7 @@
     # helix.enable = false;
     home-manager.enable = true;
     jetbrains.idea-community.enable = true;
+    kde.enable = true;
     kitty.enable = true;
     lorri.enable = true;
     navi.enable = true;

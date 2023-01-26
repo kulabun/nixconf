@@ -38,6 +38,7 @@ with lib; {
     ./helix
     ./home-manager
     ./jetbrains
+    ./kde
     ./kitty
     ./lorri
     ./navi
