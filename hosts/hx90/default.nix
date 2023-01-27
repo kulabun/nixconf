@@ -11,7 +11,7 @@
     ../../modules/nixos/default
 
     ./hardware-configuration.nix
-    ./sway.nix
+    # ./sway.nix
     ./kde.nix
   ];
 
@@ -105,7 +105,7 @@
   users.users.konstantin = {
     isNormalUser = true;
     description = "Konstantin";
-    extraGroups = ["networkmanager" "wheel" "docker"];
+    extraGroups = ["networkmanager" "wheel" "docker" "video"];
     shell = pkgs.zsh;
     packages = with pkgs; [
       usbutils # lsusb
@@ -115,7 +115,6 @@
       pulseaudio
       libnotify # notify-send
       mpd
-      gnome.zenity
     ];
   };
 
@@ -125,10 +124,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    #neovim
     wget
-    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    #  wget
+    # vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   ];
 
   # Auto-completion wouldn't work if Zsh is enabled only in home-manager.

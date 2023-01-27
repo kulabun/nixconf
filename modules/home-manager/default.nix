@@ -164,9 +164,8 @@ with lib; {
     };
 
     services = {
-      #blueman-applet.enable = true; # doesnt work on wayland
       playerctld.enable = true;
-      blueman-applet.enable = true;
+      # blueman-applet.enable = true;
     };
   };
 }

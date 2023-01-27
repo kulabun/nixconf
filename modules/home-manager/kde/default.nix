@@ -2,9 +2,10 @@
 #   https://github.com/LunNova/nixos-configs/blob/dev/users/lun/on-nixos/kdeconfig.nix
 { config, mylib, lib, pkgs, ... }:
 let
+  isNixOS = builtins.pathExists /etc/NIXOS;
   toValue = v:
     if builtins.isString v then
-      v
+      ''"${v}"''
     else if builtins.isBool v then
       lib.boolToString v
     else if builtins.isInt v then
@@ -123,17 +124,72 @@ let
     kcminputrc = {
       "Logitech MX Ergo" = {
         NaturalScroll = false;
-        PointerAcceleration = -0.750;
-        PointerAccelerationProfile = 2;
+        # PointerAcceleration = -0.200; # kwriteconfig5 cannot write negative numbers as key values
+        PointerAccelerationProfile = 1;
       };
       Mouse = {
-        PointerAcceleration = -0.200;
+        # PointerAcceleration = -0.200; # kwriteconfig5 cannot write negative numbers as key values
         PointerAccelerationProfile = 1;
       };
     };
-    kded5rc = {
-      PlasmaBrowserIntegration = {
-        shownCount = 0;
+    kglobalshortcutsrc = {
+      kwin = {
+        # Reset default keybindings
+        "view_actual_size" = "none,Meta+0,Zoom to Actual Size";
+        "Show Desktop" = "none,Meta+D,Peek at Desktop";
+
+        # Setup new keybindings
+        "Switch Window Down" = "Meta+J,Meta+Alt+Down,Switch to Window Below";
+        "Switch Window Left" = "Meta+H,Meta+Alt+Left,Switch to Window to the Left";
+        "Switch Window Right" = "Meta+L,Meta+Alt+Right,Switch to Window to the Right";
+        "Switch Window Up" = "Meta+K,Meta+Alt+Up,Switch to Window Above";
+
+        "Kill Window" = "Meta+Shift+Q,Meta+Ctrl+Esc,Kill Window";
+        "Window Close" = "Meta+Q,Alt+F4,Close Window";
+        "Window Maximize" = "Meta+M,Meta+PgUp,Maximize Window";
+
+        "Switch to Desktop 1" = "Meta+1,Ctrl+F1,Switch to Desktop 1";
+        "Switch to Desktop 2" = "Meta+2,Ctrl+F2,Switch to Desktop 2";
+        "Switch to Desktop 3" = "Meta+3,Ctrl+F3,Switch to Desktop 3";
+        "Switch to Desktop 4" = "Meta+4,Ctrl+F4,Switch to Desktop 4";
+        "Switch to Desktop 5" = "Meta+5,Ctrl+F5,Switch to Desktop 5";
+        "Switch to Desktop 6" = "Meta+6,Ctrl+F6,Switch to Desktop 6";
+        "Switch to Desktop 7" = "Meta+7,Ctrl+F7,Switch to Desktop 7";
+        "Switch to Desktop 8" = "Meta+8,Ctrl+F8,Switch to Desktop 8";
+        "Switch to Desktop 9" = "Meta+9,Ctrl+F9,Switch to Desktop 9";
+        "Switch to Desktop 10" = "Meta+0,Ctrl+F10,Switch to Desktop 10";
+
+        "Window to Desktop 1" = "Meta+!,,Window to Desktop 1";
+        "Window to Desktop 2" = "Meta+@,,Window to Desktop 2";
+        "Window to Desktop 3" = "Meta+#,,Window to Desktop 3";
+        "Window to Desktop 4" = "Meta+$,,Window to Desktop 4";
+        "Window to Desktop 5" = "Meta+%,,Window to Desktop 5";
+        "Window to Desktop 6" = "Meta+^,,Window to Desktop 6";
+        "Window to Desktop 7" = "Meta+&,,Window to Desktop 7";
+        "Window to Desktop 8" = "Meta+*,,Window to Desktop 8";
+        "Window to Desktop 9" = "Meta+(,,Window to Desktop 9";
+        "Window to Desktop 10" = "Meta+),,Window to Desktop 10";
+      };
+      plasmashell = {
+        # Reset default keybindings
+        "activate task manager entry 1" = "none,Meta+1,Activate Task Manager Entry 1";
+        "activate task manager entry 2" = "none,Meta+2,Activate Task Manager Entry 2";
+        "activate task manager entry 3" = "none,Meta+3,Activate Task Manager Entry 3";
+        "activate task manager entry 4" = "none,Meta+4,Activate Task Manager Entry 4";
+        "activate task manager entry 5" = "none,Meta+5,Activate Task Manager Entry 5";
+        "activate task manager entry 6" = "none,Meta+6,Activate Task Manager Entry 6";
+        "activate task manager entry 7" = "none,Meta+7,Activate Task Manager Entry 7";
+        "activate task manager entry 8" = "none,Meta+8,Activate Task Manager Entry 8";
+        "activate task manager entry 9" = "none,Meta+9,Activate Task Manager Entry 9";
+        "activate task manager entry 10" = "none,Meta+0,Activate Task Manager Entry 10";
+      };
+      # App launcher
+      "org.kde.krunner.desktop" = {
+        "_launch" = "Alt+F2\tMeta+D\tAlt+Space\tSearch,Alt+Space\tAlt+F2\tSearch,KRunner";
+      };
+      kded5 = {
+        "Show System Activity" = "Ctrl+Esc\tMeta+Esc,Ctrl+Esc,Show System Activity";
+        "display" = "Display\tMeta+O,Display\tMeta+P,Switch Display";
       };
     };
     kdeglobals = {
@@ -149,9 +205,9 @@ let
         (group:
           lib.mapAttrsToList
             (key: value:
-              "$DRY_RUN_CMD ${pkgs.libsForQt5.kconfig}/bin/kwriteconfig5 --file $confdir/'${file}' --group '${group}' --key '${key}' '${
-                toValue value
-              }'")
+              ''
+              $DRY_RUN_CMD ${pkgs.libsForQt5.kconfig}/bin/kwriteconfig5 --file $confdir/'${file}' --group '"${group}"' --key '"${key}"' '${toValue value}'
+              '')
         ))
     configs);
 in
@@ -160,9 +216,10 @@ with lib;
    options = {
       settings.kde = {
         enable = mylib.mkEnableOpt "kde";
-        font = mylib.mkFontOpt "kde";
+        # font = mylib.mkFontOpt "kde";
       };
     };
+
 
     config = mkIf config.settings.kde.enable {
       home.activation.kwriteconfig5 = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
