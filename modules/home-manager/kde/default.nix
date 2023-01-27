@@ -5,7 +5,7 @@ let
   isNixOS = builtins.pathExists /etc/NIXOS;
   toValue = v:
     if builtins.isString v then
-      ''"${v}"''
+      v
     else if builtins.isBool v then
       lib.boolToString v
     else if builtins.isInt v then
@@ -69,10 +69,24 @@ let
         wmclasscomplete = true;
         wmclassmatch = 2;
       };
+      
+      "5" = {
+        Description = "Slack";
+        maximizehoriz = true;
+        maximizehorizrule = 3;
+        maximizevert = true;
+        maximizevertrule = 3;
+        noborder = true;
+        noborderrule = 3;
+        types = 1;
+        wmclass = "slack";
+        wmclassmatch = 2;
+        wmclasscomplete = true;
+      };
 
       General = {
-        count = 4;
-        rules = "1,2,3,4";
+        count = 5;
+        rules = "1,2,3,4,5";
       };
     };
     kwinrc = {
@@ -121,17 +135,17 @@ let
         slideEnabled = false;
       };
     };
-    kcminputrc = {
-      "Logitech MX Ergo" = {
-        NaturalScroll = false;
-        # PointerAcceleration = -0.200; # kwriteconfig5 cannot write negative numbers as key values
-        PointerAccelerationProfile = 1;
-      };
-      Mouse = {
-        # PointerAcceleration = -0.200; # kwriteconfig5 cannot write negative numbers as key values
-        PointerAccelerationProfile = 1;
-      };
-    };
+    # kcminputrc = {
+    #   "Logitech MX Ergo" = {
+    #     NaturalScroll = false;
+    #     # PointerAcceleration = -0.200; # kwriteconfig5 cannot write negative numbers as key values
+    #     PointerAccelerationProfile = 1;
+    #   };
+    #   Mouse = {
+    #     # PointerAcceleration = -0.200; # kwriteconfig5 cannot write negative numbers as key values
+    #     PointerAccelerationProfile = 1;
+    #   };
+    # };
     kglobalshortcutsrc = {
       kwin = {
         # Reset default keybindings
@@ -206,7 +220,7 @@ let
           lib.mapAttrsToList
             (key: value:
               ''
-              $DRY_RUN_CMD ${pkgs.libsForQt5.kconfig}/bin/kwriteconfig5 --file $confdir/'${file}' --group '"${group}"' --key '"${key}"' '${toValue value}'
+              $DRY_RUN_CMD ${pkgs.libsForQt5.kconfig}/bin/kwriteconfig5 --file $confdir/'${file}' --group '${group}' --key '${key}' '${toValue value}'
               '')
         ))
     configs);
