@@ -27,7 +27,7 @@ let
         types = 1;
         wmclass = "code code-url-handler";
         wmclasscomplete = true;
-        wmclassmatch = 1;
+        wmclassmatch = 2;
       };
 
       "2" = {
@@ -40,7 +40,8 @@ let
         noborderrule = 3;
         types = 1;
         wmclass = "firefox";
-        wmclassmatch = 1;
+        wmclasscomplete = true;
+        wmclassmatch = 2;
       };
 
       "3" = {
@@ -53,7 +54,8 @@ let
         noborderrule = 3;
         types = 1;
         wmclass = "kitty";
-        wmclassmatch = 1;
+        wmclasscomplete = true;
+        wmclassmatch = 2;
       };
 
       "4" = {
@@ -84,9 +86,23 @@ let
         wmclasscomplete = true;
       };
 
+      "6" = {
+        Description = "Konsole";
+        maximizehoriz = true;
+        maximizehorizrule = 3;
+        maximizevert = true;
+        maximizevertrule = 3;
+        noborder = true;
+        noborderrule = 3;
+        types = 1;
+        wmclass = "konsole";
+        wmclassmatch = 2;
+        wmclasscomplete = true;
+      };
+
       General = {
-        count = 5;
-        rules = "1,2,3,4,5";
+        count = 6;
+        rules = "1,2,3,4,5,6";
       };
     };
     kwinrc = {
