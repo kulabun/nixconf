@@ -4,7 +4,6 @@
   services.xserver.desktopManager.plasma5.enable = true;
   services.xserver.desktopManager.plasma5.excludePackages = with pkgs.libsForQt5; [
     khelpcenter
-    konsole
     plasma-browser-integration
   ];
 
@@ -17,6 +16,10 @@
     wev # same as xev for xorg but for wayland
     ulauncher
     clipman
+    vlc
+    ark
+    konsole
+    docker-compose 
   ];
 
   services.pipewire = {
@@ -41,4 +44,12 @@
 
   services.udisks2.enable = true;
   programs.dconf.enable = true;
+  networking.extraHosts = ''
+    127.0.0.1 kafka
+    127.0.0.1 zookeeper
+    127.0.0.1 schema-registry
+    127.0.0.1 connect
+    127.0.0.1 ksqldb-server
+    127.0.0.1 postgres
+  '';
 }
