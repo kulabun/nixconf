@@ -20,6 +20,7 @@
     ark
     konsole
     docker-compose 
+    libsForQt5.bismuth
   ];
 
   services.pipewire = {

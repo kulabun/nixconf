@@ -15,96 +15,6 @@ let
     else
       builtins.abort ("Unknown value type: ${builtins.toString v}");
   configs = {
-    kwinrulesrc = {
-      "1" = {
-        Description = "VSCode";
-        maximizehoriz = true;
-        maximizehorizrule = 3;
-        maximizevert = true;
-        maximizevertrule = 3;
-        noborder = true;
-        noborderrule = 3;
-        types = 1;
-        wmclass = "code code-url-handler";
-        wmclasscomplete = true;
-        wmclassmatch = 2;
-      };
-
-      "2" = {
-        Description = "firefox";
-        maximizehoriz = true;
-        maximizehorizrule = 3;
-        maximizevert = true;
-        maximizevertrule = 3;
-        noborder = true;
-        noborderrule = 3;
-        types = 1;
-        wmclass = "firefox";
-        wmclasscomplete = true;
-        wmclassmatch = 2;
-      };
-
-      "3" = {
-        Description = "Kitty";
-        maximizehoriz = true;
-        maximizehorizrule = 3;
-        maximizevert = true;
-        maximizevertrule = 3;
-        noborder = true;
-        noborderrule = 3;
-        types = 1;
-        wmclass = "kitty";
-        wmclasscomplete = true;
-        wmclassmatch = 2;
-      };
-
-      "4" = {
-        Description = "Electron";
-        maximizehoriz = true;
-        maximizehorizrule = 3;
-        maximizevert = true;
-        maximizevertrule = 3;
-        noborder = true;
-        noborderrule = 3;
-        types = 1;
-        wmclass = "electron";
-        wmclasscomplete = true;
-        wmclassmatch = 2;
-      };
-      
-      "5" = {
-        Description = "Slack";
-        maximizehoriz = true;
-        maximizehorizrule = 3;
-        maximizevert = true;
-        maximizevertrule = 3;
-        noborder = true;
-        noborderrule = 3;
-        types = 1;
-        wmclass = "slack";
-        wmclassmatch = 2;
-        wmclasscomplete = true;
-      };
-
-      "6" = {
-        Description = "Konsole";
-        maximizehoriz = true;
-        maximizehorizrule = 3;
-        maximizevert = true;
-        maximizevertrule = 3;
-        noborder = true;
-        noborderrule = 3;
-        types = 1;
-        wmclass = "konsole";
-        wmclassmatch = 2;
-        wmclasscomplete = true;
-      };
-
-      General = {
-        count = 6;
-        rules = "1,2,3,4,5,6";
-      };
-    };
     kwinrc = {
       Desktops = {
         Rows = 1;
@@ -149,6 +59,16 @@ let
       };
       Plugins = {
         slideEnabled = false;
+        bismuthEnable = true;
+      };
+      "Script-bismuth" = {
+        noTileBorder = true;
+        preventMinimize = true;
+        screenGapBottom = 3;
+        screenGapLeft = 3;
+        screenGapRight = 3;
+        screenGapTop = 3;
+        tileLayoutGap = 3;
       };
     };
     # kcminputrc = {
