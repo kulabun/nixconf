@@ -12,7 +12,7 @@ with mylib; {
     settings.zellij.enable = mkEnableOpt "zellij";
   };
   config = mkIf config.settings.zellij.enable {
-    home.packages = [pkgs'.zellij];
+    home.packages = with pkgs; [ zellij ];
     xdg.configFile."zellij/config.kdl".source = ./config/config.kdl;
 
     # programs.zellij = {
