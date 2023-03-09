@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  pkgs',
   lib,
   mylib,
   ...
@@ -12,7 +11,7 @@ with mylib; {
     settings.fonts.enable = mkEnableOpt "fonts";
   };
   config = mkIf config.settings.fonts.enable {
-    home.packages = with pkgs'; [
+    home.packages = with pkgs; [
       font-awesome
 
       (nerdfonts.override {

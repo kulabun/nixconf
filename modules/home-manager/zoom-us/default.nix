@@ -10,7 +10,7 @@ let
     postFixup =
       old.postFixup
       + ''
-        # this helps to overcome default check and zoom is still running on wayland
+        # this helps to overcome default check and zoom is still running on sway
         # but the app still doesn't work, it crashes when I try to share a screen :(
         wrapProgram $out/bin/zoom-us --unset XDG_SESSION_TYPE
         wrapProgram $out/bin/zoom --unset XDG_SESSION_TYPE

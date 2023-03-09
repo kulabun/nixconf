@@ -14,7 +14,6 @@
     gcc
     firefox-wayland
     wev # same as xev for xorg but for wayland
-    ulauncher
     clipman
     vlc
     ark
@@ -29,6 +28,7 @@
     pulse.enable = true;
   };
 
+
   # xdg-desktop-portal works by exposing a series of D-Bus interfaces
   # known as portals under a well-known name
   # (org.freedesktop.portal.Desktop) and object path
@@ -38,19 +38,11 @@
   services.dbus.enable = true;
   xdg.portal = {
     enable = true;
-    # wlr.enable = true;
-    # # gtk portal needed to make gtk apps happy
-    # extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
   services.udisks2.enable = true;
   programs.dconf.enable = true;
   networking.extraHosts = ''
-    127.0.0.1 kafka
-    127.0.0.1 zookeeper
-    127.0.0.1 schema-registry
-    127.0.0.1 connect
-    127.0.0.1 ksqldb-server
-    127.0.0.1 postgres
+    127.0.0.1 localhost
   '';
 }

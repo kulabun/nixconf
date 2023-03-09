@@ -27,8 +27,8 @@ with mylib; {
   config = mkIf config.settings.slack.enable {
     home.packages = with pkgs'; [
       my-slack
-      xdg-desktop-portal-wlr
-      xdg-desktop-portal-gtk
+      # xdg-desktop-portal-wlr
+      # xdg-desktop-portal-gtk
     ];
   };
 }

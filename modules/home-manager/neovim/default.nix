@@ -2,7 +2,6 @@
 , system
 , config
 , pkgs
-, pkgs'
 , lib
 , mylib
 , ...

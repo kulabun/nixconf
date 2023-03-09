@@ -1,1 +1,3 @@
-{ ... }: { imports = [ ../kint-keyboard/default.nix ]; }
+{ ... }: { imports = [ 
+  ../kint-keyboard/default.nix 
+  ]; }

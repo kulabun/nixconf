@@ -117,7 +117,7 @@
     stateVersion = "22.11";
 
     sessionVariables = {
-      GDK_SCALE = 2;
+    # GDK_SCALE = 2;
       XCURSOR_SIZE = settings.cursor.size;
       XCURSOR_THEME = settings.cursor.theme;
     };
