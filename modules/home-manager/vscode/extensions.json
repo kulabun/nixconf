@@ -5,6 +5,10 @@
       "extension": "vscode-neovim"
     },
     {
+      "publisher": "jnoortheen",
+      "extension": "nix-ide"
+    },
+    {
       "publisher": "esbenp",
       "extension": "prettier-vscode"
     },

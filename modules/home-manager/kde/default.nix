@@ -62,6 +62,10 @@ let
         bismuthEnable = true;
       };
       "Script-bismuth" = {
+        enableFloatingLayout = true;
+        enableMonocleLayout = false;
+        enableSpiralLayout = false;
+        enableStairLayout = false;
         noTileBorder = true;
         preventMinimize = true;
         screenGapBottom = 3;
@@ -69,6 +73,7 @@ let
         screenGapRight = 3;
         screenGapTop = 3;
         tileLayoutGap = 3;
+        ignoreTitle = "Firefox — Sharing Indicator";
       };
     };
     # kcminputrc = {
@@ -140,6 +145,19 @@ let
       kded5 = {
         "Show System Activity" = "Ctrl+Esc\tMeta+Esc,Ctrl+Esc,Show System Activity";
         "display" = "Display\tMeta+O,Display\tMeta+P,Switch Display";
+      };
+      ksmserver = {
+        "Lock Screen" = "Meta+Shift+Esc\tScreensaver,Meta+L\tScreensaver,Lock Session";
+        "Lock Session" = "Meta+Shift+Esc,Meta+L\tScreensaver,Lock Session";
+      };
+      bismuth = {
+        "toggle_float_layout" = "Meta+Shift+F,Meta+Shift+F,Toggle Floating Layout";
+        "toggle_three_column_layout" = "Meta+Shift+C,,Toggle Three Column Layout";
+        "toggle_tile_layout" = "Meta+Shift+T,Meta+T,Toggle Tile Layout";
+        "move_window_to_left_pos" = "Meta+Shift+H,Meta+Shift+H,Move Window Left";
+        "move_window_to_right_pos" = "Meta+Shift+L,Meta+Shift+L,Move Window Right";
+        "push_window_to_master" = "Meta+Return,Meta+Return,Push Active Window to Master Area";
+        "toggle_spread_layout" = "Meta+Shift+S,,Toggle Spread Layout";
       };
     };
     kdeglobals = {

@@ -6,6 +6,13 @@
   mylib,
   ...
 }:
+let 
+  idea-ultimate = pkgs'.jetbrains.idea-ultimate.overrideAttrs (old: {
+    postFixup = (old.postFixup or "") + ''
+      wrapProgram $out/bin/idea-ultimate --unset GDK_SCALE
+    '';
+  });
+in
 with lib;
 with mylib; {
   options = {
@@ -13,8 +20,6 @@ with mylib; {
   };
 
   config = mkIf config.settings.jetbrains.idea-ultimate.enable {
-    home.packages = with pkgs'; [ 
-      jetbrains.idea-ultimate
-    ];
+    home.packages = [ idea-ultimate ];
   };
 }

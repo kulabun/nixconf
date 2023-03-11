@@ -122,6 +122,8 @@ vscjava.vscode-spring-initializr
 vscjava.vscode-java-pack
 vscjava.vscode-gradle
 vscodevim.vim
+jnoortheen.nix-ide
+redhat.vscode-yaml
 EXT
 }
 
