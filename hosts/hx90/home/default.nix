@@ -115,6 +115,7 @@
 
     sessionVariables = {
       GDK_SCALE = 2;
+      QT_DEVICE_PIXEL_RATIO = 2;
       XCURSOR_SIZE = settings.cursor.size;
       XCURSOR_THEME = settings.cursor.theme;
     };
