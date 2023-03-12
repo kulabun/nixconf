@@ -124,6 +124,7 @@ in
             # Nix
             alejandra
             rnix-lsp
+            nixpkgs-fmt
             statix
 
             # go

@@ -82,17 +82,13 @@ with mylib; {
         p = "ps -A f -o user:12,pid,priority,ni,pcpu,pmem,args";
         nh = "unset HISTFILE";
         o = "xdg-open";
-        ezh = "$EDITOR ~/.zshrc && source ~/.zshrc";
-        outputs = "swaymsg -t get_outputs";
-        inputs = "swaymsg -t get_inputs";
         share = "python3 -m http.server 9000";
         d = "docker";
-        dps = "d ps";
+        dp = "d ps";
         dl = "d logs";
         ip4 = "ip -4 -c -o address";
         ip6 = "ip -6 -c -o address";
-        vpn = ''
-          (nmcli connection show | grep Indeed > /dev/null && echo "Already connected") || nmcli connection up Indeed --ask'';
+        vpn = ''(nmcli connection show | grep Indeed > /dev/null && echo "Already connected") || nmcli connection up Indeed --ask'';
         g = "git";
         gl = "gradle";
         chrome = "google-chrome-stable";
@@ -112,7 +108,7 @@ with mylib; {
         "~zsh" = "cd ~zsh";
         "~nix" = "cd ~nix";
         "~scripts" = "cd ~scripts";
-        "~sway" = "cd ~sway";
+        "~navi" = "cd ~navi";
       };
 
       shellGlobalAliases = {
@@ -126,12 +122,7 @@ with mylib; {
 
       dirHashes = {
         proj = "$HOME/projects";
-        vim = "$HOME/nixconf/home-manager/modules/neovim/config";
-        zsh = "$HOME/nixconf/home-manager/modules/zsh/config";
         nix = "$HOME/nixconf/";
-        scripts = "$HOME/nixconf/home-manager/mondules/scripts";
-        sway = "$HOME/nixconf/home-manager/mondules/sway";
-        navi = "$HOME/nixconf/home-manager/mondules/navi";
       };
 
       profileExtra = ''

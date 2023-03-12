@@ -6,7 +6,7 @@
   
   settings = {
     user = "klabun";
-    machine = "dell7590";
+    machine = "dell7573";
     secretsRootPath = "/home/klabun/secrets";
     cursor = {
       theme = "capitaine-cursors-white";
@@ -97,6 +97,7 @@
     stateVersion = "22.11";
 
     sessionVariables = {
+      GDK_SCALE = 2;
       XCURSOR_SIZE = settings.cursor.size;
       XCURSOR_THEME = settings.cursor.theme;
     };

@@ -50,5 +50,6 @@
   },
   "tabnine.experimentalAutoImports": true,
   "vim.useCtrlKeys": false,
-  "vim.useSystemClipboard": true
+  "vim.useSystemClipboard": true,
+  "nix.serverPath": "rnix-lsp"
 }

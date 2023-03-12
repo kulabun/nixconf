@@ -139,7 +139,7 @@ with lib; {
         watson
         fd
         ripgrep
-        tmux
+        # tmux
         age # file encryption
         psmisc # fuser.- helps to see what process blocks the file
 
@@ -159,7 +159,8 @@ with lib; {
         unrar
         feh
         ranger
-        terraform
+        # terraform
+        htop
       ];
     };
 

@@ -106,6 +106,28 @@
             }
           ];
         };
+        dell7573 = nixpkgs.lib.nixosSystem {
+          inherit system;
+          inherit pkgs;
+          modules = [
+            ./hosts/dell7573
+            ./modules/nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users."klabun" = {imports = [./hosts/dell7573/home];};
+                extraSpecialArgs = {
+                  inherit system;
+                  inherit inputs;
+                  inherit mylib;
+                  inherit pkgs';
+                };
+              };
+            }
+          ];
+        };
       };
 
       homeConfigurations = {

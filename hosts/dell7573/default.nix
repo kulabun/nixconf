@@ -1,57 +1,38 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{ config
-, pkgs
-, ...
-}: {
-  imports = [
-    # Include the results of the hardware scan.
-    ../../modules/nixos/default
-    ../../modules/nixos/kde
 
-    ./hardware-configuration.nix
-  ];
+{ config, pkgs, ... }:
+
+{
+  imports =
+    [
+      # Include the results of the hardware scan.
+      ./hardware-configuration.nix
+      ../../modules/nixos/default
+      ../../modules/nixos/kde
+    ];
 
   # Bootloader.
-  boot = {
-    loader = {
-      systemd-boot.enable = true;
-      efi = {
-        canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot/efi";
-      };
-    };
-    kernelModules = [ "mt7921e" ];
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
-    # Setup keyfile
-    initrd.secrets."/crypto_keyfile.bin" = null;
+  # Setup keyfile
+  boot.initrd.secrets = {
+    "/crypto_keyfile.bin" = null;
   };
 
-  # Decrypt second drive
-  environment.etc."crypttab".text = ''
-    ct2000mx500ssd1 /dev/disk/by-uuid/71d37ba8-f366-45a2-9a5f-2c1238cef11c /crypto_keyfile.bin
-  '';
-  fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/0c3bca9a-037d-4990-aecb-943e5becd99b";
-    fsType = "ext4";
-  };
-  fileSystems."/root-drive" = {
-    device = "/dev/disk/by-uuid/80699c90-ce4e-4de6-b45f-9c75a484be4b";
-    fsType = "ext4";
-  };
+  # Enable swap on luks
+  boot.initrd.luks.devices."luks-0beaaea9-239c-4ee9-b90b-b51687accdbb".device = "/dev/disk/by-uuid/0beaaea9-239c-4ee9-b90b-b51687accdbb";
+  boot.initrd.luks.devices."luks-0beaaea9-239c-4ee9-b90b-b51687accdbb".keyFile = "/crypto_keyfile.bin";
 
-  # MiniForum HX90 has MediaTek 7921k Wi-Fi module. It is supported by mt7921e kernel module, but device is not mapped to this kernel module. So we need to do it.
-  # https://askubuntu.com/questions/1376871/rz608-mt7921k-wireless-lan-driver-is-not-supported-on-ubuntu-18-04/1378043#1378043
-  services.udev.extraRules = ''
-    SUBSYSTEM=="drivers", DEVPATH=="/bus/pci/drivers/mt7921e", ATTR{new_id}="14c3 0608"
-  '';
-  boot.extraModprobeConfig = ''
-    alias pci:v000014C3d00000608sv*sd*bc*sc*i* mt7921e
-  '';
+  # Enable the KDE Plasma Desktop Environment.
+  services.xserver.displayManager.sddm.enable = true;
+  services.xserver.desktopManager.plasma5.enable = true;
 
   hardware.bluetooth.enable = true;
-  networking.hostName = "konstantin-desktop"; # Define your hostname.
+  networking.hostName = "dell7573"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # networking.extraHosts = ''
   #   127.0.0.1 localhost
@@ -128,9 +109,9 @@
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.konstantin = {
+  users.users.klabun = {
     isNormalUser = true;
-    description = "Konstantin";
+    description = "klabun";
     extraGroups = [ "networkmanager" "wheel" "docker" "video" ];
     shell = pkgs.zsh;
     packages = with pkgs; [
@@ -186,4 +167,5 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
+
 }

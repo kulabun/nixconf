@@ -59,13 +59,14 @@ let
       };
       Plugins = {
         slideEnabled = false;
-        bismuthEnable = true;
+        bismuthEnabled = true;
       };
       "Script-bismuth" = {
         enableFloatingLayout = true;
-        enableMonocleLayout = false;
         enableSpiralLayout = false;
         enableStairLayout = false;
+        ignoreTitle = "Firefox — Sharing Indicator";
+        monocleMaximize = false;
         noTileBorder = true;
         preventMinimize = true;
         screenGapBottom = 3;
@@ -73,7 +74,47 @@ let
         screenGapRight = 3;
         screenGapTop = 3;
         tileLayoutGap = 3;
-        ignoreTitle = "Firefox — Sharing Indicator";
+      };
+      Windows = {
+        ElectricBorderMaximize = false;
+        ElectricBorderTilling = false;
+        Placement = "Centered";
+      };
+      "org.kde.kdecoration2" = {
+        BorderSize = "None";
+        BorderSizeAuto = false;
+      };
+    };
+    krunnerrc = {
+      General = {
+        ActivateWhenTypingOnDesktop = false;
+        ActivityAware = false;
+        FreeFloating = true;
+        HistoryEnabled = false;
+        RetainPriorSearch = false;
+      };
+
+      Plugins = {
+        CharacterRunnerEnabled = false;
+        DictionaryEnabled = false;
+        appstreamEnabled = false;
+        baloosearchEnabled = false;
+        bookmarksEnabled = false;
+        browserhistoryEnabled = false;
+        browsertabsEnabled = false;
+        desktopsessionsEnabled = false;
+        helprunnerEnabled = false;
+        katesessionsEnabled = false;
+        konsoleprofilesEnabled = false;
+        kwinEnabled = false;
+        "org.kde.activities2Enabled" = false;
+        "org.kde.datetimeEnabled" = false;
+        "org.kde.windowedwidgetsEnabled" = false;
+        plasma-desktopEnabled = false;
+        recentdocumentsEnabled = false;
+        shellEnabled = false;
+        webshortcutsEnabled = false;
+        windowsEnabled = false;
       };
     };
     # kcminputrc = {
@@ -143,11 +184,10 @@ let
         "_launch" = "Alt+F2\tMeta+D\tAlt+Space\tSearch,Alt+Space\tAlt+F2\tSearch,KRunner";
       };
       kded5 = {
-        "Show System Activity" = "Ctrl+Esc\tMeta+Esc,Ctrl+Esc,Show System Activity";
+        "Show System Activity" = "none,Ctrl+Esc,Show System Activity";
         "display" = "Display\tMeta+O,Display\tMeta+P,Switch Display";
       };
       ksmserver = {
-        "Lock Screen" = "Meta+Shift+Esc\tScreensaver,Meta+L\tScreensaver,Lock Session";
         "Lock Session" = "Meta+Shift+Esc,Meta+L\tScreensaver,Lock Session";
       };
       bismuth = {
@@ -158,6 +198,8 @@ let
         "move_window_to_right_pos" = "Meta+Shift+L,Meta+Shift+L,Move Window Right";
         "push_window_to_master" = "Meta+Return,Meta+Return,Push Active Window to Master Area";
         "toggle_spread_layout" = "Meta+Shift+S,,Toggle Spread Layout";
+        "toggle_monocle_layout" = "Meta+Shift+M,Meta+M,Toggle Monocle Layout";
+        "toggle_window_floating" = "Meta+F,Meta+F,Toggle Active Window Floating";
       };
     };
     kdeglobals = {
@@ -174,32 +216,32 @@ let
           lib.mapAttrsToList
             (key: value:
               ''
-              $DRY_RUN_CMD ${pkgs.libsForQt5.kconfig}/bin/kwriteconfig5 --file $confdir/'${file}' --group '${group}' --key '${key}' '${toValue value}'
+                $DRY_RUN_CMD ${pkgs.libsForQt5.kconfig}/bin/kwriteconfig5 --file $confdir/'${file}' --group '${group}' --key '${key}' '${toValue value}'
               '')
         ))
     configs);
 in
 with lib;
 {
-   options = {
-      settings.kde = {
-        enable = mylib.mkEnableOpt "kde";
-        # font = mylib.mkFontOpt "kde";
-      };
+  options = {
+    settings.kde = {
+      enable = mylib.mkEnableOpt "kde";
+      # font = mylib.mkFontOpt "kde";
     };
+  };
 
 
-    config = mkIf config.settings.kde.enable {
-      home.activation.kwriteconfig5 = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-        _() {
-          confdir="''${XDG_CONFIG_HOME:-$HOME/.config}"
-          ${builtins.concatStringsSep "\n" lines}
-          $DRY_RUN_CMD ${pkgs.libsForQt5.qt5.qttools.bin}/bin/qdbus org.kde.KWin /KWin reconfigure || echo "KWin reconfigure failed"
-          for i in {0..10}; do
-            $DRY_RUN_CMD ${pkgs.dbus}/bin/dbus-send --type=signal /KGlobalSettings org.kde.KGlobalSettings.notifyChange int32:$i int32:0 || echo "KGlobalSettings.notifyChange failed"
-          done
-        } && _
-        unset -f _
-      '';
-    };
+  config = mkIf config.settings.kde.enable {
+    home.activation.kwriteconfig5 = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+      _() {
+        confdir="''${XDG_CONFIG_HOME:-$HOME/.config}"
+        ${builtins.concatStringsSep "\n" lines}
+        $DRY_RUN_CMD ${pkgs.libsForQt5.qt5.qttools.bin}/bin/qdbus org.kde.KWin /KWin reconfigure || echo "KWin reconfigure failed"
+        for i in {0..10}; do
+          $DRY_RUN_CMD ${pkgs.dbus}/bin/dbus-send --type=signal /KGlobalSettings org.kde.KGlobalSettings.notifyChange int32:$i int32:0 || echo "KGlobalSettings.notifyChange failed"
+        done
+      } && _
+      unset -f _
+    '';
+  };
 }
