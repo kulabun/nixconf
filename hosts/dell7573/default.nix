@@ -5,13 +5,13 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ../../modules/nixos/default
-      ../../modules/nixos/kde
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ../../modules/nixos/default
+    ../../modules/nixos/kde
+    ../../modules/nixos/network
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

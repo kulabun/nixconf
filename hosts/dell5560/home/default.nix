@@ -49,11 +49,11 @@ in
     user = "klabun";
     machine = "dell5560";
     secretsRootPath = "/home/klabun/secrets";
-    cursor = {
-      theme = "capitaine-cursors-white";
-      # theme = "capitaine-cursors";
-      size = 32;
-    };
+    # cursor = {
+    #   theme = "capitaine-cursors-white";
+    #   # theme = "capitaine-cursors";
+    #   size = 32;
+    # };
 
     fonts.enable = true;
 
@@ -62,14 +62,12 @@ in
     dev-tools.enable = true;
     # firefox.enable = false;
     fish.enable = true;
-    flameshot.enable = true;
     gh.enable = true;
     git.enable = true;
     # go-chromecast.enable = true;
     # google-chrome.enable = false;
     # google-cloud-sdk.enable = true;
     gpg.enable = true;
-    gtk.enable = true;
     # helix.enable = false;
     home-manager.enable = true;
     #jetbrains.idea-community.enable = true; # Disable for now till I mirgrate from toolbox
@@ -111,19 +109,21 @@ in
     # swaylock.enable = true;
     # mako.enable = true;
     # foot.enable = true;
+    # flameshot.enable = true;
+    # gtk.enable = true;
 
-    sway = {
-      terminal = "/usr/bin/kitty";
-      # terminal = "${pkgs.kitty}/bin/kitty";
-      # terminal = "${pkgs.foot}/bin/footclient";
-    };
+    # sway = {
+    #   terminal = "/usr/bin/kitty";
+    #   # terminal = "${pkgs.kitty}/bin/kitty";
+    #   # terminal = "${pkgs.foot}/bin/footclient";
+    # };
+    # sway.font = {
+    #   name = "SauceCodePro Nerd Font";
+    #   size = 9;
+    # };
 
     gtk.font = {
       name = "DejaVu Sans";
-      size = 9;
-    };
-    sway.font = {
-      name = "SauceCodePro Nerd Font";
       size = 9;
     };
     foot.font = {

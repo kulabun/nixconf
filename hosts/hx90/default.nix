@@ -9,6 +9,7 @@
     # Include the results of the hardware scan.
     ../../modules/nixos/default
     ../../modules/nixos/kde
+    ../../modules/nixos/network
 
     ./hardware-configuration.nix
   ];
@@ -51,7 +52,7 @@
   '';
 
   hardware.bluetooth.enable = true;
-  networking.hostName = "konstantin-desktop"; # Define your hostname.
+  networking.hostName = "hx90"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # networking.extraHosts = ''
   #   127.0.0.1 localhost

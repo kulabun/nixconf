@@ -26,7 +26,6 @@
     # google-chrome.enable = false;
     google-cloud-sdk.enable = true;
     gpg.enable = true;
-    gtk.enable = true;
     # helix.enable = false;
     home-manager.enable = true;
     jetbrains.idea-community.enable = true;
@@ -70,6 +69,7 @@
     # foot.enable = false;
     # rofi.enable = false;
     # flameshot.enable = true;
+    # gtk.enable = true;
 
     # sway = {
     #   terminal = "${pkgs.kitty}/bin/kitty";

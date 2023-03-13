@@ -117,17 +117,35 @@ let
         windowsEnabled = false;
       };
     };
-    # kcminputrc = {
-    #   "Logitech MX Ergo" = {
-    #     NaturalScroll = false;
-    #     # PointerAcceleration = -0.200; # kwriteconfig5 cannot write negative numbers as key values
-    #     PointerAccelerationProfile = 1;
-    #   };
-    #   Mouse = {
-    #     # PointerAcceleration = -0.200; # kwriteconfig5 cannot write negative numbers as key values
-    #     PointerAccelerationProfile = 1;
-    #   };
-    # };
+    konsolerc = {
+      General = {
+        ConfigVersion = 1;
+      };
+
+      KonsoleWindow = {
+        RememberWindowSize = false;
+      };
+
+      MainWindow = {
+        MenuBar = "Disabled";
+        ToolBarsMovable = "Disabled";
+      };
+
+      TabBar = {
+        TabBarPosition = "Top";
+      };
+    };
+    kcminputrc = {
+      "Libinput+1133+16495+Logitech MX Ergo" = {
+        NaturalScroll = false;
+        # PointerAcceleration = -0.200; # kwriteconfig5 cannot write negative numbers as key values
+        PointerAccelerationProfile = 1;
+      };
+      Mouse = {
+        # PointerAcceleration = -0.200; # kwriteconfig5 cannot write negative numbers as key values
+        PointerAccelerationProfile = 1;
+      };
+    };
     kglobalshortcutsrc = {
       kwin = {
         # Reset default keybindings
@@ -142,7 +160,7 @@ let
 
         "Kill Window" = "Meta+Shift+Q,Meta+Ctrl+Esc,Kill Window";
         "Window Close" = "Meta+Q,Alt+F4,Close Window";
-        "Window Maximize" = "Meta+M,Meta+PgUp,Maximize Window";
+        "Window Maximize" = "none,Meta+PgUp,Maximize Window";
 
         "Switch to Desktop 1" = "Meta+1,Ctrl+F1,Switch to Desktop 1";
         "Switch to Desktop 2" = "Meta+2,Ctrl+F2,Switch to Desktop 2";
@@ -181,7 +199,7 @@ let
       };
       # App launcher
       "org.kde.krunner.desktop" = {
-        "_launch" = "Alt+F2\tMeta+D\tAlt+Space\tSearch,Alt+Space\tAlt+F2\tSearch,KRunner";
+        "_launch" = "Meta+D,Alt+Space\tAlt+F2\tSearch,KRunner";
       };
       kded5 = {
         "Show System Activity" = "none,Ctrl+Esc,Show System Activity";
@@ -202,21 +220,30 @@ let
         "toggle_window_floating" = "Meta+F,Meta+F,Toggle Active Window Floating";
       };
     };
-    kdeglobals = {
-      KDE = {
-        SingleClick = false;
-        AnimationDurationFactor = 0;
+    "plasma-arg.kde.plasma.desktop-appletsrc" = {
+      "ActionPlugins+0" = {
+        "RightButton;NoModifier" = "org.kde.contextmenu";
+        "MiddleButton;NoModifier" = null;
+        "wheel:Vertical;NoModifier" = null;
       };
     };
+    kdeglobals.KDE = {
+      SingleClick = false;
+      AnimationDurationFactor = 0;
+    };
+    baloofilerc."Basic Settings".Indexing-Enabled = false;
+    ksmserverrc.General.loginMode = "emptySession";
   };
   lines = lib.flatten (lib.mapAttrsToList
     (file:
       lib.mapAttrsToList
-        (group:
+        (groups:
           lib.mapAttrsToList
             (key: value:
               ''
-                $DRY_RUN_CMD ${pkgs.libsForQt5.kconfig}/bin/kwriteconfig5 --file $confdir/'${file}' --group '${group}' --key '${key}' '${toValue value}'
+                $DRY_RUN_CMD ${pkgs.libsForQt5.kconfig}/bin/kwriteconfig5 --file $confdir/'${file}' \
+                  ${lib.concatStringsSep " " (map (group: "--group '" + group + "'") (lib.splitString "+" groups))} \
+                  --key '${key}' ${if (isNull value) then "--delete" else ("'" + (toValue value) + "'")}
               '')
         ))
     configs);
@@ -232,16 +259,22 @@ with lib;
 
 
   config = mkIf config.settings.kde.enable {
-    home.activation.kwriteconfig5 = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-      _() {
-        confdir="''${XDG_CONFIG_HOME:-$HOME/.config}"
-        ${builtins.concatStringsSep "\n" lines}
-        $DRY_RUN_CMD ${pkgs.libsForQt5.qt5.qttools.bin}/bin/qdbus org.kde.KWin /KWin reconfigure || echo "KWin reconfigure failed"
-        for i in {0..10}; do
-          $DRY_RUN_CMD ${pkgs.dbus}/bin/dbus-send --type=signal /KGlobalSettings org.kde.KGlobalSettings.notifyChange int32:$i int32:0 || echo "KGlobalSettings.notifyChange failed"
-        done
-      } && _
-      unset -f _
-    '';
+    home = {
+      packages = [ pkgs.dracula-theme ];
+
+      # Hack to install configuration without making it immutable
+      # Use `nixos-rebuild switch`, it will not be called for `boot`
+      activation.kwriteconfig5 = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+        _() {
+          confdir="''${XDG_CONFIG_HOME:-$HOME/.config}"
+          ${builtins.concatStringsSep "\n" lines}
+          $DRY_RUN_CMD ${pkgs.libsForQt5.qt5.qttools.bin}/bin/qdbus org.kde.KWin /KWin reconfigure || echo "KWin reconfigure failed"
+          for i in {0..10}; do
+            $DRY_RUN_CMD ${pkgs.dbus}/bin/dbus-send --type=signal /KGlobalSettings org.kde.KGlobalSettings.notifyChange int32:$i int32:0 || echo "KGlobalSettings.notifyChange failed"
+          done
+        } && _
+        unset -f _
+      '';
+    };
   };
 }
