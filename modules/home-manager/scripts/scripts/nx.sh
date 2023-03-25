@@ -43,6 +43,10 @@ function nx() {
 		nix-index
 		;;
 
+	info)
+		nix-info -m
+		;;
+
 	locate)
 		nix-locate
 		;;
@@ -51,6 +55,22 @@ function nx() {
 		fd . "/home/$USER/nixconf" | fzf | xargs -L1 "$EDITOR"
 		;;
 
+	release-upgrade)
+		[ $# -ne 2 ] && echo "Usage: nx release-upgrade <release>. Example: nx release-upgrade 22.11" && exit 1
+		local release=$2
+
+		sudo nix-channel --remove nixpkgs
+		sudo nix-channel --remove nixos
+		sudo nix-channel --remove home-manager
+
+		sudo nix-channel --add "https://nixos.org/channels/nixos-${release}" nixos
+		sudo nix-channel --update
+
+		nix-channel --remove home-manager
+		nix-channel --add "https://github.com/nix-community/home-manager/archive/release-${release}.tar.gz" home-manager
+		nix-channel --update
+
+		;;
 	*)
 		echo "$cmd is not a known command"
 		;;

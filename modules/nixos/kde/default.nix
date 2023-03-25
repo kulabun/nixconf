@@ -12,13 +12,10 @@
     gtk3
     glib # gsettings
     gcc
-    firefox-wayland
     wev # same as xev for xorg but for wayland
     clipman
-    vlc
     ark
     konsole
-    docker-compose 
     libsForQt5.bismuth
   ];
 

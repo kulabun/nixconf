@@ -98,8 +98,8 @@ with lib; {
         GSETTINGS_SCHEMA_DIR = "${pkgs.glib.getSchemaPath pkgs.gtk3}";
 
         # Configure cursor theme
-        XCURSOR_SIZE = cfg.cursor.size;
-        XCURSOR_THEME = cfg.cursor.theme;
+        # XCURSOR_SIZE = cfg.cursor.size;
+        # XCURSOR_THEME = cfg.cursor.theme;
 
         # Secrets storage
         # TODO: use sops instead
@@ -116,6 +116,7 @@ with lib; {
 
         nix-prefetch-scripts
         nix-index
+        nix-info
         nvfetcher
 
         tealdeer

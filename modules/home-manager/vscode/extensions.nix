@@ -12,16 +12,16 @@
       version = "2.8.4";
     }
     {
-      name = "eamodio-gitlens-2023.3.1004";
+      name = "eamodio-gitlens-2023.3.2405";
       src = {
-        url = "https://eamodio.gallerycdn.vsassets.io/extensions/eamodio/gitlens/2023.3.1004/1678439428144/Microsoft.VisualStudio.Services.VSIXPackage";
-        sha256 = "0wl3bff8kyb9crlkiil95vmnrmz43z70mlq86vrrpq3l5izsnap1";
+        url = "https://eamodio.gallerycdn.vsassets.io/extensions/eamodio/gitlens/2023.3.2405/1679648957053/Microsoft.VisualStudio.Services.VSIXPackage";
+        sha256 = "0i173abaihggd4ghq561dpphm67kzmh8zc9z66x4ccq68v96c6a2";
         name = "gitlens-eamodio.zip";
       };
       vscodeExtUniqueId = "eamodio.gitlens";
       vscodeExtPublisher = "eamodio";
       vscodeExtName = "gitlens";
-      version = "2023.3.1004";
+      version = "2023.3.2405";
     }
     {
       name = "esbenp-prettier-vscode-9.10.4";
@@ -36,16 +36,16 @@
       version = "9.10.4";
     }
     {
-      name = "GitHub-copilot-1.77.9225";
+      name = "GitHub-copilot-1.78.9758";
       src = {
-        url = "https://github.gallerycdn.vsassets.io/extensions/github/copilot/1.77.9225/1677787102885/Microsoft.VisualStudio.Services.VSIXPackage";
-        sha256 = "1awqw7bpyvw72hnj9l1hx21djgjpjl15h5pq5la408ll4rd2645m";
+        url = "https://github.gallerycdn.vsassets.io/extensions/github/copilot/1.78.9758/1679004388603/Microsoft.VisualStudio.Services.VSIXPackage";
+        sha256 = "028di2bayvabm0y9qbhrpar8jgbld304qr7vz8pp6yljplrrm1m8";
         name = "copilot-GitHub.zip";
       };
       vscodeExtUniqueId = "GitHub.copilot";
       vscodeExtPublisher = "GitHub";
       vscodeExtName = "copilot";
-      version = "1.77.9225";
+      version = "1.78.9758";
     }
     {
       name = "GitHub-github-vscode-theme-6.3.3";
@@ -96,6 +96,18 @@
       version = "2.2.2";
     }
     {
+      name = "jnoortheen-nix-ide-0.2.1";
+      src = {
+        url = "https://jnoortheen.gallerycdn.vsassets.io/extensions/jnoortheen/nix-ide/0.2.1/1665747546235/Microsoft.VisualStudio.Services.VSIXPackage";
+        sha256 = "0bibb3r4cb7chnx6vpyl41ig12pc0cbg0sb8f2khs52c71nk4bn8";
+        name = "nix-ide-jnoortheen.zip";
+      };
+      vscodeExtUniqueId = "jnoortheen.nix-ide";
+      vscodeExtPublisher = "jnoortheen";
+      vscodeExtName = "nix-ide";
+      version = "0.2.1";
+    }
+    {
       name = "ms-azuretools-vscode-docker-1.24.0";
       src = {
         url = "https://ms-azuretools.gallerycdn.vsassets.io/extensions/ms-azuretools/vscode-docker/1.24.0/1677187109445/Microsoft.VisualStudio.Services.VSIXPackage";
@@ -108,28 +120,40 @@
       version = "1.24.0";
     }
     {
-      name = "ms-vscode-remote-remote-containers-0.283.0";
+      name = "ms-vscode-remote-remote-containers-0.287.0";
       src = {
-        url = "https://ms-vscode-remote.gallerycdn.vsassets.io/extensions/ms-vscode-remote/remote-containers/0.283.0/1677746157590/Microsoft.VisualStudio.Services.VSIXPackage";
-        sha256 = "13b33xymj8ah7v4rmc1swj5w0jwr5ynwxjjbks75c76hnw6779id";
+        url = "https://ms-vscode-remote.gallerycdn.vsassets.io/extensions/ms-vscode-remote/remote-containers/0.287.0/1679601592813/Microsoft.VisualStudio.Services.VSIXPackage";
+        sha256 = "1zn3hzw9laagrjgg943g5nzydxiljq93ckb270fw0bjmab7hqi0c";
         name = "remote-containers-ms-vscode-remote.zip";
       };
       vscodeExtUniqueId = "ms-vscode-remote.remote-containers";
       vscodeExtPublisher = "ms-vscode-remote";
       vscodeExtName = "remote-containers";
-      version = "0.283.0";
+      version = "0.287.0";
     }
     {
-      name = "rust-lang-rust-analyzer-0.4.1432";
+      name = "redhat-vscode-yaml-1.12.2";
       src = {
-        url = "https://rust-lang.gallerycdn.vsassets.io/extensions/rust-lang/rust-analyzer/0.4.1432/1678495836138/Microsoft.VisualStudio.Services.VSIXPackage";
-        sha256 = "1bfgwfn5p3crmk7f4hdm1jk9zygv26qall9n311p0z3q9dfp913b";
+        url = "https://redhat.gallerycdn.vsassets.io/extensions/redhat/vscode-yaml/1.12.2/1679301061586/Microsoft.VisualStudio.Services.VSIXPackage";
+        sha256 = "193spsdrfwl6yf1c9k10c6s6azyq15h4jgz76gqz44c4d2yx0c8j";
+        name = "vscode-yaml-redhat.zip";
+      };
+      vscodeExtUniqueId = "redhat.vscode-yaml";
+      vscodeExtPublisher = "redhat";
+      vscodeExtName = "vscode-yaml";
+      version = "1.12.2";
+    }
+    {
+      name = "rust-lang-rust-analyzer-0.4.1447";
+      src = {
+        url = "https://rust-lang.gallerycdn.vsassets.io/extensions/rust-lang/rust-analyzer/0.4.1447/1679618450021/Microsoft.VisualStudio.Services.VSIXPackage";
+        sha256 = "00jd4d3n10awj7skarhgsxb47kba4fman817pw8322yjr0aqhvvz";
         name = "rust-analyzer-rust-lang.zip";
       };
       vscodeExtUniqueId = "rust-lang.rust-analyzer";
       vscodeExtPublisher = "rust-lang";
       vscodeExtName = "rust-analyzer";
-      version = "0.4.1432";
+      version = "0.4.1447";
     }
     {
       name = "VisualStudioExptTeam-intellicode-api-usage-examples-0.2.7";
@@ -156,40 +180,40 @@
       version = "1.2.30";
     }
     {
-      name = "vscjava-vscode-gradle-3.12.2023031100";
+      name = "vscjava-vscode-gradle-3.12.2023032400";
       src = {
-        url = "https://vscjava.gallerycdn.vsassets.io/extensions/vscjava/vscode-gradle/3.12.2023031100/1678493452115/Microsoft.VisualStudio.Services.VSIXPackage";
-        sha256 = "025p91bd3rr47islxglili5bwkqcs8zdm4pr5s2v7xzl9dpksxhb";
+        url = "https://vscjava.gallerycdn.vsassets.io/extensions/vscjava/vscode-gradle/3.12.2023032400/1679616517034/Microsoft.VisualStudio.Services.VSIXPackage";
+        sha256 = "1cmf03i9sdjcwpd1ya47ipd4a157pcfvwcylkf0179cks4cx4vsc";
         name = "vscode-gradle-vscjava.zip";
       };
       vscodeExtUniqueId = "vscjava.vscode-gradle";
       vscodeExtPublisher = "vscjava";
       vscodeExtName = "vscode-gradle";
-      version = "3.12.2023031100";
+      version = "3.12.2023032400";
     }
     {
-      name = "vscjava-vscode-java-pack-0.25.2023021400";
+      name = "vscjava-vscode-java-pack-0.25.2023032108";
       src = {
-        url = "https://vscjava.gallerycdn.vsassets.io/extensions/vscjava/vscode-java-pack/0.25.2023021400/1676343762571/Microsoft.VisualStudio.Services.VSIXPackage";
-        sha256 = "0k68f6andbd4ydlyz0c45bcigzbylcv197jzipcdj7z98p4d1r6r";
+        url = "https://vscjava.gallerycdn.vsassets.io/extensions/vscjava/vscode-java-pack/0.25.2023032108/1679387686531/Microsoft.VisualStudio.Services.VSIXPackage";
+        sha256 = "0gw5582f4f47jxkbarsx47bdvrwzqrsid77q0cxq8p9y8myzhqaz";
         name = "vscode-java-pack-vscjava.zip";
       };
       vscodeExtUniqueId = "vscjava.vscode-java-pack";
       vscodeExtPublisher = "vscjava";
       vscodeExtName = "vscode-java-pack";
-      version = "0.25.2023021400";
+      version = "0.25.2023032108";
     }
     {
-      name = "vscjava-vscode-spring-initializr-0.11.2023030203";
+      name = "vscjava-vscode-spring-initializr-0.11.2023031603";
       src = {
-        url = "https://vscjava.gallerycdn.vsassets.io/extensions/vscjava/vscode-spring-initializr/0.11.2023030203/1677726178095/Microsoft.VisualStudio.Services.VSIXPackage";
-        sha256 = "0lbfddrign60jac7fd2k1ay2gjnfjczrswrsp059wsdbf23mcgfy";
+        url = "https://vscjava.gallerycdn.vsassets.io/extensions/vscjava/vscode-spring-initializr/0.11.2023031603/1678935876565/Microsoft.VisualStudio.Services.VSIXPackage";
+        sha256 = "0gq849mmcf4n387pbis0vac4jr117sbgz9z1d62pz26s50nrab1i";
         name = "vscode-spring-initializr-vscjava.zip";
       };
       vscodeExtUniqueId = "vscjava.vscode-spring-initializr";
       vscodeExtPublisher = "vscjava";
       vscodeExtName = "vscode-spring-initializr";
-      version = "0.11.2023030203";
+      version = "0.11.2023031603";
     }
     {
       name = "vscodevim-vim-1.25.2";
@@ -228,40 +252,40 @@
       version = "2.2.2";
     }
     {
-      name = "vscjava-vscode-spring-initializr-0.11.2023030203";
+      name = "vscjava-vscode-spring-initializr-0.11.2023031603";
       src = {
-        url = "https://vscjava.gallerycdn.vsassets.io/extensions/vscjava/vscode-spring-initializr/0.11.2023030203/1677726178095/Microsoft.VisualStudio.Services.VSIXPackage";
-        sha256 = "0lbfddrign60jac7fd2k1ay2gjnfjczrswrsp059wsdbf23mcgfy";
+        url = "https://vscjava.gallerycdn.vsassets.io/extensions/vscjava/vscode-spring-initializr/0.11.2023031603/1678935876565/Microsoft.VisualStudio.Services.VSIXPackage";
+        sha256 = "0gq849mmcf4n387pbis0vac4jr117sbgz9z1d62pz26s50nrab1i";
         name = "vscode-spring-initializr-vscjava.zip";
       };
       vscodeExtUniqueId = "vscjava.vscode-spring-initializr";
       vscodeExtPublisher = "vscjava";
       vscodeExtName = "vscode-spring-initializr";
-      version = "0.11.2023030203";
+      version = "0.11.2023031603";
     }
     {
-      name = "vscjava-vscode-java-pack-0.25.2023021400";
+      name = "vscjava-vscode-java-pack-0.25.2023032108";
       src = {
-        url = "https://vscjava.gallerycdn.vsassets.io/extensions/vscjava/vscode-java-pack/0.25.2023021400/1676343762571/Microsoft.VisualStudio.Services.VSIXPackage";
-        sha256 = "0k68f6andbd4ydlyz0c45bcigzbylcv197jzipcdj7z98p4d1r6r";
+        url = "https://vscjava.gallerycdn.vsassets.io/extensions/vscjava/vscode-java-pack/0.25.2023032108/1679387686531/Microsoft.VisualStudio.Services.VSIXPackage";
+        sha256 = "0gw5582f4f47jxkbarsx47bdvrwzqrsid77q0cxq8p9y8myzhqaz";
         name = "vscode-java-pack-vscjava.zip";
       };
       vscodeExtUniqueId = "vscjava.vscode-java-pack";
       vscodeExtPublisher = "vscjava";
       vscodeExtName = "vscode-java-pack";
-      version = "0.25.2023021400";
+      version = "0.25.2023032108";
     }
     {
-      name = "vscjava-vscode-gradle-3.12.2023031100";
+      name = "vscjava-vscode-gradle-3.12.2023032400";
       src = {
-        url = "https://vscjava.gallerycdn.vsassets.io/extensions/vscjava/vscode-gradle/3.12.2023031100/1678493452115/Microsoft.VisualStudio.Services.VSIXPackage";
-        sha256 = "025p91bd3rr47islxglili5bwkqcs8zdm4pr5s2v7xzl9dpksxhb";
+        url = "https://vscjava.gallerycdn.vsassets.io/extensions/vscjava/vscode-gradle/3.12.2023032400/1679616517034/Microsoft.VisualStudio.Services.VSIXPackage";
+        sha256 = "1cmf03i9sdjcwpd1ya47ipd4a157pcfvwcylkf0179cks4cx4vsc";
         name = "vscode-gradle-vscjava.zip";
       };
       vscodeExtUniqueId = "vscjava.vscode-gradle";
       vscodeExtPublisher = "vscjava";
       vscodeExtName = "vscode-gradle";
-      version = "3.12.2023031100";
+      version = "3.12.2023032400";
     }
     {
       name = "vscodevim-vim-1.25.2";
@@ -288,16 +312,16 @@
       version = "0.2.1";
     }
     {
-      name = "redhat-vscode-yaml-1.12.1";
+      name = "redhat-vscode-yaml-1.12.2";
       src = {
-        url = "https://redhat.gallerycdn.vsassets.io/extensions/redhat/vscode-yaml/1.12.1/1678274282333/Microsoft.VisualStudio.Services.VSIXPackage";
-        sha256 = "1dsbfc167r3069a8x3skdj1pcmr1gqqliy8f66zv2dcr1gapciy1";
+        url = "https://redhat.gallerycdn.vsassets.io/extensions/redhat/vscode-yaml/1.12.2/1679301061586/Microsoft.VisualStudio.Services.VSIXPackage";
+        sha256 = "193spsdrfwl6yf1c9k10c6s6azyq15h4jgz76gqz44c4d2yx0c8j";
         name = "vscode-yaml-redhat.zip";
       };
       vscodeExtUniqueId = "redhat.vscode-yaml";
       vscodeExtPublisher = "redhat";
       vscodeExtName = "vscode-yaml";
-      version = "1.12.1";
+      version = "1.12.2";
     }
 ];
 }

@@ -25,57 +25,103 @@
     };
   };
 
-  outputs = inputs @ {
-    self,
-    nixpkgs,
-    nixpkgs-unstable,
-    home-manager,
-    ...
-  }: let
-    system = "x86_64-linux";
-
-    mkPkgs = pkgs: overlays:
-      import pkgs {
-        inherit system;
-        inherit overlays;
-        config.allowUnfree = true;
-      };
-
-    pkgs = mkPkgs nixpkgs [
-      (import ./overlay)
-      # (import inputs.rust-overlay)
-      (import inputs.neovim-nightly-overlay)
-      (
-        final: prev: {
-          neovim-kl = inputs.neovim-kl.packages.${system}.neovim-kl;
-        }
-      )
-      # (import inputs.helix-master)
-    ];
-
-    pkgs' = mkPkgs nixpkgs-unstable [];
-
-    mylib = import ./lib {
-      inherit pkgs inputs;
-      lib = pkgs.lib;
-    };
-
-    homeConfig = {
-      machine,
+  outputs =
+    inputs @ { self
+    , nixpkgs
+    , nixpkgs-unstable
+    , home-manager
+    , ...
     }:
-      home-manager.lib.homeManagerConfiguration rec {
-        inherit pkgs;
-        modules = [ ./hosts/${machine}/home ];
-        extraSpecialArgs = {
+    let
+      system = "x86_64-linux";
+
+      mkPkgs = pkgs: overlays:
+        import pkgs {
           inherit system;
-          inherit inputs;
-          inherit mylib;
-          inherit pkgs';
+          inherit overlays;
+          config.allowUnfree = true;
         };
+
+      pkgs = mkPkgs nixpkgs [
+        (import ./overlay)
+        # (import inputs.rust-overlay)
+        (import inputs.neovim-nightly-overlay)
+        (
+          final: prev: {
+            neovim-kl = inputs.neovim-kl.packages.${system}.neovim-kl;
+          }
+        )
+        # (import inputs.helix-master)
+      ];
+
+      pkgs' = mkPkgs nixpkgs-unstable [ ];
+
+      mylib = import ./lib {
+        inherit pkgs inputs;
+        lib = pkgs.lib;
       };
-  in
+
+      homeConfig =
+        { machine
+        ,
+        }:
+        home-manager.lib.homeManagerConfiguration rec {
+          inherit pkgs;
+          modules = [ ./hosts/${machine}/home ];
+          extraSpecialArgs = {
+            inherit system;
+            inherit inputs;
+            inherit mylib;
+            inherit pkgs';
+          };
+        };
+      nixosConfig =
+        { host
+        , user
+        , profile ? null
+        , nixProfile ? null
+        }: nixpkgs.lib.nixosSystem {
+          inherit system;
+          inherit pkgs;
+
+          specialArgs = {
+            inherit host;
+            inherit user;
+            inherit nixProfile;
+          };
+          modules = [
+            ./modules/nixos/nix-profile
+            ./modules/nix
+            ./hosts/${host}
+
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users.${user} = {
+                  imports = [
+                    ./hosts/${host}/home
+                  ]
+                  ++ (nixpkgs.lib.optional (profile != null) ./profiles/${profile}/home);
+                };
+                extraSpecialArgs = {
+                  inherit system;
+                  inherit inputs;
+                  inherit mylib;
+                  inherit pkgs';
+                  inherit host;
+                  inherit user;
+                };
+              };
+            }
+          ]
+          ++ (nixpkgs.lib.optional (profile != null) ./profiles/${profile});
+        };
+    in
     with pkgs.lib;
     with mylib; {
+
       #isoImage = (baseSystem {
       #  system = "x86_64-linux";
       #  modules = [
@@ -84,60 +130,45 @@
       #});
 
       nixosConfigurations = {
-        hx90 = nixpkgs.lib.nixosSystem {
-          inherit system;
-          inherit pkgs;
-          modules = [
-            ./hosts/hx90
-            ./modules/nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users."konstantin" = {imports = [./hosts/hx90/home];};
-                extraSpecialArgs = {
-                  inherit system;
-                  inherit inputs;
-                  inherit mylib;
-                  inherit pkgs';
-                };
-              };
-            }
-          ];
+        hx90 = nixosConfig {
+          host = "hx90";
+          user = "konstantin";
+          profile = "personal";
         };
-        dell7573 = nixpkgs.lib.nixosSystem {
-          inherit system;
-          inherit pkgs;
-          modules = [
-            ./hosts/dell7573
-            ./modules/nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users."klabun" = {imports = [./hosts/dell7573/home];};
-                extraSpecialArgs = {
-                  inherit system;
-                  inherit inputs;
-                  inherit mylib;
-                  inherit pkgs';
-                };
-              };
-            }
-          ];
+        hx90-work = nixosConfig {
+          host = "hx90";
+          user = "klabun";
+          profile = "work";
+          nixProfile = "work";
         };
+        dell7573 = nixosConfig {
+          host = "dell7573";
+          user = "konstantin";
+          profile = "personal";
+        };
+        # dell9360 = nixosConfig {
+        #   host = "dell9360";
+        #   user = "konstantin";
+        #   profile = "personal";
+        # };
       };
 
       homeConfigurations = {
-        # hx90 = homeConfig {
-        #   user = "konstantin";
-        #   machine = "hx90";
-        # };
         dell5560 = homeConfig {
           machine = "dell5560";
+          user = "klabun";
+          profile = "work";
         };
+        # pbgo = homeConfig {
+        #   machine = "pbgo";
+        #   user = "konstantin";
+        #   profile = "minimal";
+        # };
+        # mba16 = homeConfig {
+        #   machine = "mba16";
+        #   user = "konstantin";
+        #   profile = "minimal";
+        # };
       };
     };
 }

@@ -3,6 +3,10 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 { config
 , pkgs
+, lib
+, modulesPath
+, user
+, host
 , ...
 }: {
   imports = [
@@ -10,36 +14,36 @@
     ../../modules/nixos/default
     ../../modules/nixos/kde
     ../../modules/nixos/network
-
-    ./hardware-configuration.nix
+    ../../modules/nixos/hardened
   ];
 
   # Bootloader.
   boot = {
     loader = {
       systemd-boot.enable = true;
+      # timeout = 120;
       efi = {
         canTouchEfiVariables = true;
         efiSysMountPoint = "/boot/efi";
       };
     };
-    kernelModules = [ "mt7921e" ];
 
-    # Setup keyfile
-    initrd.secrets."/crypto_keyfile.bin" = null;
-  };
+    kernelModules = [ "mt7921e" "kvm-amd" "8821au" ];
+    extraModulePackages = with pkgs.linuxPackages; [ rtl8821au ];
+    tmpOnTmpfs = true;
 
-  # Decrypt second drive
-  environment.etc."crypttab".text = ''
-    ct2000mx500ssd1 /dev/disk/by-uuid/71d37ba8-f366-45a2-9a5f-2c1238cef11c /crypto_keyfile.bin
-  '';
-  fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/0c3bca9a-037d-4990-aecb-943e5becd99b";
-    fsType = "ext4";
-  };
-  fileSystems."/root-drive" = {
-    device = "/dev/disk/by-uuid/80699c90-ce4e-4de6-b45f-9c75a484be4b";
-    fsType = "ext4";
+    initrd = {
+      # Setup keyfile
+      secrets."/crypto_keyfile.bin" = null;
+
+      availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
+      kernelModules = [ ];
+      luks.devices."luks-75e92035-b145-4814-a76d-6b5a998efaf5".device = "/dev/disk/by-uuid/75e92035-b145-4814-a76d-6b5a998efaf5";
+    };
+
+    extraModprobeConfig = ''
+      alias pci:v000014C3d00000608sv*sd*bc*sc*i* mt7921e
+    '';
   };
 
   # MiniForum HX90 has MediaTek 7921k Wi-Fi module. It is supported by mt7921e kernel module, but device is not mapped to this kernel module. So we need to do it.
@@ -47,12 +51,53 @@
   services.udev.extraRules = ''
     SUBSYSTEM=="drivers", DEVPATH=="/bus/pci/drivers/mt7921e", ATTR{new_id}="14c3 0608"
   '';
-  boot.extraModprobeConfig = ''
-    alias pci:v000014C3d00000608sv*sd*bc*sc*i* mt7921e
-  '';
 
-  hardware.bluetooth.enable = true;
-  networking.hostName = "hx90"; # Define your hostname.
+  # Decrypt second drive
+  environment.etc."crypttab".text = ''
+    ct2000mx500ssd1 /dev/disk/by-uuid/71d37ba8-f366-45a2-9a5f-2c1238cef11c /crypto_keyfile.bin
+  '';
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-uuid/80699c90-ce4e-4de6-b45f-9c75a484be4b";
+      fsType = "ext4";
+    };
+    "/boot/efi" = {
+      device = "/dev/disk/by-uuid/F9FC-489F";
+      fsType = "vfat";
+    };
+    "/home" = {
+      device = "/dev/disk/by-uuid/0c3bca9a-037d-4990-aecb-943e5becd99b";
+      fsType = "ext4";
+    };
+    "/root-drive" = {
+      device = "/dev/disk/by-uuid/80699c90-ce4e-4de6-b45f-9c75a484be4b";
+      fsType = "ext4";
+    };
+  };
+
+  swapDevices = [ ];
+
+  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
+  # (the default) this is the recommended approach. When using systemd-networkd it's
+  # still possible to use this option, but it's recommended to use it in conjunction
+  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
+  networking.useDHCP = lib.mkDefault true;
+  # networking.interfaces.eno1.useDHCP = lib.mkDefault true;
+  # networking.interfaces.enp4s0f4u2u2u2.useDHCP = lib.mkDefault true;
+
+  hardware = {
+    bluetooth.enable = true;
+    enableRedistributableFirmware = true;
+    video.hidpi.enable = true;
+    cpu.amd.updateMicrocode = true;
+    opengl = {
+      enable = true;
+      driSupport = true;
+    };
+  };
+
+
+  networking.hostName = host; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # networking.extraHosts = ''
   #   127.0.0.1 localhost
@@ -91,6 +136,7 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true; # BUG: when removed cursor disappers in wayland
+  services.xserver.videoDrivers = [ "amdgpu" ];
   #programs.sway.enable = true;
 
   # Enable the GNOME Desktop Environment.
@@ -129,15 +175,15 @@
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.konstantin = {
+  users.users.${user} = {
     isNormalUser = true;
-    description = "Konstantin";
-    extraGroups = [ "networkmanager" "wheel" "docker" "video" ];
+    description = user;
+    extraGroups = [ "networkmanager" "wheel" "podman" "video" ];
     shell = pkgs.zsh;
+    initialHashedPassword = "";
     packages = with pkgs; [
-      usbutils # lsusb
-      pciutils # lspci
       procps # pgrep, pkill
+      inxi # print devices and associated drivers: inxi -Fza
       pavucontrol # volume control
       pulseaudio
       libnotify # notify-send
@@ -151,6 +197,20 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    tcpdump
+
+    # Hardware-related tools.
+    sdparm
+    hdparm
+    smartmontools # for diagnosing hard disks
+    usbutils # lsusb
+    pciutils # lspci
+    nvme-cli
+
+
+    # Other tools.
+    unzip
+    zip
     wget
     # vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   ];
@@ -159,7 +219,21 @@
   # See https://github.com/nix-community/home-manager/issues/2562
   programs.zsh.enable = true;
 
-  virtualisation.docker.enable = true;
+  virtualisation = {
+    docker = {
+      enable = true;
+      autoPrune = {
+        enable = true;
+        dates = "weekly";
+      };
+    };
+    # podman = {
+    #   enable = true;
+    #   dockerCompat = true;
+    #   dockerSocket.enable = true;
+    #   autoPrune.enable = true;
+    # };
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

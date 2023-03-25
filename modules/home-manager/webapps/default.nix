@@ -85,6 +85,14 @@ let
     wmClass = "whatsapp-webapps";
     icon = "${pkgs.moka-icon-theme}/share/icons/Moka/48x48/web/whatsapp.png";
   };
+  poe = makeWebApp {
+    name = "poe";
+    desktopName = "POE";
+    url = "https://poe.com";
+    wmClass = "poe-webapps";
+    clearUserAgent = false;
+    icon = "${pkgs.moka-icon-theme}/share/icons/Moka/48x48/categories/applications-science.png";
+  };
   youtube-music = makeWebApp {
     name = "youtube-music";
     desktopName = "YouTube Music";
@@ -108,6 +116,7 @@ with mylib; {
       messenger.enable = mkEnableOpt "messenger";
       telegram.enable = mkEnableOpt "telegram";
       whatsapp.enable = mkEnableOpt "whatsapp";
+      poe.enable = mkEnableOpt "poe";
       youtube-music.enable = mkEnableOpt "youtube-music";
     };
   };
@@ -125,6 +134,7 @@ with mylib; {
       ++ optional config.settings.webapps.messenger.enable messenger
       ++ optional config.settings.webapps.telegram.enable telegram
       ++ optional config.settings.webapps.whatsapp.enable whatsapp
+      ++ optional config.settings.webapps.poe.enable poe
       ++ optional config.settings.webapps.youtube-music.enable youtube-music;
   };
 }
