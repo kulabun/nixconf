@@ -19,7 +19,7 @@
       url = "github:catppuccin/zellij";
       flake = false;
     };
-  
+
     kl-nvim = {
       url = "github:kulabun/neovim-flake";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
