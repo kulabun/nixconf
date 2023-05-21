@@ -1,0 +1,5 @@
+{
+  imports = [
+    ./idea-community.nix
+  ];
+}

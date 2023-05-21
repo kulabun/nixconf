@@ -1,10 +1,5 @@
-{
-  inputs,
-  lib,
-  pkgs,
-  ...
-}: let
-  options = import ./options.nix {inherit lib pkgs inputs;};
-  webapp = import ./webapp {inherit lib pkgs inputs;};
+{ ... }:
+let
+  nixos-user = import ./nixos-user.nix { };
 in
-  options // webapp
+nixos-user

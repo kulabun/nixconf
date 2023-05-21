@@ -2,173 +2,108 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-22.11";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
-    # neovim-kl.url = "path:/home/konstantin/projects/neovim-flake";
-    neovim-kl.url = "github:kulabun/neovim-flake";
-    # rust-overlay.url = "github:oxalica/rust-overlay";
-    # helix-master = {
-    #   url = "github:helix-editor/helix";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    #   inputs.rust-overlay.follows = "rust-overlay";
-    # };
+    nixpkgs-jetbrains.url = "github:GenericNerdyUsername/nixpkgs/jetbrains-plugins-overhauled";
     nixos-hardware.url = "github:nixos/nixos-hardware";
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+
+    alacritty-theme = {
+      url = "github:alacritty/alacritty-theme";
+      flake = false;
+    };
+
+    catppuccin-alacritty = {
+      url = "github:catppuccin/alacritty";
+      flake = false;
+    };
+
+    catppuccin-zellij = {
+      url = "github:catppuccin/zellij";
+      flake = false;
+    };
+  
+    kl-nvim = {
+      url = "github:kulabun/neovim-flake";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
 
     home-manager = {
-      # url = "github:nix-community/home-manager";
       url = "github:nix-community/home-manager/release-22.11";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-stable.follows = "nixpkgs";
     };
 
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    sops-secrets = {
+      # url = "path:/home/konstantin/secrets";
+      url = "git+ssh://master.codecommit/v1/repos/secrets?ref=main";
+      flake = false;
+    };
   };
 
   outputs =
     inputs @ { self
     , nixpkgs
-    , nixpkgs-unstable
     , home-manager
     , ...
     }:
     let
-      system = "x86_64-linux";
-
-      mkPkgs = pkgs: overlays:
+      stateVersion = "22.11";
+      mkPkgs = { pkgs, system, overlays ? [ ] }:
         import pkgs {
+
           inherit system;
-          inherit overlays;
+          overlays = overlays ++ [
+            inputs.agenix.overlays.default
+            inputs.kl-nvim.overlays.default
+          ];
           config.allowUnfree = true;
         };
-
-      pkgs = mkPkgs nixpkgs [
-        (import ./overlay)
-        # (import inputs.rust-overlay)
-        (import inputs.neovim-nightly-overlay)
-        (
-          final: prev: {
-            neovim-kl = inputs.neovim-kl.packages.${system}.neovim-kl;
-          }
-        )
-        # (import inputs.helix-master)
-      ];
-
-      pkgs' = mkPkgs nixpkgs-unstable [ ];
-
-      mylib = import ./lib {
-        inherit pkgs inputs;
-        lib = pkgs.lib;
-      };
-
-      homeConfig =
-        { machine
-        ,
-        }:
-        home-manager.lib.homeManagerConfiguration rec {
-          inherit pkgs;
-          modules = [ ./hosts/${machine}/home ];
-          extraSpecialArgs = {
-            inherit system;
-            inherit inputs;
-            inherit mylib;
-            inherit pkgs';
-          };
-        };
-      nixosConfig =
-        { host
-        , user
-        , profile ? null
-        , nixProfile ? null
-        }: nixpkgs.lib.nixosSystem {
-          inherit system;
-          inherit pkgs;
-
+      pkgs = system: mkPkgs { pkgs = (inputs.nixpkgs); inherit system; };
+      pkgs' = system: mkPkgs { pkgs = (inputs.nixpkgs-unstable); inherit system; };
+      lib = system: (pkgs system).lib // { my = import ./lib { }; };
+    in
+    {
+      nixosConfigurations = {
+        hx90 = nixpkgs.lib.nixosSystem rec {
+          system = "x86_64-linux";
           specialArgs = {
-            inherit host;
-            inherit user;
-            inherit nixProfile;
+            inherit inputs;
+            inherit stateVersion;
+            pkgs = pkgs system;
+            pkgs' = pkgs' system;
+            lib = lib system;
+            user = "konstantin";
           };
           modules = [
-            ./modules/nixos/nix-profile
-            ./modules/nix
-            ./hosts/${host}
-
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users.${user} = {
-                  imports = [
-                    ./hosts/${host}/home
-                  ]
-                  ++ (nixpkgs.lib.optional (profile != null) ./profiles/${profile}/home);
-                };
-                extraSpecialArgs = {
-                  inherit system;
-                  inherit inputs;
-                  inherit mylib;
-                  inherit pkgs';
-                  inherit host;
-                  inherit user;
-                };
-              };
-            }
-          ]
-          ++ (nixpkgs.lib.optional (profile != null) ./profiles/${profile});
+            ./modules
+            ./nixos/hosts/hx90
+          ];
         };
-    in
-    with pkgs.lib;
-    with mylib; {
-
-      #isoImage = (baseSystem {
-      #  system = "x86_64-linux";
-      #  modules = [
-      #    ./profiles/iso.nix
-      #  ];
-      #});
-
-      nixosConfigurations = {
-        hx90 = nixosConfig {
-          host = "hx90";
-          user = "konstantin";
-          profile = "personal";
-        };
-        hx90-work = nixosConfig {
-          host = "hx90";
-          user = "klabun";
-          profile = "work";
-          nixProfile = "work";
-        };
-        dell7573 = nixosConfig {
-          host = "dell7573";
-          user = "konstantin";
-          profile = "personal";
-        };
-        # dell9360 = nixosConfig {
-        #   host = "dell9360";
-        #   user = "konstantin";
-        #   profile = "personal";
-        # };
       };
 
       homeConfigurations = {
-        dell5560 = homeConfig {
-          machine = "dell5560";
-          user = "klabun";
-          profile = "work";
+        dell5560 = home-manager.lib.homeManagerConfiguration {
+          system = "x86_64-linux";
+          username = "klabun";
+          homeDirectory = "/home/klabun";
+
+          configuration = import ./home-manager/hosts/dell5560.nix {
+            inherit inputs;
+            inherit stateVersion;
+            inherit pkgs;
+            inherit pkgs';
+            inherit (pkgs) lib;
+          };
+          extraSpecialArgs.flake-inputs = inputs;
         };
-        # pbgo = homeConfig {
-        #   machine = "pbgo";
-        #   user = "konstantin";
-        #   profile = "minimal";
-        # };
-        # mba16 = homeConfig {
-        #   machine = "mba16";
-        #   user = "konstantin";
-        #   profile = "minimal";
-        # };
       };
     };
 }
