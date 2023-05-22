@@ -25,16 +25,14 @@ in
       };
     }
 
-    (mkIf sops.home.enable {
+    (mkIf sops.enable {
       home-manager.users.${user} = {
         programs.ssh.includes = [
           "${homeDirectory}/.ssh/config.local"
           "${homeDirectory}/.ssh/config.secret"
         ];
       };
-    })
 
-    (mkIf sops.system.enable {
       programs.ssh = {
         extraConfig = ''
           Include /etc/ssh/my/ssh_config

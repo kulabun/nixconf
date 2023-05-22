@@ -45,19 +45,18 @@ in
   imports = [ inputs.sops-nix.nixosModules.sops ];
 
   options.system'.sops = {
-    # enable = mkEnableOption "sops config" // { default = true; };
-    home.enable = mkEnableOption "sops home config";
-    system.enable = mkEnableOption "sops system level config" // { default = true; };
+    enable = mkEnableOption "sops config" // { default = true; };
   };
 
   config = mkMerge [
-    (mkIf cfg.system.enable {
+    (mkIf cfg.enable {
 
       # By default keys are owned by root:keys
       users.users.${user}.extraGroups = [ config.users.groups.keys.name ];
 
       environment.systemPackages = with pkgs; [ sops age ];
 
+      # system level sops secrets are decrypted on activation script
       sops = {
         defaultSopsFile = ./.sops.yaml;
         age = {
@@ -81,9 +80,8 @@ in
         #   owner = user;
         # };
       };
-    })
 
-    (mkIf cfg.home.enable {
+      # sops daemon starts on boot
       home-manager.users.${user} = {
         imports = [
           inputs.sops-nix.homeManagerModules.sops
