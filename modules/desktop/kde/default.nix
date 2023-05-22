@@ -9,6 +9,14 @@ with lib; {
   config = mkIf cfg.enable {
     shell'.gpg.pinentry = "qt";
 
+    # Enable KDE
+    services.xserver.displayManager.sddm.enable = true;
+    services.xserver.desktopManager.plasma5.enable = true;
+
+    # Disable GNOME
+    services.xserver.displayManager.gdm.enable = false;
+    services.xserver.desktopManager.gnome.enable = false;
+
     home-manager = {
       users.${user} = {
         home = {

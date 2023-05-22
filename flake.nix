@@ -87,23 +87,38 @@
             ./nixos/hosts/hx90
           ];
         };
+        dell7573 = nixpkgs.lib.nixosSystem rec {
+          system = "x86_64-linux";
+          specialArgs = {
+            inherit inputs;
+            inherit stateVersion;
+            pkgs = pkgs system;
+            pkgs' = pkgs' system;
+            lib = lib system;
+            user = "klabun";
+          };
+          modules = [
+            ./modules
+            ./nixos/hosts/dell7573
+          ];
+        };
       };
 
       homeConfigurations = {
-        dell5560 = home-manager.lib.homeManagerConfiguration {
-          system = "x86_64-linux";
-          username = "klabun";
-          homeDirectory = "/home/klabun";
-
-          configuration = import ./home-manager/hosts/dell5560.nix {
-            inherit inputs;
-            inherit stateVersion;
-            inherit pkgs;
-            inherit pkgs';
-            inherit (pkgs) lib;
-          };
-          extraSpecialArgs.flake-inputs = inputs;
-        };
+      #   dell5560 = home-manager.lib.homeManagerConfiguration {
+      #     system = "x86_64-linux";
+      #     username = "klabun";
+      #     homeDirectory = "/home/klabun";
+      #
+      #     configuration = import ./hm/dell5560 {
+      #       inherit inputs;
+      #       inherit stateVersion;
+      #       inherit pkgs;
+      #       inherit pkgs';
+      #       inherit (pkgs) lib;
+      #     };
+      #     extraSpecialArgs.flake-inputs = inputs;
+      #   };
       };
     };
 }

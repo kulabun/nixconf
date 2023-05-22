@@ -9,11 +9,11 @@ layout {
     }
   }
 
-  tab name="Editor" {
-    pane
+  tab name="System Monitor" {
+    pane command="btop"
   }
 
-  tab name="Terminal" {
+  tab {
     pane
   }
 }

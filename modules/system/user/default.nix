@@ -11,7 +11,7 @@ in {
       mutableUsers = true;
       users.${user} = {
         isNormalUser = true;
-        extraGroups = [ "wheel" ];
+        extraGroups = [ "wheel" "video" ];
         initialPassword = "changeme";
         createHome = true;
         home = "/home/${user}";

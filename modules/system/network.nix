@@ -14,6 +14,7 @@ in {
 
     networking = {
       networkmanager.enable = true;
+      useDHCP = mkDefault true;
       extraHosts = ''
         127.0.0.1 localhost
         192.168.1.101 hx90

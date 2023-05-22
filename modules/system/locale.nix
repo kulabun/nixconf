@@ -10,6 +10,11 @@ in {
     time.timeZone = "US/Pacific";
     i18n.defaultLocale = "en_US.UTF-8";
 
+    services.xserver = {
+      layout = "us";
+      xkbVariant = "";
+    };
+
     # i18n.extraLocaleSettings = {
     #   LC_ADDRESS = "en_US.UTF-8";
     #   LC_IDENTIFICATION = "en_US.UTF-8";

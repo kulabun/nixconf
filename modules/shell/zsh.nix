@@ -11,6 +11,11 @@ in
   options.shell'.zsh.enable = mkEnableOption "zsh" // { default = true; };
 
   config = mkIf cfg.enable {
+
+    # Auto-completion wouldn't work if Zsh is enabled only in home-manager.
+    # See https://github.com/nix-community/home-manager/issues/2562
+    programs.zsh.enable = true;
+
     home-manager.users.${user} = {
       home.packages = with pkgs; [
         shell-hist # analyze my shell history

@@ -25,7 +25,7 @@ let
     "vscjava.vscode-spring-initializr"
     "vscodevim.vim"
   ];
-  installExtensionCmd = extension: "${pkgs'.vscode}/bin/code --install-extension ${extension}";
+  installExtensionCmd = extension: "${pkgs'.vscode}/bin/code --install-extension '${extension}' || true";
   installExtensionsScript = builtins.concatStringsSep "\n" (map installExtensionCmd extensions);
 in
 {
@@ -47,7 +47,7 @@ in
           ${installExtensionsScript}
 
           SETTINGS_PATH="''$HOME/.config/Code/User/settings.json"
-          NIX_SETTINGS_PATH=${builtins.toString ./.}/config/settings.json
+          NIX_SETTINGS_PATH=${builtins.toString ./config/settings.json}
           if [ -e "''$SETTINGS_PATH" ]; then
             cat ''$NIX_SETTINGS_PATH ''$SETTINGS_PATH | grep -v "//" | ${pkgs'.jq}/bin/jq -s add
           else

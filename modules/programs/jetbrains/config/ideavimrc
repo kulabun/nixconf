@@ -1,0 +1,145 @@
+set number
+set relativenumber
+set surround
+set ideajoin
+
+set ideamarks
+set idearefactormode=select
+set ideawrite=all
+set NERDTree
+
+let mapleader = " "
+
+sethandler <C-s> n:ide i:vim 
+imap <C-s> <Action>(copilot.applyInlays)
+
+sethandler <C-h> n:ide i:vim
+imap <C-h> <Action>(copilot.cyclePrevInlays)
+
+sethandler <C-l> n:ide i:vim
+imap <C-l> <Action>(copilot.cycleNextInlays)
+
+" IdeaVim has non-standard behaviour for Y. It copies all the line, not just the rest
+nmap Y v$y
+
+map <leader>/ <Action>(FindInPath)
+map <leader>f <Action>(GotoFile)
+map <leader>c <Action>(GotoClass)
+" This one is much cooler in IDEA, it would be nice to improve same experience in neovim
+map <leader>s <Action>(FileStructurePopup)
+map <leader>S <Action>(GotoSymbol)
+map <leader>, <Action>(RecentFiles)
+map <leader>j <Action>(ShowBookmarks)
+map <leader>a <Action>(ShowIntentionActions)
+map <leader>A <Action>(GotoAction)
+
+nmap <leader><leader> <Action>(HideAllWindows)
+nmap <leader>ww <C-w>w
+nmap <leader>wl <C-w>l
+nmap <leader>wh <C-w>h
+nmap <leader>wj <C-w>j
+nmap <leader>wk <C-w>k
+nmap <leader>wL <C-w>l
+nmap <leader>wH <C-w>h
+nmap <leader>wJ <C-w>j
+nmap <leader>wK <C-w>k
+nmap <leader>wc <C-w>c
+nmap <leader>wo <C-w>o
+nmap <leader>wv <C-w>v
+nmap <leader>ws <C-w>s
+nmap <leader>k K
+nmap <leader>N <Action>(NewScratchFile)
+nmap <leader>q <Action>(CloseContent)
+
+nmap <leader>e :NERDTree<cr>
+nmap <leader>t <Action>(ActivateTerminalToolWindow)
+
+nmap = <Action>(ReformatCode)
+vmap = <Action>(EditorIndentSelection)
+
+nmap gr <Action>(ShowUsages)
+nmap gd <Action>(GotoDeclaration)
+nmap gi <Action>(JumpToLastChange)
+nmap gI <Action>(GotoImplementation)
+nmap gn <Action>(SelectNextOccurrence)
+nmap gp <Action>(SelectPrevioutOccurrence)
+nmap gs <Action>(FileStructurePopup)
+
+nmap <leader>g <Action>(Generate)
+vmap <leader>g <Action>(SurroundWith)
+nmap <leader>a <Action>(ShowIntentionActions)
+nmap <leader>r <Action>(Refactorings.QuickListPopupAction)
+nmap <leader>n <Action>(RenameElement)
+nmap <leader>h <Action>(QuickJavaDoc)
+nmap <leader>p <Action>(Run)
+nmap <leader>P <Action>(ChooseRunConfiguration)
+nmap <leader>y <Action>(Debug)
+nmap <leader>Y <Action>(ChooseDebugConfiguration)
+
+" Idea lack context keymaps.. It would be nice to implement it
+nmap gcc <Action>(CommentByLineComment)
+nmap gcb <Action>(CommentByBlockComment)
+
+" nmap gn <Action>(GotoNextError)
+" nmap gp <Action>(GotoPreviousError)
+
+" Bookmarks
+map ma <Action>(ToggleBookmarkA)
+map mb <Action>(ToggleBookmarkB)
+map mc <Action>(ToggleBookmarkC)
+map md <Action>(ToggleBookmarkD)
+map me <Action>(ToggleBookmarkE)
+map mf <Action>(ToggleBookmarkF)
+map mg <Action>(ToggleBookmarkG)
+map mh <Action>(ToggleBookmarkH)
+map mi <Action>(ToggleBookmarkI)
+map mj <Action>(ToggleBookmarkJ)
+map mk <Action>(ToggleBookmarkK)
+map ml <Action>(ToggleBookmarkL)
+map mm <Action>(ToggleBookmarkM)
+map mn <Action>(ToggleBookmarkN)
+map mo <Action>(ToggleBookmarkO)
+map mp <Action>(ToggleBookmarkP)
+map mq <Action>(ToggleBookmarkQ)
+map mr <Action>(ToggleBookmarkR)
+map ms <Action>(ToggleBookmarkS)
+map mt <Action>(ToggleBookmarkT)
+map mu <Action>(ToggleBookmarkU)
+map mv <Action>(ToggleBookmarkV)
+map mw <Action>(ToggleBookmarkW)
+map mx <Action>(ToggleBookmarkX)
+map my <Action>(ToggleBookmarkY)
+map mz <Action>(ToggleBookmarkZ)
+
+map 'a <Action>(GotoBookmarkA)
+map 'b <Action>(GotoBookmarkB)
+map 'c <Action>(GotoBookmarkC)
+map 'd <Action>(GotoBookmarkD)
+map 'e <Action>(GotoBookmarkE)
+map 'f <Action>(GotoBookmarkF)
+map 'g <Action>(GotoBookmarkG)
+map 'h <Action>(GotoBookmarkH)
+map 'i <Action>(GotoBookmarkI)
+map 'j <Action>(GotoBookmarkJ)
+map 'k <Action>(GotoBookmarkK)
+map 'l <Action>(GotoBookmarkL)
+map 'm <Action>(GotoBookmarkM)
+map 'n <Action>(GotoBookmarkN)
+map 'o <Action>(GotoBookmarkO)
+map 'p <Action>(GotoBookmarkP)
+map 'q <Action>(GotoBookmarkQ)
+map 'r <Action>(GotoBookmarkR)
+map 's <Action>(GotoBookmarkS)
+map 't <Action>(GotoBookmarkT)
+map 'u <Action>(GotoBookmarkU)
+map 'v <Action>(GotoBookmarkV)
+map 'w <Action>(GotoBookmarkW)
+map 'x <Action>(GotoBookmarkX)
+map 'y <Action>(GotoBookmarkY)
+map 'z <Action>(GotoBookmarkZ)
+
+" System clipboard with gp/gy
+nmap gp "+p
+nmap gP "+P
+vmap gy "+y
+nmap gY "+Y

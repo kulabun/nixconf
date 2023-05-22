@@ -18,7 +18,8 @@ let
     paths = [ idea-community ];
     buildInputs = [ pkgs'.makeWrapper ];
     postBuild = ''
-      wrapProgram $out/bin/idea-community --set GDK_SCALE 2
+      wrapProgram $out/bin/idea-community --unset GDK_SCALE
+      # wrapProgram $out/bin/idea-community --set GDK_SCALE 2
     '';
   };
 in
@@ -27,7 +28,14 @@ in
 
   config = mkIf cfg.enable {
     home-manager.users.${user} = {
-      home.packages = [ my-idea-community ];
+      home = {
+        packages = [ my-idea-community ];
+
+        file.ideavimrc = {
+          source = ./config/ideavimrc;
+          target = ".ideavimrc";
+        };
+      };
 
       programs.zsh = {
         shellAliases = {

@@ -15,10 +15,10 @@ let
   copilotInfo = rec {
     name = "github-copilot-intellij";
     id = 17718;
-    updateId = 313933;
-    version = "1.2.5.2507";
+    updateId = 331908;
+    version = "1.2.6.2594";
     url = "https://plugins.jetbrains.com/files/${toString id}/${toString updateId}/${name}-${version}.zip";
-    hash = "sha256-AZ8qKwI2OGBVd/0ulFAElm+Al9N3Ea5MGm+cMPAYHn4=";
+    hash = "sha256-4wEfT+IA1XOD1VZ2qQ9eoP9W2b6W9AcWWd8ioqClFlI=";
     special = true;
   };
 
