@@ -1,12 +1,11 @@
 { config, lib, user, ... }:
 with lib;
 let
-  cfg = config.hardware'.media;
-  inherit (cfg) components;
+  cfg = config.hardware'.audio;
 in
 {
-  options.hardware'.media = {
-    enable = mkEnableOption "multimedia support" // { enable = true; };
+  options.hardware'.audio = {
+    enable = mkEnableOption "multimedia support" // { default = true; };
   };
 
   config = mkIf cfg.enable {
@@ -18,6 +17,7 @@ in
     };
 
     hardware.pulseaudio.enable = false;
+
     services.pipewire = {
       enable = true;
       alsa.enable = true;
@@ -25,6 +25,7 @@ in
       pulse.enable = true;
       jack.enable = true;
     };
+
     security.rtkit.enable = true;
 
     # screensharing

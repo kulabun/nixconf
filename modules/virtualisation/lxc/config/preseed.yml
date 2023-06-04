@@ -1,0 +1,43 @@
+config:
+  images.auto_update_interval: "0"
+# networks: []
+networks:
+  - config:
+      ipv4.address: 192.168.192.1/24
+      ipv4.nat: "true"
+      ipv6.address: fe80::216:21ff:fe33:2233/64
+      ipv6.nat: "true"
+    description: ""
+    name: lxdbr0
+    type: bridge
+    project: default
+storage_pools:
+  - config:
+      size: 128GiB
+    description: ""
+    name: default
+    driver: btrfs
+profiles:
+  - config: {}
+    description: Default LXD profile
+    devices:
+      eth0:
+        name: eth0
+        network: lxdbr0
+        type: nic
+      mygpu:
+        type: gpu
+      root:
+        path: /
+        pool: default
+        type: disk
+    name: default
+projects:
+  - config:
+      features.images: "true"
+      features.networks: "true"
+      features.profiles: "true"
+      features.storage.buckets: "true"
+      features.storage.volumes: "true"
+    description: Default LXD project
+    name: default

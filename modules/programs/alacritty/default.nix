@@ -79,7 +79,7 @@ in
             { key = "A"; mods = "Control|Shift"; chars = "\\x1b[65;5u"; }
             { key = "B"; mods = "Control|Shift"; chars = "\\x1b[66;5u"; }
             # { key = "C"; mods = "Control|Shift"; chars = "\\x1b[67;5u"; }
-            { key = "C"; mods = "Control|Shift"; chars = "Copy"; }
+            { key = "C"; mods = "Control|Shift"; action = "Copy"; }
             { key = "D"; mods = "Control|Shift"; chars = "\\x1b[68;5u"; }
             { key = "E"; mods = "Control|Shift"; chars = "\\x1b[69;5u"; }
             { key = "F"; mods = "Control|Shift"; chars = "\\x1b[70;5u"; }
@@ -99,7 +99,7 @@ in
             { key = "T"; mods = "Control|Shift"; chars = "\\x1b[84;5u"; }
             { key = "U"; mods = "Control|Shift"; chars = "\\x1b[85;5u"; }
             # { key = "V"; mods = "Control|Shift"; chars = "\\x1b[86;5u"; }
-            { key = "V"; mods = "Control|Shift"; chars = "Paste"; }
+            { key = "V"; mods = "Control|Shift"; action = "Paste"; }
             { key = "W"; mods = "Control|Shift"; chars = "\\x1b[87;5u"; }
             { key = "X"; mods = "Control|Shift"; chars = "\\x1b[88;5u"; }
             { key = "Y"; mods = "Control|Shift"; chars = "\\x1b[89;5u"; }

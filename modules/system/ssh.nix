@@ -23,21 +23,35 @@ in
           matchBlocks."*".identitiesOnly = true;
         };
       };
+
+      home-manager.users.root = {
+        programs.ssh = {
+          enable = true;
+          forwardAgent = true;
+          matchBlocks."*".identitiesOnly = true;
+        };
+      };
     }
 
     (mkIf sops.enable {
       home-manager.users.${user} = {
         programs.ssh.includes = [
           "${homeDirectory}/.ssh/config.local"
-          "${homeDirectory}/.ssh/config.secret"
+          "${homeDirectory}/.ssh/sops/config"
         ];
       };
 
-      programs.ssh = {
-        extraConfig = ''
-          Include /etc/ssh/my/ssh_config
-        '';
+      home-manager.users.root = {
+        programs.ssh.includes = [
+          "/etc/ssh/sops/config"
+        ];
       };
+
+      # programs.ssh = {
+      #   extraConfig = ''
+      #     Include /etc/ssh/my/ssh_config
+      #   '';
+      # };
     })
   ]);
 }

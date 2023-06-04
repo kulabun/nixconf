@@ -2,7 +2,7 @@
 with lib;
 let cfg = config.programs'.yubikey;
 in {
-  options.programs'.yubikey.enable = mkEnableOption "YubiKey";
+  options.programs'.yubikey.enable = mkEnableOption "YubiKey" // { default = true; };
 
   config = mkIf cfg.enable {
     services.udev.packages = with pkgs; [
@@ -15,6 +15,7 @@ in {
       yubikey-personalization-gui
     ];
 
+    # PC/SC Smart Card Daemon
     services.pcscd.enable = true;
   };
 }

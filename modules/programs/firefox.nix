@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 with lib;
 let cfg = config.programs'.firefox;
 in {
@@ -13,6 +13,7 @@ in {
 
     programs.firefox = {
       enable = true;
+      package = pkgs.firefox-wayland;
       preferences = {
         "extensions.pocket.enabled" = false;
         "gfx.webrender.all" = true;

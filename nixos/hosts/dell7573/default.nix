@@ -15,13 +15,6 @@ with lib;
     inputs.nixos-hardware.nixosModules.common-hidpi
     inputs.nixos-hardware.nixosModules.common-pc-laptop
     inputs.nixos-hardware.nixosModules.common-pc-ssd
-
-
-    # Include the results of the hardware scan.
-    ../../modules/default
-    ../../modules/kde
-    ../../modules/network
-    ../../modules/hardened
   ];
 
   # Bootloader.
@@ -67,10 +60,23 @@ with lib;
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
-  networking.hostName = user;
+  networking.hostName = "dell7573";
+
+  system' = {
+    # network.bridge = {
+    #   enable = true;
+    #   externalInterface = "wlp2s0";
+    # };
+  };
+
+  virtualisation' = {
+    docker.enable = true;
+    lxc.enable = true;
+  };
 
   services' = {
     openssh.enable = true;
+    cloudflare-warp.enable = true;
   };
 
   desktop' = {
@@ -95,7 +101,7 @@ with lib;
     obs-studio.enable = true;
     vscode.enable = false;
     yubikey.enable = true;
-    slack.enable = false;
+    slack.enable = true;
     zoom-us.enable = true;
     jetbrains = {
       idea-community.enable = true;
@@ -136,6 +142,7 @@ with lib;
 
   work' = {
     globalprotect-vpn.enable = true;
+    lxc.enable = true;
   };
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
@@ -177,9 +184,7 @@ with lib;
   # Define a user account. Don't forget to set a password with ‘passwd’.
 
   users = {
-    users.${user}.extraGroups = [ ]
-      ++ optionals config.virtualisation.docker.enable [ "docker" ]
-      ++ optionals config.virtualisation.podman.enable [ "podman" ];
+    users.${user}.extraGroups = [ ];
     defaultUserShell = pkgs.zsh;
     mutableUsers = true;
   };
@@ -218,16 +223,6 @@ with lib;
     wget
     # vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   ];
-
-  virtualisation = {
-    docker = {
-      enable = true;
-      autoPrune = {
-        enable = true;
-        dates = "weekly";
-      };
-    };
-  };
 
   system.stateVersion = stateVersion;
 }

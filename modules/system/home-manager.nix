@@ -28,6 +28,10 @@ in {
           json.enable = true;
         };
       };
+
+      users.root.home = {
+        inherit stateVersion;
+      };
     };
   };
 }

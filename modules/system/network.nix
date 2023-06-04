@@ -1,4 +1,4 @@
-{ config, lib, user, ... }:
+{ config, lib, pkgs, user, ... }:
 with lib;
 let cfg = config.system'.network;
 in {
@@ -12,9 +12,16 @@ in {
     # Required for chromecast https://github.com/NixOS/nixpkgs/issues/49630
     services.avahi.enable = true;
 
+    environment.systemPackages = [
+      pkgs.iptables
+      pkgs.nftables
+    ];
+
     networking = {
       networkmanager.enable = true;
-      useDHCP = mkDefault true;
+      firewall.enable = false; # TODO: enable it
+      usePredictableInterfaceNames = true;
+
       extraHosts = ''
         127.0.0.1 localhost
         192.168.1.101 hx90

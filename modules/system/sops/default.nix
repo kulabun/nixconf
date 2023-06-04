@@ -65,14 +65,22 @@ in
         };
         secrets = mkMerge [
           (createSopsConfig {
-            source = "${inputs.sops-secrets}/ssh";
-            target = "/etc/ssh/my";
+            source = "${inputs.sops-secrets}/ssh/keys";
+            target = "/etc/ssh/sops";
             config = {
-              mode = "0660";
+              mode = "0600";
               owner = "root";
               group = config.users.groups.keys.name;
             };
           })
+          {
+            "config-sops" = {
+              sopsFile = "${inputs.sops-secrets}/ssh/config/root.enc";
+              path = "/etc/ssh/sops/config";
+              mode = "0600";
+              format = "binary";
+            };
+          }
         ];
         # secrets.<fileName> = {
         #   sopsfile = ./path-to-secret;
@@ -89,7 +97,15 @@ in
 
         sops = {
           secrets = mkMerge [
-            (createSopsConfig { source = "${inputs.sops-secrets}/ssh"; target = "${homeDirectory}/.ssh"; })
+            (createSopsConfig { source = "${inputs.sops-secrets}/ssh/keys"; target = "${homeDirectory}/.ssh/sops"; })
+            {
+              "config-sops" = {
+                sopsFile = "${inputs.sops-secrets}/ssh/config/user.enc";
+                path = "${homeDirectory}/.ssh/sops/config";
+                mode = "0600";
+                format = "binary";
+              };
+            }
           ];
           age.keyFile = "${homeDirectory}/.secrets/id_age";
         };

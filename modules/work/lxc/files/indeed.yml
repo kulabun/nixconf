@@ -1,0 +1,79 @@
+config:
+  environment.INDEED_TEAMS: "resume"
+  environment.INDEED_OFFICE: "seaoff"
+  environment.INSTALL_SOURCEGRAPH_CLI: ""
+  environment.INSTALL_JETBRAINS_TOOLBOX: ""
+  environment.ANSIBLE_SKIP_TAGS: "wildcard_dns"
+  environment.LANG: en_US.UTF-8
+  environment.LANGUAGE: en_US:en
+  limits.cpu: "4"
+  limits.memory: 8GB
+  limits.memory.swap: "false"
+  linux.kernel_modules: nf_nat,overlay
+  raw.idmap: both 1000 1000
+  raw.lxc: |
+    lxc.apparmor.profile=unconfined
+  security.nesting: "true"
+  cloud-init.user-data: |
+    #cloud-config
+    version: v1
+
+    users:
+      - name: klabun
+        shell: /usr/bin/bash
+        uid: 1000
+        gid: 1000
+        lock_passwd: true
+        groups: [ adm, audio, video, plugdev, netdev, sudo, users ]
+        sudo:
+          - ALL=(ALL) NOPASSWD:ALL
+    ssh:
+        disable_root: false
+    runcmd:
+      - set -xe
+      - bash /home/klabun/sys/bin/bootstrap.sh
+description: Indeed LXD Profile
+devices:
+  XDG_RUNTIME_DIR:
+    path: /home/klabun/.runtime
+    source: /run/user/1000
+    type: disk
+  XWayland:
+    path: /tmp/.X11-unix
+    source: /tmp/.X11-unix
+    type: disk
+  eth0:
+    name: eth0
+    network: lxdbr0
+    type: nic
+  mygpu:
+    type: gpu
+  home-sys:
+    path: /home/klabun/sys
+    source: /home/klabun/indeed/sys
+    type: disk
+  home-indeed:
+    path: /home/klabun/indeed
+    source: /home/klabun/indeed/indeed
+    type: disk
+  home-gradle:
+    path: /home/klabun/.gradle
+    source: /home/klabun/indeed/.gradle
+    type: disk
+  home-config:
+    path: /home/klabun/.config
+    source: /home/klabun/indeed/.config
+    type: disk
+  home-local:
+    path: /home/klabun/.local
+    source: /home/klabun/indeed/.local
+    type: disk
+  home-share:
+    path: /home/klabun/share
+    source: /home/klabun/indeed/share
+    type: disk
+  root:
+    path: /
+    pool: default
+    type: disk
+name: indeed

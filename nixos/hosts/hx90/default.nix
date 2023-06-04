@@ -18,12 +18,6 @@ with lib;
     inputs.nixos-hardware.nixosModules.common-hidpi
     inputs.nixos-hardware.nixosModules.common-pc
     inputs.nixos-hardware.nixosModules.common-pc-ssd
-
-    # Include the results of the hardware scan.
-    ../../modules/default
-    ../../modules/kde
-    ../../modules/network
-    ../../modules/hardened
   ];
 
   # Bootloader.
@@ -74,8 +68,22 @@ with lib;
     rtl8821au.enable = true;
   };
 
+  system' = {
+    # network.bridge = {
+    #   enable = true;
+    #   externalInterface = "wlp3s0";
+    # };
+  };
+
+  virtualisation' = {
+    docker.enable = true;
+    lxc.enable = true;
+    qemu.enable = false;
+  };
+
   services' = {
     openssh.enable = true;
+    cloudflare-warp.enable = true;
   };
 
   desktop' = {
@@ -99,7 +107,6 @@ with lib;
     easyeffects.enable = true;
     obs-studio.enable = true;
     vscode.enable = false;
-    yubikey.enable = true;
     slack.enable = false;
     zoom-us.enable = true;
     jetbrains = {
@@ -162,9 +169,6 @@ with lib;
 
   networking.hostName = "hx90"; # Define your hostname.
 
-  # PC/SC Smart Card Daemon
-  services.pcscd.enable = true;
-
   # Enable the X11 windowing system.
   services.xserver.enable = true; # BUG: when removed cursor disappers in wayland
   services.xserver.videoDrivers = [ "amdgpu" ];
@@ -181,9 +185,7 @@ with lib;
   # Define a user account. Don't forget to set a password with ‘passwd’.
 
   users = {
-    users.${user}.extraGroups = [ ]
-      ++ optionals config.virtualisation.docker.enable [ "docker" ]
-      ++ optionals config.virtualisation.podman.enable [ "podman" ];
+    users.${user}.extraGroups = [ ];
     defaultUserShell = pkgs.zsh;
     mutableUsers = true;
   };
@@ -222,22 +224,6 @@ with lib;
     wget
     # vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   ];
-
-  virtualisation = {
-    docker = {
-      enable = true;
-      autoPrune = {
-        enable = true;
-        dates = "weekly";
-      };
-    };
-    # podman = {
-    #   enable = true;
-    #   dockerCompat = true;
-    #   dockerSocket.enable = true;
-    #   autoPrune.enable = true;
-    # };
-  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

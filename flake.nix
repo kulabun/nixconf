@@ -42,6 +42,7 @@
     };
 
     sops-secrets = {
+      # url = "path:/home/klabun/secrets";
       # url = "path:/home/konstantin/secrets";
       url = "git+ssh://master.codecommit/v1/repos/secrets?ref=main";
       flake = false;
@@ -105,20 +106,20 @@
       };
 
       homeConfigurations = {
-      #   dell5560 = home-manager.lib.homeManagerConfiguration {
-      #     system = "x86_64-linux";
-      #     username = "klabun";
-      #     homeDirectory = "/home/klabun";
-      #
-      #     configuration = import ./hm/dell5560 {
-      #       inherit inputs;
-      #       inherit stateVersion;
-      #       inherit pkgs;
-      #       inherit pkgs';
-      #       inherit (pkgs) lib;
-      #     };
-      #     extraSpecialArgs.flake-inputs = inputs;
-      #   };
+        #   dell5560 = home-manager.lib.homeManagerConfiguration {
+        #     system = "x86_64-linux";
+        #     username = "klabun";
+        #     homeDirectory = "/home/klabun";
+        #
+        #     configuration = import ./hm/dell5560 {
+        #       inherit inputs;
+        #       inherit stateVersion;
+        #       inherit pkgs;
+        #       inherit pkgs';
+        #       inherit (pkgs) lib;
+        #     };
+        #     extraSpecialArgs.flake-inputs = inputs;
+        #   };
       };
     };
 }
