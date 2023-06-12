@@ -1,0 +1,162 @@
+typeset -U path cdpath fpath manpath
+
+# History options should be set in .zshrc and after oh-my-zsh sourcing.
+# See https://github.com/nix-community/home-manager/issues/177.
+HISTSIZE="10000"
+SAVEHIST="1000000"
+
+HISTFILE="$HOME/.zsh_history"
+mkdir -p "$(dirname "$HISTFILE")"
+
+setopt HIST_FCNTL_LOCK
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+unsetopt HIST_EXPIRE_DUPS_FIRST
+setopt SHARE_HISTORY
+setopt EXTENDED_HISTORY
+setopt autocd
+
+function unbind() {
+  if bindkey "$1" > /dev/null; then
+    bindkey -rM vicmd "$1" > /dev/null
+    bindkey -rM viins "$1" > /dev/null
+  fi
+}
+
+function bind() {
+  unbind $1
+  bindkey -M vicmd "$1" "$2" > /dev/null
+  bindkey -M viins "$1" "$2" > /dev/null
+}
+
+unbind '^[^['
+bind '^S' sudo-command-line
+
+export FZF_COMPLETION_TRIGGER="*"
+############################################################
+# ZShell Configuration
+###########################################################
+
+# tab copmpletion
+function sudo-command-line() {
+    [[ -z $BUFFER ]] && zle up-history
+    if [[ $BUFFER == sudo\ * ]]; then
+        LBUFFER="${LBUFFER#sudo }"
+    else
+        LBUFFER="sudo $LBUFFER"
+    fi
+}
+zle -N sudo-command-line
+
+zsh_syntax_path="$HOME/.local/share/zsh/zsh-syntax-highlighting"
+if ! [ -d $zsh_syntax_path ]; then
+  mkdir -p $zsh_syntax_path
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$zsh_syntax_path"
+fi
+
+source "$zsh_syntax_path/zsh-syntax-highlighting.zsh"
+bindkey '^t' sudo-command-line
+bindkey '^s' autosuggest-accept
+
+export SUDO_PROMPT="$(tput bold)$(tput setaf 1)[sudo] $(tput setaf 7)password for $(tput setaf 6)$USER$(tput setaf 7):$(tput sgr0) "
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#6f6f6f"
+export FZF_DEFAULT_OPTS='--color=fg:#f8f8f2,hl:#bd93f9 --color=fg+:#f8f8f2,hl+:#bd93f9 --color=info:#ffb86c,prompt:#50fa7b,pointer:#ff79c6 --color=marker:#ff79c6,spinner:#ffb86c,header:#6272a4'
+# Don't use xterm-256color https://github.com/NvChad/NvChad/issues/926#issuecomment-1108220606
+#export TERM=xterm-color
+
+setopt INC_APPEND_HISTORY
+setopt HIST_NO_STORE
+unsetopt BANG_HIST
+unsetopt mail_warning
+unsetopt BEEP
+unset MAILCHECK
+setopt SHORT_LOOPS
+setopt MAGIC_EQUAL_SUBST
+setopt NO_BEEP
+setopt NO_NOMATCH
+setopt NO_HUP
+FIGNORE='.o:.out:.class'
+REPORTTIME=5
+
+export GPG_TTY=$(tty)
+f() { find . -iname "*$1*" }
+x() { wl-copy <<< $($*) }
+abs() { echo -n $PWD/$1 }
+
+function ping() {
+  if [ $# -eq 0 ]
+  then
+      =ping google.ch
+  else
+      =ping "$@"
+  fi
+}
+
+#########################################################################################################
+# Fix slow paste. See https://github.com/zsh-users/zsh-autosuggestions/issues/238#issuecomment-389324292
+#########################################################################################################
+pasteinit() {
+  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
+  zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
+}
+
+pastefinish() {
+  zle -N self-insert $OLD_SELF_INSERT
+}
+zstyle :bracketed-paste-magic paste-init pasteinit
+zstyle :bracketed-paste-magic paste-finish pastefinish
+#########################################################################################################
+
+GPG_TTY="$(tty)"
+export GPG_TTY
+
+# Aliases
+alias ..='cd ..'
+alias b='bat'
+alias c='cat'
+alias cal='cal -y'
+alias cat='bat --plain'
+alias chrome='google-chrome-stable'
+alias d='docker'
+alias dd='dd status=progress'
+alias diff='diff --color'
+alias dl='d logs'
+alias dps='d ps'
+alias e='$EDITOR'
+alias ezh='$EDITOR ~/.zshrc && source ~/.zshrc'
+alias g='git'
+alias grep='grep --color=auto'
+alias h='cat ~/.zsh_history | grep --text --color '
+alias ind='f(){local project=$(ls $HOME/indeed | fzf); [ -n "$project" ] && cd "$HOME/indeed/$project"};f;unset -f f'
+alias inputs='swaymsg -t get_inputs'
+alias ip4='ip -4 -c -o address'
+alias ip6='ip -6 -c -o address'
+alias j='journalctl --full -e'
+alias jt='j -t'
+alias l='exa --color=auto --group-directories-first --classify --icons -lh'
+alias ll='l -a'
+alias ls='exa --color=auto'
+alias nh='unset HISTFILE'
+alias o='xdg-open'
+alias outputs='swaymsg -t get_outputs'
+alias p='ps -A f -o user:12,pid,priority,ni,pcpu,pmem,args'
+alias pr='f(){local project=$(ls $HOME/projects | fzf); [ -n "$project" ] && cd "$HOME/projects/$project"};f;unset -f f'
+alias py='python3'
+alias s='sudo'
+alias share='python3 -m http.server 9000'
+alias vi='vim'
+alias vim='nvim'
+alias xev='wev'
+alias ~='cd ~'
+
+alias -g C='| wl-copy'
+alias -g G='| grep'
+alias -g H='| head'
+alias -g J='| jq'
+alias -g L='| less'
+alias -g U='| up'
+
+# Named Directory Hashes
+hash -d indeed="$HOME/indeed"
+
+source <(starship init zsh --print-full-init)

@@ -1,13 +1,8 @@
 config:
-  environment.INDEED_TEAMS: "resume"
-  environment.INDEED_OFFICE: "seaoff"
-  environment.INSTALL_SOURCEGRAPH_CLI: ""
-  environment.INSTALL_JETBRAINS_TOOLBOX: ""
-  environment.ANSIBLE_SKIP_TAGS: "wildcard_dns"
   environment.LANG: en_US.UTF-8
   environment.LANGUAGE: en_US:en
   limits.cpu: "4"
-  limits.memory: 8GB
+  limits.memory: 16GB
   limits.memory.swap: "false"
   linux.kernel_modules: nf_nat,overlay
   raw.idmap: both 1000 1000
@@ -56,21 +51,29 @@ devices:
     path: /home/klabun/indeed
     source: /home/klabun/indeed/indeed
     type: disk
-  home-gradle:
-    path: /home/klabun/.gradle
-    source: /home/klabun/indeed/.gradle
-    type: disk
-  home-config:
-    path: /home/klabun/.config
-    source: /home/klabun/indeed/.config
-    type: disk
-  home-local:
-    path: /home/klabun/.local
-    source: /home/klabun/indeed/.local
-    type: disk
   home-share:
     path: /home/klabun/share
     source: /home/klabun/indeed/share
+    type: disk
+  home-config:
+    path: /home/klabun/config
+    source: /home/klabun/indeed/config
+    type: disk
+  home-dot-gradle:
+    path: /home/klabun/.gradle
+    source: /home/klabun/indeed/.gradle
+    type: disk
+  home-dot-config:
+    path: /home/klabun/.config
+    source: /home/klabun/indeed/.config
+    type: disk
+  home-dot-local:
+    path: /home/klabun/.local
+    source: /home/klabun/indeed/.local
+    type: disk
+  home-dot-ssh:
+    path: /home/klabun/.ssh/
+    source: /home/klabun/indeed/.ssh
     type: disk
   root:
     path: /

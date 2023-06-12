@@ -12,5 +12,11 @@ lxc exec $CONTAINER \
   --env HOME=$HOME \
   --env DBUS_SESSION_BUS_ADDRESS="unix:path=$RUNTIME/bus" \
   --env PULSE_SERVER="unix:$RUNTIME/pulse/native" \
+  --env INDEED_TEAMS="resume" \
+  --env INDEED_OFFICE="seaoff" \
+  --env INSTALL_SOURCEGRAPH_CLI="" \
+  --env INSTALL_JETBRAINS_TOOLBOX="" \
+  --env ANSIBLE_SKIP_TAGS="wildcard_dns" \
   -- \
   sudo --login --user $USER $*
+  # /usr/bin/zsh --login -c "$*"

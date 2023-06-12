@@ -143,6 +143,7 @@ with lib;
   work' = {
     globalprotect-vpn.enable = true;
     lxc.enable = true;
+    sops.enable = true;
   };
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking

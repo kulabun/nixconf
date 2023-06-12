@@ -54,7 +54,13 @@ in
       # By default keys are owned by root:keys
       users.users.${user}.extraGroups = [ config.users.groups.keys.name ];
 
-      environment.systemPackages = with pkgs; [ sops age ];
+      environment = {
+        systemPackages = with pkgs; [ sops age ];
+        sessionVariables = {
+          SOPS_AGE_KEY_FILE = "${homeDirectory}/.secrets/id_age";
+          SOPS_AGE_RECIPIENTS = "age13fjgxvdn5hhcvl8jwz9ysvc2hr66k6x63uf7z98pm906tpgg4qtq9n559p";
+        };
+      };
 
       # system level sops secrets are decrypted on activation script
       sops = {

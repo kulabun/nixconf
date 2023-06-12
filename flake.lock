@@ -276,18 +276,14 @@
     "sops-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1685261879,
-        "narHash": "sha256-wH+14H47KYfe3bWMTxfv/JEDf00rybONE9DOfHLj1j0=",
-        "ref": "main",
-        "rev": "7e10ad586c1eac70ce1b73ae695e8388da6f5de6",
-        "revCount": 5,
-        "type": "git",
-        "url": "ssh://master.codecommit/v1/repos/secrets"
+        "lastModified": 1686110386,
+        "narHash": "sha256-3dRgQ3TwtfJYxwWqpJ5ifCdt4fPZEnnMJNmPyxZQN54=",
+        "path": "/home/klabun/secrets",
+        "type": "path"
       },
       "original": {
-        "ref": "main",
-        "type": "git",
-        "url": "ssh://master.codecommit/v1/repos/secrets"
+        "path": "/home/klabun/secrets",
+        "type": "path"
       }
     },
     "systems": {
