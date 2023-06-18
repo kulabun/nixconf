@@ -42,9 +42,9 @@
     };
 
     sops-secrets = {
-      url = "path:/home/klabun/secrets";
+      # url = "path:/home/klabun/secrets";
       # url = "path:/home/konstantin/secrets";
-      # url = "git+ssh://master.codecommit/v1/repos/secrets?ref=main";
+      url = "git+ssh://master.codecommit/v1/repos/secrets?ref=main";
       flake = false;
     };
   };

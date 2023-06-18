@@ -25,7 +25,7 @@ function setup_hostname() {
 
 function setup_user() {
 	mkhomedir_helper "$USER"
-	chown "$USER:$USER" "$HOME"
+	chown -R "$USER:$USER" "$HOME"
 
 	usermod -d "$HOME" "$USER"
 
@@ -60,8 +60,9 @@ function setup_cargo() {
 
 	as_user cargo install --locked starship
 	as_user cargo install --locked exa
-	as_user cargo install --locked zellij
-	as_user cargo install --locked alacritty
+	as_user cargo install --locked bat
+	# as_user cargo install --locked zellij
+	# as_user cargo install --locked alacritty
 	as_user cargo install --locked ripgrep
 }
 
@@ -114,7 +115,33 @@ EOF
 
 function setup_zsh() {
   announce "Setting up ZSH"
-  grep -q 'starship init zsh' ~/.zshrc || starship init zsh >> ~/.zshrc
+  grep -q 'source $HOME/config/zshrc' ~/.zshrc || echo 'source $HOME/config/zshrc' >> ~/.zshrc
+}
+
+function setup_git() {
+  announce "Setting up Git"
+  grep -q '/home/klabun/config/git/config' ~/.gitconfig || echo <<EOF >> ~/.gitconfig
+[include]
+    path = /home/klabun/config/git/config
+EOF
+}
+
+# function install_slack() {
+#   announce "Installing Slack"
+#   apt install -y libappindicator3-1 libdbusmenu-glib4 libdbusmenu-gtk3-4 libnotify4 libxss1
+#
+#   wget https://downloads.slack-edge.com/releases/linux/4.32.127/prod/x64/slack-desktop-4.32.127-amd64.deb
+#   apt install -y ./slack-desktop-*.deb
+#   rm ./slack-desktop-*.deb
+# }
+
+function setup_sudo() {
+  announce "Setting up Sudo"
+  cat <<EOF >> /etc/sudoers
+Defaults:%sudo env_keep += "XAUTHORITY DISPLAY"
+Defaults:%sudo env_keep += "DBUS_SESSION_BUS_ADDRESS PULSE_SERVER"
+Defaults:%sudo env_keep += "INDEED_* ANSIBLE_* INSTALL_*"
+EOF
 }
 
 system_update
@@ -125,5 +152,9 @@ setup_user
 setup_system_packages
 setup_snap
 setup_cargo
+setup_sudo
+setup_zsh
+setup_git
 install_chrome
+# install_slack
 install_cloudflare_warp

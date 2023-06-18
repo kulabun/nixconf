@@ -1,28 +1,35 @@
-{ config, lib, pkgs, user, inputs, ... }:
+{ config, lib, pkgs, pkgs', user, inputs, ... }:
 with lib;
 let
   inherit (config.home-manager.users.${user}.home) homeDirectory;
   cfg = config.work'.globalprotect-vpn;
   lxc-run = pkgs.writeScriptBin "lxc-run" (readFile ./bin/lxc-run.sh);
   indeed-shell = pkgs.writeScriptBin "indeed-shell" "lxc-run indeed zsh";
-  indeed-alacritty = pkgs.makeDesktopItem {
-    icon = "${pkgs.alacritty}/share/icons/hicolor/scalable/apps/Alacritty.svg";
-    name = "Indeed Alacritty";
-    genericName = "Terminal";
-    categories = [ "System" "TerminalEmulator" ];
-    desktopName = "Indeed Alacritty";
-    startupWMClass = "Alacritty";
-    exec = "${lxc-run}/bin/lxc-run indeed alacritty";
-  };
-  indeed-chrome = pkgs.makeDesktopItem {
-    icon = "google-chrome";
-    name = "Indeed Google Chrome";
-    genericName = "Web Browser";
-    categories = [ "Network" "WebBrowser" ];
-    desktopName = "Indeed Chrome";
-    startupWMClass = "Google-chrome";
-    exec = "${lxc-run}/bin/lxc-run indeed google-chrome-stable";
-  };
+  indeed-start = pkgs.writeScriptBin "indeed-start" ''
+    warp-cli disconnect
+    lxc stop indeed > /dev/null 2>&1 || true
+    lxc start indeed
+    sleep 5
+    warp-cli connect
+  '';
+  # indeed-alacritty = pkgs.makeDesktopItem {
+  #   icon = "${pkgs.alacritty}/share/icons/hicolor/scalable/apps/Alacritty.svg";
+  #   name = "Indeed Alacritty";
+  #   genericName = "Terminal";
+  #   categories = [ "System" "TerminalEmulator" ];
+  #   desktopName = "Indeed Alacritty";
+  #   startupWMClass = "Alacritty";
+  #   exec = "${lxc-run}/bin/lxc-run indeed alacritty";
+  # };
+  # indeed-chrome = pkgs.makeDesktopItem {
+  #   icon = "google-chrome";
+  #   name = "Indeed Google Chrome";
+  #   genericName = "Web Browser";
+  #   categories = [ "Network" "WebBrowser" ];
+  #   desktopName = "Indeed Chrome";
+  #   startupWMClass = "Google-chrome";
+  #   exec = "${lxc-run}/bin/lxc-run indeed google-chrome-stable";
+  # };
   indeed-idea = pkgs.makeDesktopItem {
     icon = "idea-community";
     name = "Indeed IntelliJ IDEA";
@@ -32,6 +39,15 @@ let
     startupWMClass = "jetbrains-idea-ce";
     exec = "${lxc-run}/bin/lxc-run indeed intellij-idea-community";
   };
+  # indeed-slack = pkgs.makeDesktopItem {
+  #   icon = "slack";
+  #   name = "Indeed Slack";
+  #   genericName = "Chat";
+  #   categories = [ "Network" "Chat" ];
+  #   desktopName = "Indeed Slack";
+  #   startupWMClass = "Slack";
+  #   exec = "${lxc-run}/bin/lxc-run indeed slack";
+  # };
 in
 {
   options.work'.lxc = {
@@ -40,15 +56,52 @@ in
 
   config = mkIf cfg.enable {
     virtualisation'.lxc.enable = true;
+    systemd.services = {
+      network-link-lxdbr0-setup = {
+        description = "Link configuration for lxdbr0";
+        wantedBy = [ "machines.target" ];
+        before = [ "indeed-vm.target" ];
+        after = [ "network-pre.target" ];
+        path = [ pkgs.iproute ];
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+        };
+        # Fix MTU. Otherwise https would fail in cloudflare
+        script = ''
+          echo "Configuring lxdbr0..."
+          ip link set mtu 1400 dev lxdbr0
+        '';
+      };
+
+      indeed-vm = {
+        description = "Indeed VM";
+        wantedBy = [ "multi-user.target" ];
+        before = [ "multi-user.target" ];
+        bindsTo = [ ];
+        after = [ "network-link-lxdbr0-setup.service" "machines.target" ];
+        path = [ pkgs.sudo pkgs.lxd pkgs'.cloudflare-warp indeed-start ];
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+        };
+        # TODO: should it rather be a user service?
+        script = ''
+          sudo --user klabun indeed-start
+        '';
+      };
+    };
 
     home-manager.users.${user} = {
       home = {
         packages = [
           lxc-run
           indeed-shell
-          indeed-alacritty
+          indeed-start
+          # indeed-alacritty
           indeed-idea
-          indeed-chrome
+          # indeed-slack
+          # indeed-chrome
         ];
         # Hack to install configuration without making it immutable
         # Use `nixos-rebuild switch`, it will not be called for `boot`
@@ -71,7 +124,6 @@ in
           mkdir -p ${homeDirectory}/indeed/sys/bin
           mkdir -p ${homeDirectory}/indeed/sys/etc/lxc
           chown -R ${user}:${user} ${homeDirectory}/indeed
-
 
           # Copy over ssh keys and configuration
           cat ${homeDirectory}/indeed/.sops/indeed > ${homeDirectory}/indeed/.ssh/sops/indeed

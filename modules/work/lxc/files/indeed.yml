@@ -2,7 +2,7 @@ config:
   environment.LANG: en_US.UTF-8
   environment.LANGUAGE: en_US:en
   limits.cpu: "4"
-  limits.memory: 16GB
+  limits.memory: 12GB
   limits.memory.swap: "false"
   linux.kernel_modules: nf_nat,overlay
   raw.idmap: both 1000 1000
@@ -30,7 +30,7 @@ config:
 description: Indeed LXD Profile
 devices:
   XDG_RUNTIME_DIR:
-    path: /home/klabun/.runtime
+    path: /runtime
     source: /run/user/1000
     type: disk
   XWayland:
