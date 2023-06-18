@@ -19,7 +19,7 @@ in {
         };
       };
 
-      tmpOnTmpfs = true;
+      tmp.useTmpfs = true;
     };
   };
 }

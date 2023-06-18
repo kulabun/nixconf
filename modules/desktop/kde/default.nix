@@ -9,6 +9,11 @@ with lib; {
   config = mkIf cfg.enable {
     shell'.gpg.pinentry = "qt";
 
+    environment.plasma5.excludePackages = with pkgs.libsForQt5; [
+      khelpcenter
+      plasma-browser-integration
+    ];
+
     services = {
       dbus.enable = true;
 
@@ -28,10 +33,6 @@ with lib; {
           gnome.enable = false;
           plasma5 = {
             enable = true;
-            excludePackages = with pkgs.libsForQt5; [
-              khelpcenter
-              plasma-browser-integration
-            ];
           };
         };
 
