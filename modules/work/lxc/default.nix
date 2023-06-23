@@ -6,10 +6,24 @@ let
   lxc-run = pkgs.writeScriptBin "lxc-run" (readFile ./bin/lxc-run.sh);
   indeed-shell = pkgs.writeScriptBin "indeed-shell" "lxc-run indeed zsh";
   indeed-start = pkgs.writeScriptBin "indeed-start" ''
+    echo "Disconnecting from CloudFlare WARP.."
     warp-cli disconnect
-    lxc stop indeed > /dev/null 2>&1 || true
-    lxc start indeed
-    sleep 5
+
+    if [[ $(lxc list -c ns -f csv) == "indeed,RUNNING" ]]; then
+      echo "Restarting indeed.."
+      lxc restart indeed
+    else
+      echo "Starting indeed.."
+      lxc start indeed
+    fi
+
+    echo "Waiting for indeed to start.."
+    sleep 10
+
+    echo "Configuring lxdbr0.."
+    sudo ip link set mtu 1400 dev lxdbr0
+
+    echo "Connecting to CloudFlare WARP.."
     warp-cli connect
   '';
   # indeed-alacritty = pkgs.makeDesktopItem {
@@ -56,41 +70,58 @@ in
 
   config = mkIf cfg.enable {
     virtualisation'.lxc.enable = true;
-    systemd.services = {
-      network-link-lxdbr0-setup = {
-        description = "Link configuration for lxdbr0";
-        wantedBy = [ "machines.target" ];
-        before = [ "indeed-vm.target" ];
-        after = [ "network-pre.target" ];
-        path = [ pkgs.iproute ];
-        serviceConfig = {
-          Type = "oneshot";
-          RemainAfterExit = true;
-        };
-        # Fix MTU. Otherwise https would fail in cloudflare
-        script = ''
-          echo "Configuring lxdbr0..."
-          ip link set mtu 1400 dev lxdbr0
-        '';
-      };
 
+    systemd.user.services = {
       indeed-vm = {
         description = "Indeed VM";
-        wantedBy = [ "multi-user.target" ];
-        before = [ "multi-user.target" ];
+        wantedBy = [ "default.target" ];
+        before = [ ];
         bindsTo = [ ];
-        after = [ "network-link-lxdbr0-setup.service" "machines.target" ];
-        path = [ pkgs.sudo pkgs.lxd pkgs'.cloudflare-warp indeed-start ];
+        path = [ pkgs.sudo pkgs.lxd pkgs'.cloudflare-warp pkgs.iproute indeed-start ];
         serviceConfig = {
           Type = "oneshot";
           RemainAfterExit = true;
         };
-        # TODO: should it rather be a user service?
         script = ''
-          sudo --user klabun indeed-start
+          indeed-start
         '';
       };
     };
+    # systemd.services = {
+      # network-link-lxdbr0-setup = {
+      #   description = "Link configuration for lxdbr0";
+      #   wantedBy = [ "multi-user.target" ];
+      #   before = [ "indeed-vm.target" ];
+      #   after = [ "network-pre.target" "machines.target" ];
+      #   path = [ pkgs.iproute ];
+      #   serviceConfig = {
+      #     Type = "oneshot";
+      #     RemainAfterExit = true;
+      #   };
+      #   # Fix MTU. Otherwise https would fail in cloudflare
+      #   script = ''
+      #     echo "Configuring lxdbr0..."
+      #     ip link set mtu 1400 dev lxdbr0
+      #   '';
+      # };
+    #
+    #   indeed-vm = {
+    #     description = "Indeed VM";
+    #     wantedBy = [ "multi-user.target" ];
+    #     before = [ ];
+    #     bindsTo = [ ];
+    #     after = [ "network-link-lxdbr0-setup.service" "machines.target" ];
+    #     path = [ pkgs.sudo pkgs.lxd pkgs'.cloudflare-warp indeed-start ];
+    #     serviceConfig = {
+    #       Type = "oneshot";
+    #       RemainAfterExit = true;
+    #     };
+    #     # TODO: should it rather be a user service?
+    #     script = ''
+    #       sudo --user klabun indeed-start
+    #     '';
+    #   };
+    # };
 
     home-manager.users.${user} = {
       home = {

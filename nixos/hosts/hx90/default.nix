@@ -109,6 +109,7 @@ with lib;
     vscode.enable = false;
     slack.enable = false;
     zoom-us.enable = true;
+    libreoffice.enable = true;
     jetbrains = {
       idea-community.enable = true;
     };

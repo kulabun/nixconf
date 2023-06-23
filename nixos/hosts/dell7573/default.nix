@@ -102,6 +102,7 @@ with lib;
     vscode.enable = false;
     yubikey.enable = true;
     slack.enable = true;
+    libreoffice.enable = true;
     zoom-us.enable = true;
     jetbrains = {
       idea-community.enable = true;
@@ -144,6 +145,7 @@ with lib;
     globalprotect-vpn.enable = true;
     lxc.enable = true;
     sops.enable = true;
+    mongodb-compass.enable = true;
   };
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
