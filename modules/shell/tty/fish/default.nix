@@ -68,7 +68,6 @@ with lib; {
         ip6 = "ip -6 -c -o address";
         g = "git";
         gl = "gradle";
-        chrome = "google-chrome-stable";
         ff = "firefox";
         xev = "wev";
         nxu = "nx update";

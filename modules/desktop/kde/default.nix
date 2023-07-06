@@ -51,14 +51,10 @@ with lib; {
       glib # gsettings
       gcc
       wev # same as xev for xorg but for wayland
-      clipman
       ark
       konsole
-      libsForQt5.bismuth
 
-      pkgs'.catppuccin-kde
-      pkgs'.catppuccin-cursors
-      pkgs'.dracula-theme
+      pkgs'.nordic
     ];
 
     xdg.portal = {

@@ -2,7 +2,6 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-23.05";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
-    nixpkgs-jetbrains.url = "github:GenericNerdyUsername/nixpkgs/jetbrains-plugins-overhauled";
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
     alacritty-theme = {

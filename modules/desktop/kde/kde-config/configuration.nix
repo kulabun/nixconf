@@ -43,26 +43,11 @@
     };
     Plugins = {
       slideEnabled = false;
-      bismuthEnabled = true;
-    };
-    "Script-bismuth" = {
-      enableFloatingLayout = true;
-      enableSpiralLayout = false;
-      enableStairLayout = false;
-      ignoreTitle = "Firefox — Sharing Indicator";
-      monocleMaximize = false;
-      noTileBorder = true;
-      preventMinimize = true;
-      screenGapBottom = 20;
-      screenGapLeft = 20;
-      screenGapRight = 20;
-      screenGapTop = 20;
-      tileLayoutGap = 20;
     };
     Windows = {
       ElectricBorderMaximize = false;
       ElectricBorderTilling = false;
-      Placement = "Centered";
+      Placement = "Maximizing";
     };
     "org.kde.kdecoration2" = {
       BorderSize = "None";
@@ -80,22 +65,28 @@
     };
 
     Plugins = {
-      CharacterRunnerEnabled = false;
-      DictionaryEnabled = false;
       appstreamEnabled = false;
       baloosearchEnabled = false;
       bookmarksEnabled = false;
       browserhistoryEnabled = false;
       browsertabsEnabled = false;
+      CharacterRunnerEnabled = false;
       desktopsessionsEnabled = false;
+      DictionaryEnabled = false;
       helprunnerEnabled = false;
       katesessionsEnabled = false;
       konsoleprofilesEnabled = false;
+      krunner_killEnabled = false;
+      krunner_spellcheckEnabled = false;
+      krunner_systemsettingsEnabled = false;
       kwinEnabled = false;
+      locationsEnabled = false;
       "org.kde.activities2Enabled" = false;
       "org.kde.datetimeEnabled" = false;
       "org.kde.windowedwidgetsEnabled" = false;
+      placesEnabled = false;
       plasma-desktopEnabled = false;
+      PowerDevilEnabled = false;
       recentdocumentsEnabled = false;
       shellEnabled = false;
       webshortcutsEnabled = false;
@@ -148,7 +139,7 @@
 
       "Kill Window" = "Meta+Shift+Q,Meta+Ctrl+Esc,Kill Window";
       "Window Close" = "Meta+Q,Alt+F4,Close Window";
-      "Window Maximize" = "none,Meta+PgUp,Maximize Window";
+      "Window Maximize" = "Meta+F,Meta+PgUp,Maximize Window";
 
       "Switch to Desktop 1" = "Meta+1,Ctrl+F1,Switch to Desktop 1";
       "Switch to Desktop 2" = "Meta+2,Ctrl+F2,Switch to Desktop 2";
@@ -200,16 +191,21 @@
       "Lock Session" = "Meta+Shift+Esc,Meta+L\tScreensaver,Lock Session";
     };
 
-    bismuth = {
-      "toggle_float_layout" = "Meta+Shift+F,Meta+Shift+F,Toggle Floating Layout";
-      "toggle_three_column_layout" = "Meta+Shift+C,,Toggle Three Column Layout";
-      "toggle_tile_layout" = "Meta+Shift+T,Meta+T,Toggle Tile Layout";
-      "move_window_to_left_pos" = "Meta+Shift+H,Meta+Shift+H,Move Window Left";
-      "move_window_to_right_pos" = "Meta+Shift+L,Meta+Shift+L,Move Window Right";
-      "push_window_to_master" = "Meta+Return,Meta+Return,Push Active Window to Master Area";
-      "toggle_spread_layout" = "Meta+Shift+S,,Toggle Spread Layout";
-      "toggle_monocle_layout" = "Meta+Shift+M,Meta+M,Toggle Monocle Layout";
-      "toggle_window_floating" = "Meta+F,Meta+F,Toggle Active Window Floating";
+    "org.kde.dolphin.desktop" = {
+      "_launch" = "none,Meta+E,Dolphin";
+    };
+
+    "org.kde.plasma.emojier.desktop" = {
+      "_launch" = "none,Meta+.\tMeta+Ctrl+Alt+Shift+Space,Emoji Selector";
+    };
+
+    kmix = {
+      "decrease_microphone_volume" = "Microphone Volume Down,Microphone Volume Down,Decrease Microphone Volume";
+      "decrease_volume" = "Meta+-\tVolume Down,Volume Down,Decrease Volume";
+      "increase_microphone_volume" = "Microphone Volume Up,Microphone Volume Up,Increase Microphone Volume";
+      "increase_volume" = "Volume Up\tMeta+Shift+B,Volume Up,Increase Volume";
+      "mic_mute" = "Meta+M\tMicrophone Mute\tMeta+Volume Mute,Microphone Mute\tMeta+Volume Mute,Mute Microphone";
+      "mute" = "Volume Mute\tMeta+Shift+M,Volume Mute,Mute";
     };
   };
 
@@ -218,6 +214,21 @@
       "RightButton;NoModifier" = "org.kde.contextmenu";
       "MiddleButton;NoModifier" = null;
       "wheel:Vertical;NoModifier" = null;
+    };
+  };
+
+  kwinrulesrc = {
+    General = {
+      count = 1;
+      rules = "a4a04438-f3a7-4c36-a5d7-0bc5f038dc7d";
+    };
+
+    "a4a04438-f3a7-4c36-a5d7-0bc5f038dc7d" = {
+      Description = "No Titlebars";
+      noborder = true;
+      noborderrule = 2;
+      wmclass = ".*";
+      wmclassmatch = 3;
     };
   };
 

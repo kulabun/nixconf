@@ -162,6 +162,10 @@ in
             # haskell
             haskell-language-server
 
+            # Kafka
+            kafkactl
+            confluent-cli
+
             # Lua
             sumneko-lua-language-server
             stylua
