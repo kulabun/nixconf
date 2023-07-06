@@ -1,5 +1,27 @@
-# NixOS and Home-Manager configuration files
+# NixOS Configuration
 ```
-NIX_PROFILE=hx90
-home-manager switch --flake "/home/$USER/nixconf#$NIX_PROFILE" --extra-experimental-features "nix-command flakes" 
+# Generate new boot configuration
+sudo nixos-rebuild boot --flake .#hx90
+
+# Update current configuration
+sudo nixos-rebuild switch --flake .#hx90
+```
+
+# Secrets
+Checkout / copy files:
+- ~/.secrets
+- ~/secrets
+
+# Tailscale
+1. Go to https://login.tailscale.com/admin/settings/keys
+2. Generate auth key
+3. Login to tailscale
+```
+tailscale up -authkey <auth key>
+```
+
+# Bitwarden
+```
+bw config server https://bitwarden.snowy-butterfly.ts.net/
+bw login konstantin.labun@gmail.com
 ```
