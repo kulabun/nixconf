@@ -1,4 +1,4 @@
-{ config, lib, pkgs', ... }:
+{ config, lib, pkgs, ... }:
 with lib;
 let cfg = config.programs'.bitwarden;
 in {
@@ -7,8 +7,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs';[
-      bitwarden # bitwarden GUI app
+    environment.systemPackages = with pkgs;[
       bitwarden-cli # bitwarden CLI app
     ];
   };

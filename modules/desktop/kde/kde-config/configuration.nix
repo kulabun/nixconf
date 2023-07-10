@@ -55,6 +55,22 @@
     };
   };
 
+  kded5rc = {
+    "Module-device_automounter" = {
+      autoload = false;
+    };
+  };
+
+  kuriikwsfilterrc = {
+    General = {
+      DefaultWebShortcut = "google";
+      EnableWebShortcuts = true;
+      KeywordDelimiter = "\s";
+      PreferredWebShortcuts = "wikipedia,amazon,rfc,wikit,google,youtube,github,duckduckgo";
+      UsePreferredWebShortcutsOnly = true;
+    };
+  };
+
   krunnerrc = {
     General = {
       ActivateWhenTypingOnDesktop = false;
@@ -67,30 +83,34 @@
     Plugins = {
       appstreamEnabled = false;
       baloosearchEnabled = false;
-      bookmarksEnabled = false;
+      bookmarksEnabled = true;
       browserhistoryEnabled = false;
       browsertabsEnabled = false;
       CharacterRunnerEnabled = false;
       desktopsessionsEnabled = false;
-      DictionaryEnabled = false;
+      DictionaryEnabled = true;
       helprunnerEnabled = false;
       katesessionsEnabled = false;
       konsoleprofilesEnabled = false;
-      krunner_killEnabled = false;
+      krunner_killEnabled = true;
       krunner_spellcheckEnabled = false;
-      krunner_systemsettingsEnabled = false;
+      krunner_systemsettingsEnabled = true;
       kwinEnabled = false;
       locationsEnabled = false;
       "org.kde.activities2Enabled" = false;
-      "org.kde.datetimeEnabled" = false;
+      "org.kde.datetimeEnabled" = true;
       "org.kde.windowedwidgetsEnabled" = false;
       placesEnabled = false;
       plasma-desktopEnabled = false;
       PowerDevilEnabled = false;
       recentdocumentsEnabled = false;
       shellEnabled = false;
-      webshortcutsEnabled = false;
+      webshortcutsEnabled = true;
       windowsEnabled = false;
+    };
+
+    Runners.Dictionary = {
+      triggerWord = "def";
     };
   };
 

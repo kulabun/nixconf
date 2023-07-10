@@ -25,3 +25,11 @@ tailscale up -authkey <auth key>
 bw config server https://bitwarden.snowy-butterfly.ts.net/
 bw login konstantin.labun@gmail.com
 ```
+
+# Other
+```
+# Setup rust tools
+rustup default stable
+
+
+```

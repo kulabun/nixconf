@@ -93,13 +93,16 @@ with lib;
 
   shell' = {
     awscli.enable = true;
-    gcloud.enable = true;
     dev-tools.enable = true;
-    scripts.enable = true;
-    lorri.enable = true;
+    gcloud.enable = true;
     gopass.enable = true;
-    youtube-dl.enable = true;
+    lorri.enable = true;
+    rclone.enable = true;
+    scripts.enable = true;
+
+    # Do I even need these?
     other.enable = true;
+    youtube-dl.enable = false;
   };
 
   programs' = {
