@@ -108,10 +108,6 @@
       webshortcutsEnabled = true;
       windowsEnabled = false;
     };
-
-    Runners.Dictionary = {
-      triggerWord = "def";
-    };
   };
 
   konsolerc = {

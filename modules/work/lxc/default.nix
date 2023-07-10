@@ -182,6 +182,7 @@ in
           cat ${./config/starship.toml} > ${homeDirectory}/indeed/.config/starship.toml
           cat ${./config/git/config} > ${homeDirectory}/indeed/config/git/config
           cat ${./config/zshrc} > ${homeDirectory}/indeed/config/zshrc
+          cat ${./config/gradle.properties} > ${homeDirectory}/indeed/.gradle/gradle.properties
 
           # Gitignore
           mkdir -p ${homeDirectory}/indeed/.config/git

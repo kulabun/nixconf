@@ -16,6 +16,9 @@ setopt SHARE_HISTORY
 setopt EXTENDED_HISTORY
 setopt autocd
 
+# Enable VI mode
+bindkey -v
+
 function unbind() {
   if bindkey "$1" > /dev/null; then
     bindkey -rM vicmd "$1" > /dev/null

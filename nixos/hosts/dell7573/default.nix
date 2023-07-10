@@ -76,6 +76,7 @@ with lib;
 
   services' = {
     openssh.enable = true;
+    tailscale.enable = true;
     cloudflare-warp.enable = true;
   };
 
