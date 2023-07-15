@@ -104,6 +104,7 @@ with lib;
     yubikey.enable = true;
     slack.enable = true;
     libreoffice.enable = true;
+    bitwarden.enable = true;
     zoom-us.enable = true;
     jetbrains = {
       idea-community.enable = true;
