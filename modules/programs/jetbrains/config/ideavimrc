@@ -24,6 +24,7 @@ nmap Y v$y
 
 map <leader>/ <Action>(FindInPath)
 map <leader>f <Action>(GotoFile)
+map <leader>F <Action>(sourcegraph.openFindPopup)
 map <leader>c <Action>(GotoClass)
 " This one is much cooler in IDEA, it would be nice to improve same experience in neovim
 map <leader>s <Action>(FileStructurePopup)

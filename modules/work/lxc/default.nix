@@ -7,6 +7,7 @@ let
   indeed-shell = pkgs.writeScriptBin "indeed-shell" "lxc-run indeed zsh";
   indeed-start = pkgs.writeScriptBin "indeed-start" ''
     echo "Disconnecting from CloudFlare WARP.."
+    sudo tailscale down
     warp-cli disconnect
 
     if [[ $(lxc list -c ns -f csv) == "indeed,RUNNING" ]]; then
