@@ -19,8 +19,8 @@ function as_user() {
 
 function setup_hostname() {
 	announce "Setting up hostname"
-	echo "$USER" >/etc/hostname
-	echo "127.0.0.1 $USER" >>/etc/hosts
+	echo "$HOSTNAME" >/etc/hostname
+	echo "127.0.0.1 $HOSTNAME" >>/etc/hosts
 }
 
 function setup_user() {
@@ -90,8 +90,8 @@ function install_chrome() {
 }
 
 function setup_bash() {
-  announce "Setting up Bash"
-  grep -q '# Default Bash Config' ~/.profile || cat <<EOF >>~/.profile
+	announce "Setting up Bash"
+	grep -q '# Default Bash Config' ~/.profile || cat <<EOF >>~/.profile
 # Default Bash Config
 # if running bash 
 if [ -n "\$BASH_VERSION" ]; then 
@@ -114,13 +114,13 @@ EOF
 }
 
 function setup_zsh() {
-  announce "Setting up ZSH"
-  grep -q 'source $HOME/config/zshrc' ~/.zshrc || echo 'source $HOME/config/zshrc' >> ~/.zshrc
+	announce "Setting up ZSH"
+	grep -q 'source $HOME/config/zshrc' ~/.zshrc || echo 'source $HOME/config/zshrc' >>~/.zshrc
 }
 
 function setup_git() {
-  announce "Setting up Git"
-  grep -q '/home/klabun/config/git/config' ~/.gitconfig || echo <<EOF >> ~/.gitconfig
+	announce "Setting up Git"
+	grep -q '/home/klabun/config/git/config' ~/.gitconfig || echo <<EOF >>~/.gitconfig
 [include]
     path = /home/klabun/config/git/config
 EOF
@@ -136,8 +136,8 @@ EOF
 # }
 
 function setup_sudo() {
-  announce "Setting up Sudo"
-  cat <<EOF >> /etc/sudoers
+	announce "Setting up Sudo"
+	cat <<EOF >>/etc/sudoers
 Defaults:%sudo env_keep += "XAUTHORITY DISPLAY"
 Defaults:%sudo env_keep += "DBUS_SESSION_BUS_ADDRESS PULSE_SERVER"
 Defaults:%sudo env_keep += "INDEED_* ANSIBLE_* INSTALL_*"

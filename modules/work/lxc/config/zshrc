@@ -163,3 +163,4 @@ alias -g U='| up'
 hash -d indeed="$HOME/indeed"
 
 source <(starship init zsh --print-full-init)
+sudo ip link set dev eth0 mtu 1400

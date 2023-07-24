@@ -54,7 +54,7 @@ in
       home-manager.users.${user} = {
         sops = {
           secrets = mkMerge [
-            (createSopsConfig { source = "${inputs.sops-secrets}/work/ssh"; target = "${homeDirectory}/indeed/.sops"; })
+            (createSopsConfig { source = "${inputs.sops-secrets}/work/ssh"; target = "${homeDirectory}/indeed/.sops/ssh"; })
           ];
           age.keyFile = "${homeDirectory}/.secrets/id_age";
         };

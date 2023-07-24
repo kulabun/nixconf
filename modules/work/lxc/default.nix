@@ -158,9 +158,9 @@ in
           chown -R ${user}:${user} ${homeDirectory}/indeed
 
           # Copy over ssh keys and configuration
-          cat ${homeDirectory}/indeed/.sops/indeed > ${homeDirectory}/indeed/.ssh/sops/indeed
+          cat ${homeDirectory}/indeed/.sops/ssh/indeed > ${homeDirectory}/indeed/.ssh/sops/indeed
           chmod 600 ${homeDirectory}/indeed/.ssh/sops/indeed
-          cat ${homeDirectory}/indeed/.sops/indeed_rsa > ${homeDirectory}/indeed/.ssh/sops/indeed_rsa
+          cat ${homeDirectory}/indeed/.sops/ssh/indeed_rsa > ${homeDirectory}/indeed/.ssh/sops/indeed_rsa
           chmod 600 ${homeDirectory}/indeed/.ssh/sops/indeed_rsa
 
           cp ${homeDirectory}/secrets/work/ssh/config ${homeDirectory}/indeed/.ssh/sops/config

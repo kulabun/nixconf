@@ -15,6 +15,23 @@ in {
             "--use-gl=egl"
             "--ozone-platform=wayland"
             "--force-dark-mode=enabled"
+
+            # "--disable-features=UseChromeOSDirectVideoDecoder"
+            # "--disable-gpu-memory-buffer-compositor-resources"
+            # "--disable-gpu-memory-buffer-video-frames"
+            # "--enable-hardware-overlays"
+            # "--enable-accelerated-video-decode"
+            # "--enable-features=VaapiVideoDecoder,VaapiVideoEncoder,RawDraw,WebRTCPipeWireCapturer,UseOzonePlatform"
+            # "--ozone-platform=wayland"
+            # "--ignore-gpu-blocklist"
+            # "--enable-gpu-rasterization"
+            # "--enable-zero-copy"
+            # "--disable-gpu-driver-bug-workarounds"
+            # "--enable-native-gpu-memory-buffers"
+            # "--use-cmd-decoder=passthrough"
+            # "--ozone-platform-hint=auto"
+            # "--use-vulkan"
+            # "--force-dark-mode=enabled"
           ];
         };
       };

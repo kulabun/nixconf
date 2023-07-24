@@ -149,7 +149,7 @@ in
             }
 
             unbind '^[^['
-            bind '^S' sudo-command-line
+            bindkey '^t' sudo-command-line
 
             # Unsuspend VIM
             bindkey -s '^z' 'fg^M'
@@ -160,8 +160,7 @@ in
             ###########################################################
 
             # tab copmpletion
-            #bindkey '\t' autosuggest-accept
-            bindkey '^ ' autosuggest-accept
+            bindkey '^s' autosuggest-accept
 
             export SUDO_PROMPT="$(tput bold)$(tput setaf 1)[sudo] $(tput setaf 7)password for $(tput setaf 6)$USER$(tput setaf 7):$(tput sgr0) "
             export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#6f6f6f"

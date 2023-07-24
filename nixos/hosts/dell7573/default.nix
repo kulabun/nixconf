@@ -86,6 +86,7 @@ with lib;
 
   shell' = {
     awscli.enable = true;
+    gcloud.enable = true;
     dev-tools.enable = true;
     scripts.enable = true;
     lorri.enable = true;

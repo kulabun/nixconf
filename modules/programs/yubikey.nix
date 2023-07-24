@@ -11,8 +11,9 @@ in {
 
     environment.systemPackages = with pkgs; [
       yubikey-personalization
-      yubikey-manager
       yubikey-personalization-gui
+      yubikey-manager
+      yubikey-manager-qt
     ];
 
     # PC/SC Smart Card Daemon
