@@ -102,6 +102,21 @@
             ./nixos/hosts/dell7573
           ];
         };
+        dell5560 = nixpkgs.lib.nixosSystem rec {
+          system = "x86_64-linux";
+          specialArgs = {
+            inherit inputs;
+            stateVersion = "23.05";
+            pkgs = pkgs system;
+            pkgs' = pkgs' system;
+            lib = lib system;
+            user = "klabun";
+          };
+          modules = [
+            ./modules
+            ./nixos/hosts/dell5560
+          ];
+        };
       };
 
       homeConfigurations = {

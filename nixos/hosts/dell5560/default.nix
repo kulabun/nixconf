@@ -1,6 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
 { config
 , pkgs
 , lib
@@ -10,82 +7,76 @@
 , ...
 }:
 with lib;
+
 {
   imports = [
-    inputs.nixos-hardware.nixosModules.common-cpu-amd
-    inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
-    inputs.nixos-hardware.nixosModules.common-gpu-amd
+    inputs.nixos-hardware.nixosModules.common-cpu-intel
+    inputs.nixos-hardware.nixosModules.common-cpu-intel-kaby-lake
     inputs.nixos-hardware.nixosModules.common-hidpi
-    inputs.nixos-hardware.nixosModules.common-pc
+    inputs.nixos-hardware.nixosModules.common-pc-laptop
     inputs.nixos-hardware.nixosModules.common-pc-ssd
   ];
 
   # Bootloader.
   boot = {
-    kernelModules = [ "kvm-amd" ];
-    loader.efi.efiSysMountPoint = "/boot/efi";
-
-    initrd = {
-      # Setup keyfile
-      secrets."/crypto_keyfile.bin" = null;
-
-      availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
-      kernelModules = [ ];
-      luks.devices."luks-75e92035-b145-4814-a76d-6b5a998efaf5".device = "/dev/disk/by-uuid/75e92035-b145-4814-a76d-6b5a998efaf5";
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+      efi.efiSysMountPoint = "/boot";
     };
+    initrd = {
+      availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
+      kernelModules = [ ];
+      luks.devices."luks-8f93d47d-b02f-48ca-acb4-011ff2756e8f".device = "/dev/disk/by-uuid/8f93d47d-b02f-48ca-acb4-011ff2756e8f";
 
-    extraModprobeConfig = ''
-      alias pci:v000014C3d00000608sv*sd*bc*sc*i* mt7921e
-    '';
+      # Setup keyfile
+      secrets = {
+        "/crypto_keyfile.bin" = null;
+      };
+
+      # Enable swap on luks
+      luks.devices."luks-84466a7a-bf3c-47b1-9a42-2d12d1288a23".device = "/dev/disk/by-uuid/84466a7a-bf3c-47b1-9a42-2d12d1288a23";
+      luks.devices."luks-84466a7a-bf3c-47b1-9a42-2d12d1288a23".keyFile = "/crypto_keyfile.bin";
+    };
+    kernelModules = [ "kvm-intel" ];
+    extraModulePackages = [ ];
   };
 
-  # Decrypt second drive
-  environment.etc."crypttab".text = ''
-    ct2000mx500ssd1 /dev/disk/by-uuid/71d37ba8-f366-45a2-9a5f-2c1238cef11c /crypto_keyfile.bin
-  '';
   fileSystems = {
-    "/" = {
-      device = "/dev/disk/by-uuid/80699c90-ce4e-4de6-b45f-9c75a484be4b";
+    "/" = { 
+      device = "/dev/disk/by-uuid/9dd9bfed-c126-4c12-9148-18ad5ba20836";
       fsType = "ext4";
     };
-    "/boot/efi" = {
-      device = "/dev/disk/by-uuid/F9FC-489F";
+
+    "/boot" = { 
+      device = "/dev/disk/by-uuid/3788-DEA3";
       fsType = "vfat";
     };
-    "/home" = {
-      device = "/dev/disk/by-uuid/0c3bca9a-037d-4990-aecb-943e5becd99b";
-      fsType = "ext4";
-    };
-    "/root-drive" = {
-      device = "/dev/disk/by-uuid/80699c90-ce4e-4de6-b45f-9c75a484be4b";
-      fsType = "ext4";
-    };
   };
 
-  swapDevices = [ ];
+  swapDevices = [{ device = "/dev/disk/by-uuid/4b9fc722-9c93-4917-a594-84ef4482b1f4"; }];
 
-  hardware' = {
-    mt7921e.enable = true;
-    rtl8821au.enable = true;
-  };
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+
+  networking.hostName = "dell5560";
 
   system' = {
     # network.bridge = {
     #   enable = true;
-    #   externalInterface = "wlp3s0";
+    #   externalInterface = "wlp2s0";
     # };
   };
 
   virtualisation' = {
     docker.enable = true;
     lxc.enable = true;
-    qemu.enable = false;
   };
 
   services' = {
     openssh.enable = true;
     tailscale.enable = true;
-    cloudflare-warp.enable = false;
+    cloudflare-warp.enable = true;
   };
 
   desktop' = {
@@ -95,15 +86,11 @@ with lib;
   shell' = {
     awscli.enable = true;
     dev-tools.enable = true;
-    gcloud.enable = true;
-    gopass.enable = true;
-    lorri.enable = true;
-    rclone.enable = true;
     scripts.enable = true;
-
-    # Do I even need these?
+    lorri.enable = true;
+    gopass.enable = true;
+    youtube-dl.enable = true;
     other.enable = true;
-    youtube-dl.enable = false;
   };
 
   programs' = {
@@ -113,10 +100,11 @@ with lib;
     easyeffects.enable = true;
     obs-studio.enable = true;
     vscode.enable = false;
-    slack.enable = false;
-    zoom-us.enable = true;
+    yubikey.enable = true;
+    slack.enable = true;
     libreoffice.enable = true;
     bitwarden.enable = true;
+    zoom-us.enable = true;
     jetbrains = {
       idea-community.enable = true;
     };
@@ -144,6 +132,7 @@ with lib;
         size = 9;
       };
     };
+
     alacritty = {
       enable = true;
       font = {
@@ -151,6 +140,13 @@ with lib;
         size = 10;
       };
     };
+  };
+
+  work' = {
+    globalprotect-vpn.enable = true;
+    lxc.enable = true;
+    sops.enable = true;
+    mongodb-compass.enable = true;
   };
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
@@ -175,12 +171,11 @@ with lib;
     };
   };
 
-  networking.hostName = "hx90"; # Define your hostname.
+  # PC/SC Smart Card Daemon
+  services.pcscd.enable = true;
 
   # Enable the X11 windowing system.
   services.xserver.enable = true; # BUG: when removed cursor disappers in wayland
-  services.xserver.videoDrivers = [ "amdgpu" ];
-  #programs.sway.enable = true;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -232,14 +227,6 @@ with lib;
     wget
     # vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   ];
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
 
   system.stateVersion = stateVersion;
 }

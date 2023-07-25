@@ -39,7 +39,7 @@
     };
     NightColor = {
       Active = true;
-      Mode = "Times";
+      Mode = "Constant";
     };
     Plugins = {
       slideEnabled = false;
@@ -245,6 +245,13 @@
       noborderrule = 2;
       wmclass = ".*";
       wmclassmatch = 3;
+    };
+  };
+
+
+  plasmanotifyrc = {
+    Notifications = {
+      PopupPosition = "TopCenter";
     };
   };
 

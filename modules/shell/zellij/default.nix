@@ -2,7 +2,6 @@
 with lib;
 let
   cfg = config.shell'.zellij;
-  catppuccin_theme = inputs.catppuccin-zellij;
 in
 {
   options.shell'.zellij.enable = mkEnableOption "zellij" // { default = true; };
@@ -15,7 +14,6 @@ in
         source = ./config/layouts;
         recursive = true;
       };
-      xdg.configFile."zellij/themes/catppuccin.yaml".source = "${catppuccin_theme}/catppuccin.yaml";
     };
   };
 }
