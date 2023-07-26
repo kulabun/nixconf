@@ -1,8 +1,8 @@
-{ config, lib, pkgs', user, ... }:
+{ config, lib, pkgs, user, ... }:
 with lib;
 let
   cfg = config.programs'.zoom-us;
-  my-zoom-us = pkgs'.zoom-us.overrideAttrs (old: {
+  my-zoom-us = pkgs.zoom-us.overrideAttrs (old: {
     postFixup =
       old.postFixup
       + ''
@@ -18,7 +18,7 @@ with lib; {
 
   config = mkIf cfg.enable {
     home-manager.users.${user} = {
-      home.packages = with pkgs'; [
+      home.packages = [
         my-zoom-us
       ];
     };
