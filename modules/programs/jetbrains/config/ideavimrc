@@ -11,7 +11,8 @@ set NERDTree
 let mapleader = " "
 
 sethandler <C-s> n:ide i:vim 
-imap <C-s> <Action>(copilot.applyInlays)
+#imap <C-s> <Action>(copilot.applyInlays)
+imap <C-s> <Action>(cody.acceptAutoCompleteAction)
 
 sethandler <C-h> n:ide i:vim
 imap <C-h> <Action>(copilot.cyclePrevInlays)
@@ -23,16 +24,22 @@ imap <C-l> <Action>(copilot.cycleNextInlays)
 nmap Y v$y
 
 map <leader>/ <Action>(FindInPath)
-map <leader>f <Action>(GotoFile)
-map <leader>F <Action>(sourcegraph.openFindPopup)
-map <leader>c <Action>(GotoClass)
+map <leader>ff <Action>(GotoFile)
+map <leader>fc <Action>(GotoClass)
+map <leader>fs <Action>(GotoSymbol)
+map <leader>fa <Action>(GotoAction)
+map <leader>fr <Action>(RecentFiles)
+map <leader>fk <Action>(ShowBookmarks)
+map <leader>fu <Action>(ShowUsages)
+map <leader>fS <Action>(sourcegraph.openFindPopup)
+
+map <leader>, <Action>(RecentFiles)
+
 " This one is much cooler in IDEA, it would be nice to improve same experience in neovim
 map <leader>s <Action>(FileStructurePopup)
-map <leader>S <Action>(GotoSymbol)
-map <leader>, <Action>(RecentFiles)
 map <leader>j <Action>(ShowBookmarks)
 map <leader>a <Action>(ShowIntentionActions)
-map <leader>A <Action>(GotoAction)
+map <leader>c <Action>(CodyEditorActions)
 
 nmap <leader><leader> <Action>(HideAllWindows)
 nmap <leader>ww <C-w>w
@@ -144,3 +151,4 @@ nmap gp "+p
 nmap gP "+P
 vmap gy "+y
 nmap gY "+Y
+
