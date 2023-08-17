@@ -145,6 +145,8 @@
     kwin = {
       # Reset default keybindings
       "view_actual_size" = "none,Meta+0,Zoom to Actual Size";
+      "view_zoom_in" = "Meta++,Meta++,Zoom In";
+      "view_zoom_out" = "Meta+=,Meta+-,Zoom Out";
       "Show Desktop" = "none,Meta+D,Peek at Desktop";
 
       # Setup new keybindings

@@ -8,8 +8,14 @@ let
       + ''
         # this helps to overcome default check and zoom is still running on sway
         # but the app still doesn't work, it crashes when I try to share a screen :(
-        wrapProgram $out/bin/zoom-us --unset XDG_SESSION_TYPE --set QT_DEVICE_PIXEL_RATIO 2
-        wrapProgram $out/bin/zoom --unset XDG_SESSION_TYPE --set QT_DEVICE_PIXEL_RATIO 2
+
+        # No scale
+        wrapProgram $out/bin/zoom-us --unset XDG_SESSION_TYPE
+        wrapProgram $out/bin/zoom --unset XDG_SESSION_TYPE
+
+        # Scale x2
+        # wrapProgram $out/bin/zoom-us --unset XDG_SESSION_TYPE --set QT_DEVICE_PIXEL_RATIO 2
+        # wrapProgram $out/bin/zoom --unset XDG_SESSION_TYPE --set QT_DEVICE_PIXEL_RATIO 2
       '';
   });
 in
