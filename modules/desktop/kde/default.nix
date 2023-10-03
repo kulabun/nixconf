@@ -59,6 +59,9 @@ with lib; {
 
     xdg.portal = {
       enable = true;
+      # extraPortals = with pkgs; [
+      #   xdg-desktop-portal-wlr
+      # ];
     };
 
     programs.dconf.enable = true;
@@ -66,6 +69,10 @@ with lib; {
     home-manager = {
       users.${user} = {
         home = {
+          sessionVariables = {
+            XDG_SESSION_TYPE = "wayland";
+            NIXOS_OZONE_WL = "1";
+          };
           # Hack to install configuration without making it immutable
           # Use `nixos-rebuild switch`, it will not be called for `boot`
           activation.kwriteconfig5 = inputs.home-manager.lib.hm.dag.entryAfter [ "linkGeneration" ] configurationScript;

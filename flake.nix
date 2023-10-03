@@ -46,6 +46,8 @@
       url = "git+ssh://master.codecommit/v1/repos/secrets?ref=main";
       flake = false;
     };
+
+    nur.url = "github:nix-community/NUR";
   };
 
   outputs =
@@ -63,6 +65,7 @@
           overlays = overlays ++ [
             inputs.agenix.overlays.default
             inputs.kl-nvim.overlays.default
+            inputs.nur.overlay
           ];
           config.allowUnfree = true;
         };

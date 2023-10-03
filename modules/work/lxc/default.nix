@@ -2,7 +2,7 @@
 with lib;
 let
   inherit (config.home-manager.users.${user}.home) homeDirectory;
-  cfg = config.work'.globalprotect-vpn;
+  cfg = config.work'.lxc;
   lxc-run = pkgs.writeScriptBin "lxc-run" (readFile ./bin/lxc-run.sh);
   indeed-shell = pkgs.writeScriptBin "indeed-shell" "lxc-run indeed zsh";
   indeed-start = pkgs.writeScriptBin "indeed-start" ''
@@ -73,20 +73,20 @@ in
     virtualisation'.lxc.enable = true;
 
     systemd.user.services = {
-      indeed-vm = {
-        description = "Indeed VM";
-        wantedBy = [ "default.target" ];
-        before = [ ];
-        bindsTo = [ ];
-        path = [ pkgs.sudo pkgs.lxd pkgs'.cloudflare-warp pkgs.iproute indeed-start ];
-        serviceConfig = {
-          Type = "oneshot";
-          RemainAfterExit = true;
-        };
-        script = ''
-          indeed-start
-        '';
-      };
+      # indeed-vm = {
+      #   description = "Indeed VM";
+      #   wantedBy = [ "default.target" ];
+      #   before = [ ];
+      #   bindsTo = [ ];
+      #   path = [ pkgs.sudo pkgs.lxd pkgs'.cloudflare-warp pkgs.iproute indeed-start ];
+      #   serviceConfig = {
+      #     Type = "oneshot";
+      #     RemainAfterExit = true;
+      #   };
+      #   script = ''
+      #     indeed-start
+      #   '';
+      # };
     };
     # systemd.services = {
       # network-link-lxdbr0-setup = {

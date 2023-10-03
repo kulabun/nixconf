@@ -107,8 +107,9 @@ with lib;
   };
 
   programs' = {
+    brave.enable = false;
     chrome.enable = true;
-    firefox.enable = true;
+    firefox.enable = false;
     vivaldi.enable = false;
     easyeffects.enable = true;
     obs-studio.enable = true;

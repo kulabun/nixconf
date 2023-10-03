@@ -225,6 +225,17 @@
       "mic_mute" = "Meta+M\tMicrophone Mute\tMeta+Volume Mute,Microphone Mute\tMeta+Volume Mute,Mute Microphone";
       "mute" = "Volume Mute\tMeta+Shift+M,Volume Mute,Mute";
     };
+
+   "org.kde.spectacle.desktop" = {
+      "ActiveWindowScreenShot"="Print,Meta+Print,Capture Active Window";
+      "CurrentMonitorScreenShot"="none,none,Capture Current Monitor";
+      "FullScreenScreenShot"="none,Shift+Print,Capture Entire Desktop";
+      "OpenWithoutScreenshot"="none,none,Launch Spectacle without capturing";
+      "RectangularRegionScreenShot"="Shift+Print,Meta+Shift+Print,Capture Rectangular Region";
+      "WindowUnderCursorScreenShot"="Meta+Ctrl+Print,Meta+Ctrl+Print,Capture Window Under Cursor";
+      "_k_friendly_name"="Spectacle";
+      "_launch"="none,Print,Launch Spectacle";
+   };
   };
 
   "plasma-arg.kde.plasma.desktop-appletsrc" = {

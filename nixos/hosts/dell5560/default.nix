@@ -38,17 +38,18 @@ with lib;
       luks.devices."luks-84466a7a-bf3c-47b1-9a42-2d12d1288a23".device = "/dev/disk/by-uuid/84466a7a-bf3c-47b1-9a42-2d12d1288a23";
       luks.devices."luks-84466a7a-bf3c-47b1-9a42-2d12d1288a23".keyFile = "/crypto_keyfile.bin";
     };
+    # kernelModules = [ "kvm-intel" "nvidia" ];
     kernelModules = [ "kvm-intel" ];
     extraModulePackages = [ ];
   };
 
   fileSystems = {
-    "/" = { 
+    "/" = {
       device = "/dev/disk/by-uuid/9dd9bfed-c126-4c12-9148-18ad5ba20836";
       fsType = "ext4";
     };
 
-    "/boot" = { 
+    "/boot" = {
       device = "/dev/disk/by-uuid/3788-DEA3";
       fsType = "vfat";
     };
@@ -94,8 +95,8 @@ with lib;
   };
 
   programs' = {
+    brave.enable = false;
     chrome.enable = true;
-    firefox.enable = true;
     vivaldi.enable = false;
     easyeffects.enable = true;
     obs-studio.enable = true;
@@ -110,19 +111,20 @@ with lib;
     };
 
     webapps = {
-      google-calendar.enable = true;
-      google-docs.enable = true;
-      google-drive.enable = true;
-      google-keep.enable = true;
-      google-mail.enable = true;
-      google-meet.enable = true;
-      google-photos.enable = true;
+      # google-calendar.enable = true;
+      # google-docs.enable = true;
+      # google-drive.enable = true;
+      # google-keep.enable = true;
+      # google-mail.enable = true;
+      # google-meet.enable = true;
+      # google-photos.enable = true;
       messenger.enable = true;
       telegram.enable = true;
       whatsapp.enable = true;
       poe.enable = true;
       chatgpt.enable = true;
       youtube-music.enable = true;
+      spotify.enable = true;
     };
 
     kitty = {
@@ -143,10 +145,15 @@ with lib;
   };
 
   work' = {
-    globalprotect-vpn.enable = true;
     lxc.enable = true;
     sops.enable = true;
     mongodb-compass.enable = true;
+
+    # Deprecated
+    globalprotect-vpn.enable = false;
+
+    # I keep seeing firefox browser crashing. Sometimes once a day, sometimes once an hour. I need a stable browser
+    firefox.enable = false;
   };
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
@@ -157,6 +164,39 @@ with lib;
   # networking.interfaces.enp4s0f4u2u2u2.useDHCP = lib.mkDefault true;
 
   hardware = {
+    # nvidia = {
+    #   # Modesetting is required.
+    #   modesetting.enable = true;
+    #
+    #   # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
+    #   powerManagement.enable = true;
+    #   # Fine-grained power management. Turns off GPU when not in use.
+    #   # Experimental and only works on modern Nvidia GPUs (Turing or newer).
+    #   powerManagement.finegrained = true;
+    #
+    #   # Use the NVidia open source kernel module (not to be confused with the
+    #   # independent third-party "nouveau" open source driver).
+    #   # Support is limited to the Turing and later architectures. Full list of 
+    #   # supported GPUs is at: 
+    #   # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
+    #   # Only available from driver 515.43.04+
+    #   # Do not disable this unless your GPU is unsupported or if you have a good reason to.
+    #   # open = true;
+    #
+    #   # Enable the Nvidia settings menu,
+    #   # accessible via `nvidia-settings`.
+    #   nvidiaSettings = true;
+    #
+    #   # Optionally, you may need to select the appropriate driver version for your specific GPU.
+    #   # package = config.boot.kernelPackages.nvidiaPackages.stable;
+    #
+    #   prime = {
+    #     offload.enable = true;
+    #     # sync.enable = true;
+    #     intelBusId = "PCI:0:2:0";
+    #     nvidiaBusId = "PCI:1:0:0";
+    #   };
+    # };
     bluetooth.enable = true;
     enableRedistributableFirmware = true;
     # video.hidpi.enable = true;
@@ -167,6 +207,10 @@ with lib;
       extraPackages = with pkgs; [
         vaapiVdpau
         libvdpau-va-gl
+        intel-media-driver # LIBVA_DRIVER_NAME=iHD
+        # vaapiIntel # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
+        # mesa.drivers
+        linux-firmware
       ];
     };
   };
@@ -176,6 +220,9 @@ with lib;
 
   # Enable the X11 windowing system.
   services.xserver.enable = true; # BUG: when removed cursor disappers in wayland
+
+  # Load nvidia driver for Xorg and Wayland
+  # services.xserver.videoDrivers = [ "nvidia" "intel" ];
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -213,6 +260,8 @@ with lib;
     libva-utils
     glxinfo
     vdpauinfo
+    vulkan-tools
+    intel-gpu-tools
 
     procps # pgrep, pkill
     inxi # print devices and associated drivers: inxi -Fza

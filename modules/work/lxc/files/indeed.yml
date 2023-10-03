@@ -8,6 +8,10 @@ config:
   raw.idmap: both 1000 1000
   raw.lxc: |
     lxc.apparmor.profile=unconfined
+    lxc.mount.entry = /dev/video0 dev/video0 none bind,optional,create=file
+    lxc.mount.entry = /dev/video1 dev/video0 none bind,optional,create=file
+    lxc.mount.entry = /dev/video2 dev/video2 none bind,optional,create=file
+    lxc.mount.entry = /dev/video3 dev/video2 none bind,optional,create=file
   security.nesting: "true"
   cloud-init.user-data: |
     #cloud-config
