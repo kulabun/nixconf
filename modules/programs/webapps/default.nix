@@ -103,14 +103,6 @@ let
     clearUserAgent = false;
     icon = "${pkgs.moka-icon-theme}/share/icons/Moka/48x48/web/Youtube-youtube.com.png";
   };
-  spotify = makeWebApp {
-    name = "spotify";
-    desktopName = "Spotify";
-    url = "https://spotify.com";
-    wmClass = "spotify-webapps";
-    clearUserAgent = false;
-    icon = "${pkgs.moka-icon-theme}/share/icons/Moka/48x48/web/Spotify.png";
-  };
   mkEnableOpt = name: lib.mkOption {
     type = lib.types.bool;
     default = false;
@@ -133,7 +125,6 @@ with lib; {
       poe.enable = mkEnableOpt "poe";
       chatgpt.enable = mkEnableOpt "chatgpt";
       youtube-music.enable = mkEnableOpt "youtube-music";
-      spotify.enable = mkEnableOpt "youtube-music";
     };
   };
 
@@ -153,8 +144,7 @@ with lib; {
         ++ optional config.programs'.webapps.whatsapp.enable whatsapp
         ++ optional config.programs'.webapps.poe.enable poe
         ++ optional config.programs'.webapps.chatgpt.enable chatgpt
-        ++ optional config.programs'.webapps.youtube-music.enable youtube-music
-        ++ optional config.programs'.webapps.spotify.enable spotify;
+        ++ optional config.programs'.webapps.youtube-music.enable youtube-music;
     };
   };
 }

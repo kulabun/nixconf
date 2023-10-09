@@ -95,16 +95,17 @@ with lib;
   };
 
   programs' = {
+    bitwarden.enable = true;
     brave.enable = false;
     chrome.enable = true;
-    vivaldi.enable = false;
     easyeffects.enable = true;
+    libreoffice.enable = true;
     obs-studio.enable = true;
+    slack.enable = true;
+    spotify.enable=true;
+    vivaldi.enable = false;
     vscode.enable = false;
     yubikey.enable = true;
-    slack.enable = true;
-    libreoffice.enable = true;
-    bitwarden.enable = true;
     zoom-us.enable = true;
     jetbrains = {
       idea-community.enable = true;
@@ -124,7 +125,6 @@ with lib;
       poe.enable = true;
       chatgpt.enable = true;
       youtube-music.enable = true;
-      spotify.enable = true;
     };
 
     kitty = {
