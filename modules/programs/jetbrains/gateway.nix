@@ -15,7 +15,7 @@ let
     ];
     buildInputs = [ pkgs'.makeWrapper ];
     postBuild = ''
-      wrapProgram $out/bin/gateway --unset GDK_SCALE
+      wrapProgram $out/bin/gateway --unset GDK_SCALE --set JETBRAINS_CLIENT_JDK "${pkgs'.jetbrains.jdk.home}"
       # wrapProgram $out/bin/gateway --set GDK_SCALE 2
     '';
   };

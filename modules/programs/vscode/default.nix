@@ -27,7 +27,7 @@ let
     "sourcegraph.cody-ai"
     "sourcegraph.sourcegraph"
   ];
-  installExtensionCmd = extension: "${pkgs'.vscode}/bin/code --install-extension '${extension}' || true";
+  installExtensionCmd = extension: "${pkgs'.vscode}/bin/code --list-extensions | grep ${extension} || ${pkgs'.vscode}/bin/code --install-extension '${extension}' || true";
   installExtensionsScript = builtins.concatStringsSep "\n" (map installExtensionCmd extensions);
 in
 {
