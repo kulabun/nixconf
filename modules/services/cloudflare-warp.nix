@@ -9,6 +9,35 @@ let
     };
     unpackPhase = null;
   }));
+
+  # cloudflare-warp = (pkgs'.cloudflare-warp.overrideAttrs (old: {
+  #   src = pkgs'.fetchurl {
+  #     url = "https://pkg.cloudflareclient.com/pool/jammy/main/c/cloudflare-warp/cloudflare-warp_2023.9.301-1_amd64.deb";
+  #     sha256 = "sha256-mkkBpYLfByqWzjQjcvT5F8n1bEMQVqG1D+DuvfOfd9k=";
+  #   };
+  #   unpackPhase = null;
+  #   buildInputs = with pkgs'; [
+  #     dbus
+  #     stdenv.cc.cc.lib
+  #     dbus.lib
+  #     glibc
+  #     gtk3
+  #     pango
+  #     gobject-introspection
+  #     cairo
+  #     gdk-pixbuf
+  #     wayland
+  #     expat
+  #     fontconfig
+  #
+  #     nss
+  #     nspr
+  #     pango
+  #     udev
+  #     libdrm
+  #     libuuid
+  #   ];
+  # }));
 in
 {
   options.services'.cloudflare-warp = {

@@ -9,7 +9,7 @@ rec {
        ,
        }:
         let
-          electron = pkgs.electron_24;
+          electron = pkgs.electron_27;
           extraArgs = concatStringsSep " " [
             (optionalString (wmClass != null) "--wmclass='${wmClass}'")
             "--title=${name}" # the title is used in addition to wmclass(app_id) to make apps share profile but differenciate them

@@ -164,6 +164,8 @@ in {
           # Checkout their version of a file and add it
           "theirs" = "!f() { git checkout --theirs $@ && git add $@; }; f";
 
+          "collect-garbage" = "!f() {git reflog expire --expire=now --all; git gc --aggressive --prune=now;}; f";
+
           # Delete any branches that have been merged into master
           # See also: https://gist.github.com/robmiller/5133264
           "delete-merged-branches" = ''

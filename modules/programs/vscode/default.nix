@@ -7,7 +7,7 @@ let
     "christian-kohler.path-intellisense"
     "eamodio.gitlens"
     "esbenp.prettier-vscode"
-    "GitHub.copilot"
+    # "GitHub.copilot"
     "GitHub.github-vscode-theme"
     "golang.go"
     "hashicorp.terraform"
@@ -24,6 +24,8 @@ let
     "vscjava.vscode-java-pack"
     "vscjava.vscode-spring-initializr"
     "vscodevim.vim"
+    "sourcegraph.cody-ai"
+    "sourcegraph.sourcegraph"
   ];
   installExtensionCmd = extension: "${pkgs'.vscode}/bin/code --install-extension '${extension}' || true";
   installExtensionsScript = builtins.concatStringsSep "\n" (map installExtensionCmd extensions);

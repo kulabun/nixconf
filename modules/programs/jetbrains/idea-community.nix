@@ -4,7 +4,7 @@ let
   cfg = config.programs'.jetbrains.idea-community;
 
   idea-community = pkgs'.jetbrains.plugins.addPlugins pkgs'.jetbrains.idea-community [
-    "github-copilot"
+    # "github-copilot"
     "ideavim"
   ];
 

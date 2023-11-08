@@ -1,17 +1,25 @@
 config:
   environment.LANG: en_US.UTF-8
   environment.LANGUAGE: en_US:en
-  limits.cpu: "4"
-  limits.memory: 12GB
+  limits.cpu: "12"
+  limits.memory: 48GB
   limits.memory.swap: "false"
   linux.kernel_modules: nf_nat,overlay
   raw.idmap: both 1000 1000
   raw.lxc: |
     lxc.apparmor.profile=unconfined
-    lxc.mount.entry = /dev/video0 dev/video0 none bind,optional,create=file
-    lxc.mount.entry = /dev/video1 dev/video0 none bind,optional,create=file
+
+    lxc.mount.entry = /dev/video1 dev/video1 none bind,optional,create=file
     lxc.mount.entry = /dev/video2 dev/video2 none bind,optional,create=file
-    lxc.mount.entry = /dev/video3 dev/video2 none bind,optional,create=file
+    lxc.mount.entry = /dev/video3 dev/video3 none bind,optional,create=file
+    lxc.mount.entry = /dev/video4 dev/video4 none bind,optional,create=file
+    lxc.mount.entry = /dev/video5 dev/video5 none bind,optional,create=file
+    lxc.mount.entry = /dev/video6 dev/video6 none bind,optional,create=file
+
+    lxc.mount.entry = /tmp/.X11-unix tmp/.X11-unix none bind,optional,create=dir,ro
+    lxc.mount.entry = /dev/dri dev/dri none bind,optional,create=dir
+    lxc.mount.entry = /dev/snd dev/snd none bind,optional,create=dir
+
   security.nesting: "true"
   cloud-init.user-data: |
     #cloud-config
@@ -36,10 +44,6 @@ devices:
   XDG_RUNTIME_DIR:
     path: /runtime
     source: /run/user/1000
-    type: disk
-  XWayland:
-    path: /tmp/.X11-unix
-    source: /tmp/.X11-unix
     type: disk
   eth0:
     name: eth0
@@ -78,6 +82,10 @@ devices:
   home-dot-ssh:
     path: /home/klabun/.ssh/
     source: /home/klabun/indeed/.ssh
+    type: disk
+  home-zoom-backgrounds:
+    path: /home/klabun/zoom-backgrounds
+    source: /home/klabun/indeed/zoom-backgrounds/
     type: disk
   root:
     path: /

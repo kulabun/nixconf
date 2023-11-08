@@ -5,46 +5,27 @@ let
   cfg = config.work'.lxc;
   lxc-run = pkgs.writeScriptBin "lxc-run" (readFile ./bin/lxc-run.sh);
   indeed-shell = pkgs.writeScriptBin "indeed-shell" "lxc-run indeed zsh";
-  indeed-start = pkgs.writeScriptBin "indeed-start" ''
-    echo "Disconnecting from CloudFlare WARP.."
-    sudo tailscale down
-    warp-cli disconnect
-
-    if [[ $(lxc list -c ns -f csv) == "indeed,RUNNING" ]]; then
-      echo "Restarting indeed.."
-      lxc restart indeed
-    else
-      echo "Starting indeed.."
-      lxc start indeed
-    fi
-
-    echo "Waiting for indeed to start.."
-    sleep 10
-
-    echo "Configuring lxdbr0.."
-    sudo ip link set mtu 1400 dev lxdbr0
-
-    echo "Connecting to CloudFlare WARP.."
-    warp-cli connect
-  '';
-  # indeed-alacritty = pkgs.makeDesktopItem {
-  #   icon = "${pkgs.alacritty}/share/icons/hicolor/scalable/apps/Alacritty.svg";
-  #   name = "Indeed Alacritty";
-  #   genericName = "Terminal";
-  #   categories = [ "System" "TerminalEmulator" ];
-  #   desktopName = "Indeed Alacritty";
-  #   startupWMClass = "Alacritty";
-  #   exec = "${lxc-run}/bin/lxc-run indeed alacritty";
-  # };
-  # indeed-chrome = pkgs.makeDesktopItem {
-  #   icon = "google-chrome";
-  #   name = "Indeed Google Chrome";
-  #   genericName = "Web Browser";
-  #   categories = [ "Network" "WebBrowser" ];
-  #   desktopName = "Indeed Chrome";
-  #   startupWMClass = "Google-chrome";
-  #   exec = "${lxc-run}/bin/lxc-run indeed google-chrome-stable";
-  # };
+  indeed-alacritty = pkgs.makeDesktopItem {
+    icon = "${pkgs.alacritty}/share/icons/hicolor/scalable/apps/Alacritty.svg";
+    name = "Indeed Alacritty";
+    genericName = "Terminal";
+    categories = [ "System" "TerminalEmulator" ];
+    desktopName = "Indeed Alacritty";
+    startupWMClass = "Alacritty";
+    exec = "SHELL=${indeed-shell}/bin/indeed-shell ${pkgs.alacritty}/bin/alacritty";
+  };
+  indeed-chrome = pkgs.makeDesktopItem {
+    icon = "google-chrome";
+    name = "indeed-google-chrome";
+    genericName = "Web Browser";
+    categories = [ "Network" "WebBrowser" ];
+    desktopName = "Indeed Chrome";
+    startupWMClass = "Google-chrome";
+    # exec = "${lxc-run}/bin/lxc-run indeed google-chrome-stable";
+    exec = ''
+      google-chrome-stable --user-data-dir="${homeDirectory}/.chrome/indeed" --proxy-server="http://192.168.192.61:3128" %u
+    '';
+  };
   indeed-idea = pkgs.makeDesktopItem {
     icon = "idea-community";
     name = "Indeed IntelliJ IDEA";
@@ -63,6 +44,24 @@ let
   #   startupWMClass = "Slack";
   #   exec = "${lxc-run}/bin/lxc-run indeed slack";
   # };
+  # indeed-zoom = pkgs.makeDesktopItem {
+  #   icon = "zoom";
+  #   name = "Indeed Zoom";
+  #   genericName = "Chat";
+  #   categories = [ "Network" "Chat" ];
+  #   desktopName = "Indeed Zoom";
+  #   startupWMClass = "Zoom";
+  #   exec = "${lxc-run}/bin/lxc-run indeed zoom";
+  # };
+  indeed-mongodb-compas = pkgs.makeDesktopItem {
+    icon = "MongoDB Compass";
+    name = "Indeed MongoDB Compass";
+    genericName = "MongoDB Compass";
+    categories = [ "Network" ];
+    desktopName = "Indeed MongoDB Compass";
+    startupWMClass = "MongoDB Compass";
+    exec = "${lxc-run}/bin/lxc-run indeed mongodb-compass";
+  };
 in
 {
   options.work'.lxc = {
@@ -72,68 +71,27 @@ in
   config = mkIf cfg.enable {
     virtualisation'.lxc.enable = true;
 
-    systemd.user.services = {
-      # indeed-vm = {
-      #   description = "Indeed VM";
-      #   wantedBy = [ "default.target" ];
-      #   before = [ ];
-      #   bindsTo = [ ];
-      #   path = [ pkgs.sudo pkgs.lxd pkgs'.cloudflare-warp pkgs.iproute indeed-start ];
-      #   serviceConfig = {
-      #     Type = "oneshot";
-      #     RemainAfterExit = true;
-      #   };
-      #   script = ''
-      #     indeed-start
-      #   '';
-      # };
-    };
-    # systemd.services = {
-      # network-link-lxdbr0-setup = {
-      #   description = "Link configuration for lxdbr0";
-      #   wantedBy = [ "multi-user.target" ];
-      #   before = [ "indeed-vm.target" ];
-      #   after = [ "network-pre.target" "machines.target" ];
-      #   path = [ pkgs.iproute ];
-      #   serviceConfig = {
-      #     Type = "oneshot";
-      #     RemainAfterExit = true;
-      #   };
-      #   # Fix MTU. Otherwise https would fail in cloudflare
-      #   script = ''
-      #     echo "Configuring lxdbr0..."
-      #     ip link set mtu 1400 dev lxdbr0
-      #   '';
-      # };
-    #
-    #   indeed-vm = {
-    #     description = "Indeed VM";
-    #     wantedBy = [ "multi-user.target" ];
-    #     before = [ ];
-    #     bindsTo = [ ];
-    #     after = [ "network-link-lxdbr0-setup.service" "machines.target" ];
-    #     path = [ pkgs.sudo pkgs.lxd pkgs'.cloudflare-warp indeed-start ];
-    #     serviceConfig = {
-    #       Type = "oneshot";
-    #       RemainAfterExit = true;
-    #     };
-    #     # TODO: should it rather be a user service?
-    #     script = ''
-    #       sudo --user klabun indeed-start
-    #     '';
-    #   };
-    # };
-
     home-manager.users.${user} = {
+      # xdg.mimeApps = {
+      #   enable = true;
+      #   defaultApplications = {
+      #     "x-scheme-handler/http" = "indeed-google-chrome.desktop";
+      #     "x-scheme-handler/https" = "indeed-google-chrome.desktop";
+      #     "text/html" = "indeed-google-chrome.desktop";
+      #   };
+      # };
+      #
       home = {
         packages = [
           lxc-run
           indeed-shell
-          indeed-start
-          # indeed-alacritty
+          indeed-alacritty
           indeed-idea
           # indeed-slack
-          # indeed-chrome
+          indeed-chrome
+          # indeed-chrome-desktop
+          # indeed-zoom
+          indeed-mongodb-compas
         ];
         # Hack to install configuration without making it immutable
         # Use `nixos-rebuild switch`, it will not be called for `boot`
@@ -190,7 +148,27 @@ in
           chown -R ${user}:${user} ${homeDirectory}/indeed/.config/git
           chmod -R 700 ${homeDirectory}/indeed/.config/git
           cat ${./config/git/ignore} > ${homeDirectory}/indeed/.config/git/ignore
+
+          # Zellij
+          mkdir -p ${homeDirectory}/indeed/.config/zellij/layouts
+          chown -R ${user}:${user} ${homeDirectory}/indeed/.config/zellij
+          chmod -R 700 ${homeDirectory}/indeed/.config/zellij
+          cat ${homeDirectory}/.config/zellij/config.kdl > ${homeDirectory}/indeed/.config/zellij/config.kdl
+          cat ${homeDirectory}/.config/zellij/layouts/default.kdl > ${homeDirectory}/indeed/.config/zellij/layouts/default.kdl
+
+          # Alacritty
+          mkdir -p ${homeDirectory}/indeed/.config/alacritty/themes/catppuccin
+          chown -R ${user}:${user} ${homeDirectory}/indeed/.config/alacritty
+          chmod -R 700 ${homeDirectory}/indeed/.config/alacritty
+          cat ${homeDirectory}/.config/alacritty/alacritty.yml > ${homeDirectory}/indeed/.config/alacritty/alacritty.yml
+          cat ${homeDirectory}/.config/alacritty/themes/catppuccin/catppuccin-mocha.yml > ${homeDirectory}/indeed/.config/alacritty/themes/catppuccin/catppuccin-mocha.yml 
+
+          # Set Indeed Chrome as a default for URLs
         '';
+
+        # activation.setXDGbrowser = inputs.home-manager.lib.hm.dag.entryBefore [ "linkGeneration" ] ''
+        #   ${pkgs.xdg-utils}/bin/xdg-settings set default-web-browser indeed-google-chrome.desktop
+        # '';
       };
     };
   };

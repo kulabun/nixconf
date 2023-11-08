@@ -146,7 +146,6 @@ with lib;
   };
 
   work' = {
-    globalprotect-vpn.enable = true;
     lxc.enable = true;
     sops.enable = true;
     mongodb-compass.enable = true;

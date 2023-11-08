@@ -77,7 +77,7 @@ with lib;
   services' = {
     openssh.enable = true;
     tailscale.enable = true;
-    cloudflare-warp.enable = true;
+    cloudflare-warp.enable = false;
   };
 
   desktop' = {
@@ -101,15 +101,17 @@ with lib;
     easyeffects.enable = true;
     libreoffice.enable = true;
     obs-studio.enable = true;
-    slack.enable = true;
     spotify.enable=true;
     vivaldi.enable = false;
-    vscode.enable = false;
+    vscode.enable = true;
     yubikey.enable = true;
-    zoom-us.enable = true;
     jetbrains = {
-      idea-community.enable = true;
+      idea-community.enable = false;
+      gateway.enable = true;
     };
+
+    slack.enable = true;
+    zoom-us.enable = true;
 
     webapps = {
       # google-calendar.enable = true;
@@ -147,13 +149,17 @@ with lib;
   work' = {
     lxc.enable = true;
     sops.enable = true;
-    mongodb-compass.enable = true;
 
-    # Deprecated
-    globalprotect-vpn.enable = false;
 
     # I keep seeing firefox browser crashing. Sometimes once a day, sometimes once an hour. I need a stable browser
     firefox.enable = false;
+
+    # rather use apps from Ubuntu LXC
+    mongodb-compass.enable = false;
+    jetbrains = {
+      idea-community.enable = false;
+    };
+    dev-tools.enable = false;
   };
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking

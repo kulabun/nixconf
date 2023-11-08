@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 USER="klabun"
-HOSTNAME="cvm-$HOSTNAME_SUFFIX"
+HOSTNAME="cvm"
 HOME="/home/$USER"
 SHELL="/usr/bin/zsh"
 
@@ -13,78 +13,98 @@ function announce() {
 	echo "=============================="
 }
 
-function as_user() {
-	sudo --user "$USER" --login "$@"
+function setup_hostname() {
+	announce "Setting up hostname"
+	echo "$HOSTNAME" | sudo tee /etc/hostname > /dev/null
+	echo "127.0.0.1 $HOSTNAME" | sudo tee /etc/hosts > /dev/null
 }
 
 function setup_user() {
-	apt install -y zsh
-	chsh "$USER" -s "$SHELL"
-}
-
-function setup_hostname() {
-	announce "Setting up hostname"
-	hostname "$HOSTNAME"
-	echo "$HOSTNAME" >/etc/hostname
-	echo "127.0.0.1 $HOSTNAME" >>/etc/hosts
-}
-
-function fix_permissions() {
-  chmod 755 -R /opt/indeed/
+	sudo apt install -y zsh
+	sudo chsh "$USER" -s "$SHELL"
 }
 
 function setup_timezone() {
-	ln -snf /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
+	sudo ln -snf /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
 }
 
 function system_update() {
 	announce "Updating system"
-	apt update && apt upgrade -y
-}
-
-function setup_system_packages() {
-	announce "Installing System Packages"
-	apt install -y git zsh fzf jq neovim
+	sudo apt update && sudo apt upgrade -y
+	update-managed-repos
 }
 
 function setup_cargo() {
 	announce "Installing Cargo Packages"
-	as_user curl https://sh.rustup.rs -sSf |
-		as_user sh -s -- -y
+	curl https://sh.rustup.rs -sSf | sh -s -- -y
 
-	as_user cargo install --locked starship
-	as_user cargo install --locked exa
-	as_user cargo install --locked bat
-	as_user cargo install --locked ripgrep
+  source "$HOME/.cargo/env"
+  cargo install --locked starship
+	cargo install --locked exa
+	cargo install --locked bat
+	cargo install --locked ripgrep
 }
 
-function setup_zsh() {
-  announce "Setting up ZSH"
-  grep -q 'source $HOME/config/zshrc' ~/.zshrc || echo 'source $HOME/config/zshrc' >> ~/.zshrc
-}
+function setup_bash() {
+	announce "Setting up Bash"
+	grep -q '# Default Bash Config' ~/.profile || cat <<EOF >>~/.profile
+# Default Bash Config
+# if running bash 
+if [ -n "\$BASH_VERSION" ]; then 
+  # include .bashrc if it exists 
+  if [ -f "\$HOME/.bashrc" ]; then 
+    . "\$HOME/.bashrc" 
+  fi 
+fi
 
-function setup_git() {
-  announce "Setting up Git"
-  grep -q '/home/klabun/config/git/config' ~/.gitconfig || echo <<EOF >> ~/.gitconfig
-[include]
-    path = /home/klabun/config/git/config
+# set PATH so it includes user's private bin if it exists
+if [ -d "\$HOME/bin" ] ; then
+  PATH="\$HOME/bin:\$PATH"
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "\$HOME/.local/bin" ] ; then
+  PATH="\$HOME/.local/bin:\$PATH"
+fi
 EOF
 }
 
-function setup_nix() {
-  announce "Setting up Nix"
+function install_mongodb_cli() {
+  announce "Installing MongoDB CLI"
+  wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
+  echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
+  sudo apt-get update
+  sudo apt-get install -y mongocli
+}
+
+function install_sourcegraph_cli() {
+  announce "Installing SourceGraph CLI"
+  mkdir -p $HOME/.local/bin
+  curl -L https://sourcegraph.com/.api/src-cli/src_linux_amd64 -o $HOME/.local/bin/src
+  chmod +x $HOME/.local/bin/src
+  echo 'export PATH='$HOME'/.local/bin:$PATH' >> $HOME/.zshrc
+
+  read -p "SourceGraph Access Token: " SRC_ACCESS_TOKEN
+  echo 'export SRC_ACCESS_TOKEN='$SRC_ACCESS_TOKEN >> $HOME/.zshrc
+  echo 'export SRC_ENDPOINT=https://indeed.sourcegraph.com' >> $HOME/.zshrc
+}
+
+function install_nix() {
+  announce "Installing Nix"
   sh <(curl -L https://nixos.org/nix/install) --daemon
+
+  sudo mkdir -p /nix/var/nix/gcroots/per-user/$USER
+  sudo chown klabun:klabun /nix/var/nix/gcroots/per-user/$USER
 
   nix-env -i lorri direnv
 }
 
-fix_permissions
 system_update
+setup_bash
 setup_hostname
 setup_timezone
 setup_user
-setup_system_packages
 setup_cargo
-setup_zsh
-setup_git
-setup_nix
+install_mongodb_cli
+install_sourcegraph_cli
+install_nix

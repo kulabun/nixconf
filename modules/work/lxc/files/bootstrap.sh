@@ -61,8 +61,8 @@ function setup_cargo() {
 	as_user cargo install --locked starship
 	as_user cargo install --locked exa
 	as_user cargo install --locked bat
-	# as_user cargo install --locked zellij
-	# as_user cargo install --locked alacritty
+	as_user cargo install --locked zellij
+	as_user cargo install --locked alacritty
 	as_user cargo install --locked ripgrep
 }
 
@@ -126,14 +126,20 @@ function setup_git() {
 EOF
 }
 
-# function install_slack() {
-#   announce "Installing Slack"
-#   apt install -y libappindicator3-1 libdbusmenu-glib4 libdbusmenu-gtk3-4 libnotify4 libxss1
-#
-#   wget https://downloads.slack-edge.com/releases/linux/4.32.127/prod/x64/slack-desktop-4.32.127-amd64.deb
-#   apt install -y ./slack-desktop-*.deb
-#   rm ./slack-desktop-*.deb
-# }
+function install_slack() {
+  announce "Installing Slack"
+  apt install -y libappindicator3-1 libdbusmenu-glib4 libdbusmenu-gtk3-4 libnotify4 libxss1
+
+  wget https://downloads.slack-edge.com/releases/linux/4.34.121/prod/x64/slack-desktop-4.34.121-amd64.deb
+  apt install -y ./slack-desktop-*.deb
+  rm ./slack-desktop-*.deb
+}
+
+function install_zoom() {
+  announce "Installing Zoom"
+  apt install -y pipewire xdg-desktop-portal xdg-desktop-portal-gnome xdg-desktop-portal-gtk
+  apt install -y zoom-client
+}
 
 function setup_sudo() {
 	announce "Setting up Sudo"
@@ -142,6 +148,70 @@ Defaults:%sudo env_keep += "XAUTHORITY DISPLAY"
 Defaults:%sudo env_keep += "DBUS_SESSION_BUS_ADDRESS PULSE_SERVER"
 Defaults:%sudo env_keep += "INDEED_* ANSIBLE_* INSTALL_*"
 EOF
+}
+
+function install_fonts() {
+  announce "Installing Fonts"
+  apt install -y fonts-font-awesome ttf-mscorefonts-installer fonts-noto
+
+  declare fonts=(
+    Ubuntu
+    Hack
+    JetBnainsMono
+    SourceCodepro
+    Terminus
+  )
+  
+  for font in "${fonts[@]}"; do
+    mkdir -p ~/.local/share/fonts/nerdfonts/"$font"
+    cd ~/.local/share/fonts/nerdfonts/"$font"
+    wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/"$font".zip
+    unzip "$font".zip
+    rm "$font".zip
+  done
+
+  fc-cache -f -v
+}
+
+function network() {
+  announce "Configuring Network"
+  echo "100.81.131.71 bitwarden.snowy-butterfly.ts.net" >> /etc/hosts
+}
+
+function install_mongodb_compass() {
+  announce "Installing MongoDB compass"
+  wget https://downloads.mongodb.com/compass/mongodb-compass_1.40.4_amd64.deb
+  sudo dpkg -i mongodb-compass_1.40.4_amd64.deb
+}
+
+function install_mongodb_cli() {
+  announce "Installing MongoDB CLI"
+  wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
+  echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
+  sudo apt-get update
+  sudo apt-get install -y mongocli
+}
+
+function install_sourcegraph_cli() {
+  announce "Installing SourceGraph CLI"
+  mkdir -p $HOME/.local/bin
+  curl -L https://sourcegraph.com/.api/src-cli/src_linux_amd64 -o $HOME/.local/bin/src
+  chmod +x $HOME/.local/bin/src
+  echo 'export PATH='$HOME'/.local/bin:$PATH' >> $HOME/.zshrc
+
+  read -p "SourceGraph Access Token: " SRC_ACCESS_TOKEN
+  echo 'export SRC_ACCESS_TOKEN='$SRC_ACCESS_TOKEN >> $HOME/.zshrc
+  echo 'export SRC_ENDPOINT=https://indeed.sourcegraph.com' >> $HOME/.zshrc
+}
+
+function install_nix() {
+  announce "Installing Nix"
+  sh <(curl -L https://nixos.org/nix/install) --daemon
+
+  sudo mkdir -p /nix/var/nix/gcroots/per-user/$USER
+  sudo chown klabun:klabun /nix/var/nix/gcroots/per-user/$USER
+
+  nix-env -i lorri direnv
 }
 
 system_update
@@ -156,5 +226,10 @@ setup_sudo
 setup_zsh
 setup_git
 install_chrome
-# install_slack
+install_slack
+install_zoom
 install_cloudflare_warp
+install_mongodb_compass
+install_mongodb_cli
+install_sourcegraph_cli
+install_nix
